@@ -1,0 +1,22 @@
+'use strict'
+
+import Sequelize from 'sequelize';
+import conn from './db/conn';
+
+const User = conn.define('users', {
+  name: Sequelize.STRING,
+  email: {
+    type: Sequelize.STRING,
+    unique: true,
+    validate: {
+			isEmail: true,
+			notEmpty: true
+		}
+  },
+  isAdmin: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
+}
+
+module.exports = User;
