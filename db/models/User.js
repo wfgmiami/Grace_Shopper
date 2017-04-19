@@ -1,9 +1,8 @@
 'use strict'
 
 import Sequelize from 'sequelize';
-import db from './_db'
 
-const User = db.define('users', {
+const User = Sequelize.define('users', {
   name: Sequelize.STRING,
   email: {
     type: Sequelize.STRING,
