@@ -1,23 +1,29 @@
 import React from 'react';
-import { render } from 'react-dom';
-import { connect, Provider } from 'react-redux';
-import { store } from './redux/store';
+import ReactDOM from 'react-dom';
+
 import {
+  IndexRoute,
   Router,
   Route,
-  IndexRoute,
-  hashHistory
+  browserHistory
 } from 'react-router';
-import Main from './react/Main';
+
+import store from '../redux/store';
+import Home from './Home';
+import FoodRecord from './FoodRecord';
+import { Provider } from 'react-redux';
+
+import Main from './Main';
 
 const app = (
   <Provider store={ store }>
-    <Router history={ hashHistory }>
-      <Route path="/">
-        <IndexRoute component={ Main } />
+    <Router history={ browserHistory }>
+      <Route path="/" component={ Main }>
+        <IndexRoute component={ Home } />
       </Route>
     </Router>
   </Provider>
 );
 
-render(app, document.getElementById('app'));
+ReactDOM.render(app, document.getElementById('app'));
+

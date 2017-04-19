@@ -1,27 +1,27 @@
+// This is the parent component used as the main route and contains other components as children
+
 import React from 'react';
 import { connect } from 'react-redux';
 
-function mapStateToProps(state) {
-  return {
 
-  };
-}
-
-export class Main extends React.Component {
+class Main extends React.Component {
   constructor(props) {
-    super(props);
+    super();
   }
 
   render() {
     return (
-      <div></div>
+      <div>
+        <div style={{ marginTop: '65px' }}>
+          { this.props.children }
+        </div>
+      </div>
     );
   }
 }
 
+const mapStateToProps = (state) => ({
+  state
+});
 
-
-export default connect(
-  mapStateToProps,
-// Implement map dispatch to props
-)(Main)
+export default connect(mapStateToProps)(Main);
