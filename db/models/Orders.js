@@ -2,7 +2,7 @@ const sequelize = require('../connect');
 
 const { Sequelize } = sequelize;
 
-const Orders = sequelize.define('orders', {
+const Order = sequelize.define('orders', {
   price: {
     type: Sequelize.DECIMAL,
     allowNull: false
@@ -13,7 +13,7 @@ const Orders = sequelize.define('orders', {
   }
 });
 
-module.exports = Orders;
+module.exports = Order;
 
 
 // Orders must belong to a user OR guest session (authenticated vs unauthenticated)
