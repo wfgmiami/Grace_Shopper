@@ -1,9 +1,8 @@
 'use strict'
 
 import Sequelize from 'sequelize';
-import db from './_db';
 
-const Review = db.define('reviews', {
+const Review = Sequelize.define('reviews', {
   rating: {
   	type: Sequelize.INTEGER,
   	allowNull: false,
