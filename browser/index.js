@@ -8,9 +8,8 @@ import {
   browserHistory
 } from 'react-router';
 
-import store from '../redux/store';
+import store from './redux/store';
 import Home from './Home';
-import FoodRecord from './FoodRecord';
 import { Provider } from 'react-redux';
 
 import Main from './Main';
