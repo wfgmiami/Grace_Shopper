@@ -3,14 +3,15 @@
 
 const initialState = {};
 
-export default (state = initialState, action) => {
+export default ( state = initialState, action ) => {
   let newState;
-  switch (action.type) {
-    case 'TODO': // Should be changed
-      break;
-    default:
-      break;
+  switch ( action.type ) {
+  case 'TODO': // Should be changed
+    break;
+  default:
+    break;
   }
 
   return newState;
 };
+
