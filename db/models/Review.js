@@ -1,7 +1,7 @@
 'use strict'
 
 import Sequelize from 'sequelize';
-import conn from './db/conn';
+import conn from '../conn';
 
 const Review = conn.define('reviews', {
   rating: {
