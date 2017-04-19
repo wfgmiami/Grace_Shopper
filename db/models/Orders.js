@@ -14,7 +14,7 @@ const Order = sequelize.define('orders', {
 });
 
 module.exports = Order;
-
+// random commment
 
 // Orders must belong to a user OR guest session (authenticated vs unauthenticated)
 // Orders must contain line items that capture the price, current product ID and quantity
