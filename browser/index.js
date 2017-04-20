@@ -12,7 +12,7 @@ import store from './redux/store';
 import Home from './react/Home';
 import { Provider } from 'react-redux';
 
-import Main from './react/Main.js';
+import Main from './react/Main';
 
 const app = (
   <Provider store={ store }>

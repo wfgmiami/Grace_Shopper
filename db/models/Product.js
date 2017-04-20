@@ -1,3 +1,4 @@
+
 'use strict'
 
 import Sequelize from 'sequelize';
@@ -55,4 +56,3 @@ module.exports = Product;
     //   {"name":"brand","value":"Oakley"}],
 
     //   "name":"OAKLEY\nOX5118 WINGFOLD EVR"}, -> title
-      

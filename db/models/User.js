@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 import Sequelize from 'sequelize';
 import conn from '../conn';
@@ -17,9 +17,6 @@ const User = conn.define('users', {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },
-}
+});
 
 module.exports = User;
-
-// Users must have a valid email address
-// Users email must be unique
