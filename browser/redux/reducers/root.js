@@ -4,7 +4,7 @@
 const initialState = {};
 
 export default ( state = initialState, action ) => {
-  let newState;
+  let newState = null;
   switch ( action.type ) {
   case 'TODO': // Should be changed
     break;
