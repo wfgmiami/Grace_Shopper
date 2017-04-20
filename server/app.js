@@ -11,7 +11,7 @@ app.use('/api', router);
 
 
 app.get('/',(req,res,next)=>{
-  res.send(__dirname + '/index.html');
+  res.send(__dirname + '../dist/index.html');
 })
 
 const port = process.env.PORT || 3000;

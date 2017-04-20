@@ -12,6 +12,9 @@ const Product = conn.define('product', {
   },
   inventory: {
     type: conn.Sequelize.INTEGER
+  },
+  url: {
+    type: conn.Sequelize.STRING()
   }
 })
 
