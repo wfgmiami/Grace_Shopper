@@ -20,3 +20,6 @@ const User = conn.define('users', {
 }
 
 module.exports = User;
+
+// Users must have a valid email address
+// Users email must be unique

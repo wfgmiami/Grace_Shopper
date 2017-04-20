@@ -9,10 +9,10 @@ import {
 } from 'react-router';
 
 import store from './redux/store';
-import Home from './Home';
+import Home from './react/Home';
 import { Provider } from 'react-redux';
 
-import Main from './Main';
+import Main from './react/Main.js';
 
 const app = (
   <Provider store={ store }>
