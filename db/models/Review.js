@@ -26,3 +26,7 @@ const Review = conn.define('reviews', {
 });
 
 module.exports = Review;
+
+// All reviews must belong to a product
+// All reviews must belong to a user
+// All reviews must be at least X characters
