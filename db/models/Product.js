@@ -8,15 +8,15 @@ const Product = conn.define('product', {
     type: conn.Sequelize.STRING
   },
   price: {
-    type: conn.Sequelize.DECIMAL(10,2)
+    type: conn.Sequelize.DECIMAL
   },
   inventory: {
     type: conn.Sequelize.INTEGER
   },
   url: {
-    type: conn.Sequelize.STRING()
+    type: conn.Sequelize.STRING
   }
-})
+});
 
 module.exports = Product;
 
