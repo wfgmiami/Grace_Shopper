@@ -6,27 +6,26 @@ const conn = require('../conn');
 
 const Glasses = conn.define('glasses', {
 
-  title: {
+  name: {
     type: Sequelize.STRING,
     allowNull: false
   },
   category: {
-    type: Sequelize.ARRAY(Sequelize.STRING)
+    type: Sequelize.STRING
   },
-
   description: {
     type: conn.Sequelize.STRING,
     allowNull: false
   },
   price: {
-    type: conn.Sequelize.INTEGER,
+    type: conn.Sequelize.DECIMAL,
     allowNull: false
   },
   inventory: {
     type: conn.Sequelize.INTEGER,
     allowNull: false
   },
-  photo_url: {
+  images: {
     type: conn.Sequelize.ARRAY(Sequelize.STRING)
   }
 });

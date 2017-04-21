@@ -8,8 +8,8 @@ const { Sequelize } = sequelize;
 
 const Order = sequelize.define( 'orders', {
   status: {
-    // type: Sequelize.ENUM('Pending', 'Shipping', 'Delivered', 'Cancelled'),
-    type: Sequelize.STRING,
+    type: Sequelize.ENUM,
+    values: ['Pending', 'Shipping', 'Delivered', 'Cancelled'],
     defaultValue: 'Pending'
   },
   // productId through association
