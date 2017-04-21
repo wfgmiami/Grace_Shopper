@@ -4,6 +4,12 @@ const router = require( './routes' );
 const bodyParser = require( 'body-parser' );
 const db = require( '../db' );
 const path = require( 'path' );
+const chalk = require( 'chalk' );
+
+// Syncing all the models at once. This promise is used by main.js.
+db
+  .sync()
+  .then( () => console.log( chalk.green( 'Sequelize models synced to PostgreSQL' ) ) );
 
 app.use( bodyParser.json() );
 app.use( '/vendor', express.static( path.join( __dirname, '..', 'node_modules' ) ) );
@@ -16,7 +22,7 @@ app.get( '*', ( req, res, next ) => {
 } );
 
 const port = process.env.PORT || 3000;
-app.listen( port, () => console.log(`Listening on port ${port}`) );
+app.listen( port, () => console.log( `Listening on port ${port}` ) );
 
 //db.seed();
 

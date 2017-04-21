@@ -1,7 +1,7 @@
 'use strict';
 
-import Sequelize from 'sequelize';
-import conn from '../conn';
+const Sequelize = require('sequelize');
+const conn = require('../conn');
 
 const Review = conn.define('reviews', {
   rating: {
