@@ -3,6 +3,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import Nav from './Nav';
 
 class Main extends React.Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class Main extends React.Component {
   render() {
     return (
       <div>
+        <Nav />
         <div style={{ marginTop: '65px' }}>
           { this.props.children }
         </div>
