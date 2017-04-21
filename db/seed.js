@@ -1,22 +1,24 @@
 const db = require( './index' );
 const chalk = require( 'chalk' );
 
-let glasses = formatGlassesJSON( require( './jsondata/glasses-men.json', 'men' ) )
+const glasses = formatGlassesJSON( require( './jsondata/glasses-men.json' ), 'men' )
   .concat( formatGlassesJSON( require( './jsondata/glasses-women.json' ), 'women' ) );
 
-// Finagle with the data structure
-function formatGlassesJSON( arr, category ) {
-  return arr.map( prod => {
-      if ( !prod.price || !prod.name ) return null;
-      prod.price = parseInt( prod.price.replace( /\$/g, '' ), 10 );
-      prod.category = category;
-      prod.description = 'lorem ipsum';
-      prod.inventory = Math.floor( 100 * Math.random() );
-      return prod;
-    } )
-    .filter( prod => prod )
-    .filter( prod => prod.name );
-}
+const categories = require( './jsondata/glasses-men.json' )
+  .concat( require( './jsondata/glasses-women.json' ) )
+  .map( prod => prod.attr ) // get only the attributes
+  .reduce( ( master, attr ) => master.concat( attr ), [] ) // put all attributes into one array
+  .filter( attr => { // only worry about some attributes
+    return attr.name === 'color' || attr.name === 'shape' || attr.name === 'ideal_face_shape' || attr.name === 'material';
+  } )
+  .filter( ( attr, idx, self ) => // get uniques
+    self.findIndex( tst => tst.name === attr.name && tst.value === attr.value ) === idx )
+  .sort( ( one, two ) => { // sort them by attribute name
+    if ( one.name < two.name ) return -1;
+    if ( one.name > two.name ) return 1;
+    return 0;
+  } );
+
 
 const users = [
   { name: 'Arum', email: 'arum@google.com', password: '1234', isAdmin: false },
@@ -38,11 +40,27 @@ const reviews = [
   { rating: 5, review_text: 'my fav', product_id: 5 }
 ];
 
+console.log(db.models);
+
 
 db.sync( { force: true } )
   .then( () => db.models.users.bulkCreate( users ) )
   .then( () => db.models.glasses.bulkCreate( glasses ) )
   .then( () => db.models.reviews.bulkCreate( reviews ) )
-  .then( () => console.log( chalk.green.bold.inverse( `Seeded OK` ) ) )
+  .then( () => db.models.categories.bulkCreate( categories ) )
+  .then( () => console.log( chalk.green.bold.inverse( ` Seeded OK ` ) ) )
   .catch( error => console.error( error.stack ) );
 
+// Finagle with the data structure
+function formatGlassesJSON( arr, category ) {
+  return arr.map( prod => {
+      if ( !prod.price || !prod.name ) return null;
+      prod.price = parseInt( prod.price.replace( /\$/g, '' ), 10 );
+      prod.category = category;
+      prod.description = 'lorem ipsum';
+      prod.inventory = Math.floor( 100 * Math.random() );
+      return prod;
+    } )
+    .filter( prod => prod )
+    .filter( prod => prod.name );
+}

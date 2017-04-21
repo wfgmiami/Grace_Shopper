@@ -5,8 +5,9 @@
 const User = require( './User' );
 const Glasses = require( './Glasses' );
 const Review = require( './Review' );
-const Order = require( './Orders' );
+const Order = require( './Order' );
 const LineItem = require( './LineItem' );
+const Category = require( './Category' );
 
 User.hasMany( Order );
 Order.belongsTo( User );
@@ -14,14 +15,20 @@ Order.belongsTo( User );
 Order.belongsToMany( Glasses, { through: LineItem } );
 Glasses.belongsToMany( Order, { through: LineItem } );
 
-Review.belongsTo( Glasses, { through: 'UserReview' } );
-Review.belongsTo( User, { through: 'UserReview' } );
+Glasses.belongsToMany( Category, { through: 'glassesCategory' } );
+Category.belongsToMany( Glasses, { through: 'glassesCategory' } );
+
+Glasses.hasMany( Review );
+User.hasMany( Review );
+Review.belongsTo( Glasses );
+Review.belongsTo( User, { through: 'userReview' } );
 
 module.exports = {
+  Category,
   Glasses,
-  Review,
-  Order,
   LineItem,
-  User
+  Order,
+  Review,
+  User,
 };
 

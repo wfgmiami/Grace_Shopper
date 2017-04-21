@@ -1,5 +1,4 @@
-
-'use strict'
+'use strict';
 
 const Sequelize = require('sequelize');
 const conn = require('../conn');
