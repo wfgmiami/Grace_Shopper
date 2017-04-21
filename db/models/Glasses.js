@@ -1,11 +1,11 @@
 
 'use strict'
 
-import Sequelize from 'sequelize';
-import conn from '../conn';
+const Sequelize = require('sequelize');
+const conn = require('../conn');
 
-const Product = conn.define('product', {
- 
+const Glasses = conn.define('glasses', {
+
   title: {
     type: Sequelize.STRING,
     allowNull: false
@@ -19,7 +19,7 @@ const Product = conn.define('product', {
     allowNull: false
   },
   price: {
-    type: conn.Sequelize.DECIMAL(10,2),
+    type: conn.Sequelize.INTEGER,
     allowNull: false
   },
   inventory: {
@@ -27,11 +27,11 @@ const Product = conn.define('product', {
     allowNull: false
   },
   photo_url: {
-    type: type: conn.Sequelize.ARRAY(Sequelize.STRING)
+    type: conn.Sequelize.ARRAY(Sequelize.STRING)
   }
-})
+});
 
-module.exports = Product;
+module.exports = Glasses;
 
 
 // Products

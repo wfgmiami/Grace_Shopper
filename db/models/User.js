@@ -1,7 +1,7 @@
 'use strict';
 
-import Sequelize from 'sequelize';
-import conn from '../conn';
+const Sequelize = require('sequelize');
+const conn = require('../conn');
 
 const User = conn.define('users', {
   name: Sequelize.STRING,
@@ -13,6 +13,7 @@ const User = conn.define('users', {
 			notEmpty: true
 		}
   },
+  password: Sequelize.STRING,
   isAdmin: {
     type: Sequelize.BOOLEAN,
     defaultValue: false

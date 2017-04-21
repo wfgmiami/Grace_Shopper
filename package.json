@@ -13,6 +13,7 @@
     "bootstrap": "^3.3.7",
     "express": "^4.15.2",
     "pg": "^6.1.5",
+    "pg-native": "^1.10.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.3",
@@ -27,7 +28,8 @@
     "postinstall": "npm run webpack",
     "test": "echo \"Error: no test specified\" && exit 1",
     "webpack": "./node_modules/webpack/bin/webpack.js",
-    "start:dev": "npm run webpack -- -w & DATABASE_URL=postgres://localhost/react_template_db nodemon --ignore dist/ --ignore src/ ./server/app.js"
+    "start:dev": "npm run webpack -- -w & DATABASE_URL=postgres://localhost/grace_shopper nodemon --ignore dist/ --ignore src/ ./server/app.js",
+    "seed": "DATABASE_URL=postgres://localhost/grace_shopper node db/seed"
   },
   "keywords": [],
   "author": "",

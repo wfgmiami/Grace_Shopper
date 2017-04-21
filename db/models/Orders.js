@@ -7,17 +7,10 @@ const sequelize = require( '../conn' );
 const { Sequelize } = sequelize;
 
 const Order = sequelize.define( 'orders', {
-  price: { // at the time of purchase
-    type: Sequelize.DECIMAL,
-    allowNull: false
-  },
-  date: {
-    type: Sequelize.DATE,
-    allowNull: false
-  },
-  quantity: {
-    type: Sequelize.INTEGER,
-    allowNull: false
+  status: {
+    // type: Sequelize.ENUM('Pending', 'Shipping', 'Delivered', 'Cancelled'),
+    type: Sequelize.STRING,
+    defaultValue: 'Pending'
   },
   // productId through association
   // userId/guestId through association

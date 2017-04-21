@@ -4,27 +4,36 @@
 // to get access to the User model.
 
 const User = require( './User' );
-const Product = require( './Product' );
+const Glasses = require( './Glasses' );
 const Review = require( './Review' );
 const Order = require( './Orders' );
 const LineItem = require( './LineItem' );
 
+// import User from './User'
+// import Glasses from './Glasses'
+// import Review from './Review'
+// import Order from './Order'
+// import LineItem from './LineItem'
+
+console.log(User, Glasses, Review, Order, LineItem);
 
 User.hasMany( Order );
 Order.belongsTo( User );
 
-Product.belongsToMany( Order );
-Order.belongsToMany( Product );
 
-Order.belongsToMany( Product, { through: LineItem } );
-LineItem.belongsToMany( Order, { through: LineItem } );
+// Order.hasMany(Glasses);
 
-Review.belongsTo( Product, { through: 'UserReview' } );
+
+Order.belongsToMany( Glasses, { through: LineItem } );
+Glasses.belongsToMany( Order, { through: LineItem } );
+
+
+Review.belongsTo( Glasses, { through: 'UserReview' } );
 Review.belongsTo( User, { through: 'UserReview' } );
 
 
 module.exports = {
-  Product,
+  Glasses,
   Review,
   Order,
   LineItem,
