@@ -3,28 +3,31 @@
 // so any other part of the application could call sequelize.model('User')
 // to get access to the User model.
 
-const User = require('./User')
-const Product = require('./Product')
-const Review = require('./Review');
-const Order = require('./Orders');
+const User = require( './User' );
+const Product = require( './Product' );
+const Review = require( './Review' );
+const Order = require( './Orders' );
+const LineItem = require( './LineItem' );
 
 
-User.hasMany(Order);
-Order.belongsTo(User);
+User.hasMany( Order );
+Order.belongsTo( User );
 
-Product.belongsToMany(Order);
-Order.belongsToMany(Product);
+Product.belongsToMany( Order );
+Order.belongsToMany( Product );
 
-Product.hasMany(Review);
-User.hasMany(Review);
-Review.belongsTo(Product);
-Review.belongsTo(User);
+Order.belongsToMany( Product, { through: LineItem } );
+LineItem.belongsToMany( Order, { through: LineItem } );
+
+Review.belongsTo( Product, { through: 'UserReview' } );
+Review.belongsTo( User, { through: 'UserReview' } );
 
 
 module.exports = {
-	Product, 
-	Review, 
-	Orders, 
-	User
+  Product,
+  Review,
+  Order,
+  LineItem,
+  User
 };
 
