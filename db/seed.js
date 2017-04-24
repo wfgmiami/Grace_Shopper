@@ -21,14 +21,14 @@ const categories = require( './jsondata/glasses-men.json' )
 
 
 const users = [
-  { name: 'Arum', email: 'arum@google.com', password: '1234', isAdmin: false },
+  { name: 'Arum', email: 'arum@google.com', password: '123', isAdmin: false },
   { name: 'Richard', email: 'richard@google.com', password: '1234', isAdmin: true },
-  { name: 'Evan', email: 'evan@google.com', password: '1234', isAdmin: true },
-  { name: 'Alex', email: 'alex@google.com', password: '1234', isAdmin: true }
+  { name: 'Evan', email: 'evan@google.com', password: '12345', isAdmin: true },
+  { name: 'Alex', email: 'alex@google.com', password: '123456', isAdmin: true }
 ];
 
 const reviews = [
-  { rating: 1, review_text: 'aweful', product_id: 2 },
+  { rating: 1, review_text: 'awful', product_id: 2 },
   { rating: 1, review_text: 'if you have too much extra money ', product_id: 1 },
   { rating: 2, review_text: 'don\'t buy', product_id: 2 },
   { rating: 2, review_text: 'waste of money', product_id: 3 },
@@ -40,7 +40,7 @@ const reviews = [
   { rating: 5, review_text: 'my fav', product_id: 5 }
 ];
 
-console.log(db.models);
+console.log( db.models );
 
 
 db.sync( { force: true } )
@@ -64,3 +64,4 @@ function formatGlassesJSON( arr, category ) {
     .filter( prod => prod )
     .filter( prod => prod.name );
 }
+

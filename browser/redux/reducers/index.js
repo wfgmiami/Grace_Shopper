@@ -3,8 +3,12 @@
 import { combineReducers } from 'redux';
 
 import rootReducer from './root';
+import products from './products';
+import authReducer from './auth';
 
 export default combineReducers( {
-  app: rootReducer
+  app: rootReducer,
+  auth: authReducer,
+  products
 } );
 

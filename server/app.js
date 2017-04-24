@@ -23,3 +23,16 @@ app.listen( port, () => console.log( `Listening on port ${port}` ) );
 
 //db.seed();
 
+// Handle file not found
+app.use((req, res, next) => {
+  res.status(404);
+  console.log(`${chalk.magenta(req.method)} ${chalk.blue(req.url)} ${chalk.red(res.status)}`);
+  next();
+});
+
+// Handle internal server error
+app.use((err, req, res, next) => {
+  res.status(500);
+  console.log(`${chalk.magenta(req.method)} ${chalk.blue(req.url)} ${chalk.red(res.status)}`);
+  next(err);
+});

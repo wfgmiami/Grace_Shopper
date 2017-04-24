@@ -1,9 +1,18 @@
+import thunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
-import thunkMiddleware from 'redux-thunk';
 
+import { loadProducts } from '../reducers/products';
+import { me } from '../reducers/auth';
 import reducer from '../reducers';
 
-let store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(), applyMiddleware(thunkMiddleware));
-
+let store = createStore(
+  reducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  applyMiddleware(thunk)
+);
 
 export default store;
+
+store.dispatch(loadProducts());
+store.dispatch(me());
+

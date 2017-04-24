@@ -4,6 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import Nav from './Nav';
+import LoginForm from './LoginForm';
 
 class Main extends React.Component {
   constructor(props) {
@@ -15,7 +16,15 @@ class Main extends React.Component {
       <div>
         <Nav />
         <div style={{ marginTop: '65px' }}>
-          { this.props.children }
+          <div className="row">
+            <div className="col-sm-3" />
+            <div className="col-sm-6">
+              { this.props.children }
+            </div>
+            <div className="col-sm-3">
+              <LoginForm />
+            </div>
+          </div>
         </div>
       </div>
     );

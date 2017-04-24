@@ -13,13 +13,17 @@ import Home from './react/Home';
 import { Provider } from 'react-redux';
 
 import Main from './react/Main';
+import CategoryList from './react/CategoryList';
 
 const app = (
-  <Provider store={ store }>
-    <Router history={ browserHistory }>
-      <Route path="/" component={ Main }>
+  <Provider store = { store } >
+    <Router history = { browserHistory }>
+      <Route path='/' component={ Main }>
         <IndexRoute component={ Home } />
-      </Route>
+        <Route path='/eyeglasses' component={ CategoryList } />
+        <Route path='/sunglasses' component={ CategoryList } />
+        {/*<Route path='login' component={ LoginPage } />*/}
+        </Route>
     </Router>
   </Provider>
 );

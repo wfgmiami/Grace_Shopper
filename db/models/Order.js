@@ -15,6 +15,26 @@ const Order = sequelize.define( 'orders', {
   // productId through association
   // userId/guestId through association
   // addressId through association
+}, {
+  scopes: {
+    pending: {
+      status: 'Pending'
+    },
+    shipping: {
+      status: 'Shipping'
+    },
+    delivered: {
+      status: 'Delivered'
+    },
+    cancelled: {
+      status: 'Cancelled'
+    }
+  },
+  hooks: {
+    beforeCreate(order, options) {
+
+    }
+  }
 } );
 
 module.exports = Order;
