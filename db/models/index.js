@@ -15,6 +15,11 @@ Order.belongsTo( User );
 Order.belongsToMany( Glasses, { through: LineItem } );
 Glasses.belongsToMany( Order, { through: LineItem } );
 
+['color', 'shape', 'ideal_face_shape', 'material'].forEach(cat => {
+  Glasses.belongsToMany( Category, { through: 'glassesCategory', as: cat } );
+  Category.belongsToMany( Glasses, { through: 'glassesCategory', as: cat } );
+});
+
 Glasses.belongsToMany( Category, { through: 'glassesCategory' } );
 Category.belongsToMany( Glasses, { through: 'glassesCategory' } );
 

@@ -4,11 +4,13 @@ import { combineReducers } from 'redux';
 
 import rootReducer from './root';
 import products from './products';
+import categories from './categories';
 import authReducer from './auth';
 
 export default combineReducers( {
   app: rootReducer,
   auth: authReducer,
-  products
+  products,
+  categories
 } );
 

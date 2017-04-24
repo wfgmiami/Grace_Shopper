@@ -29,11 +29,6 @@ const Order = sequelize.define( 'orders', {
     cancelled: {
       status: 'Cancelled'
     }
-  },
-  hooks: {
-    beforeCreate(order, options) {
-
-    }
   }
 } );
 

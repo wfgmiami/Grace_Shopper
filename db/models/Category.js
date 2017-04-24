@@ -6,10 +6,12 @@ const { Sequelize } = conn;
 const Category = conn.define('categories', {
   name: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
+    unique: 'compositeIndex'
   },
   value: {
-    type: Sequelize.STRING
+    type: Sequelize.STRING,
+    unique: 'compositeIndex'
   }
 });
 

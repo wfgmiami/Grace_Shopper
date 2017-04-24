@@ -18,11 +18,11 @@ import CategoryList from './react/CategoryList';
 const app = (
   <Provider store = { store } >
     <Router history = { browserHistory }>
-      <Route path='/' component={ Main }>
+      <Route path="/" component={ Main }>
         <IndexRoute component={ Home } />
-        <Route path='/eyeglasses' component={ CategoryList } />
-        <Route path='/sunglasses' component={ CategoryList } />
-        {/*<Route path='login' component={ LoginPage } />*/}
+        <Route path="/eyeglasses" component={ CategoryList } />
+        <Route path="/sunglasses" component={ CategoryList } />
+        {/*<Route path="login" component={ LoginPage } />*/}
         </Route>
     </Router>
   </Provider>

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import Nav from './Nav';
 import LoginForm from './LoginForm';
+import FilterBar from './FilterBar';
 
 class Main extends React.Component {
   constructor(props) {
@@ -17,8 +18,10 @@ class Main extends React.Component {
         <Nav />
         <div style={{ marginTop: '65px' }}>
           <div className="row">
-            <div className="col-sm-3" />
-            <div className="col-sm-6">
+            <div className="col-sm-2">
+              <FilterBar />
+            </div>
+            <div className="col-sm-7">
               { this.props.children }
             </div>
             <div className="col-sm-3">

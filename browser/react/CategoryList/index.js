@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
 const ProductListItem = ({ product }) => (
-  <div className="col-xs-6">
+  <div className="col-xs-4">
     <div style={{ width: '300px', margin: 'auto' }}>
       <img style={{ marginBottom: '0', marginTop: '10%' }} className="thumbnail" src={ product.images[1] } />
       <div> { product.name }

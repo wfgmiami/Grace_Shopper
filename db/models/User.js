@@ -4,6 +4,7 @@ const md5 = require( 'crypto-md5' );
 
 const Sequelize = require( 'sequelize' );
 const conn = require( '../conn' );
+const Order = require('./Order');
 
 const User = conn.define( 'users', {
   name: Sequelize.STRING,
@@ -37,6 +38,16 @@ const User = conn.define( 'users', {
   classMethods: {
     findByNamePassord( name, password ) {
       return this.findOne( { where: { name, password: md5( password, 'hex' ) } } );
+    }
+  },
+  instanceMethods: {
+    getOrder() {
+      return Order.findOrCreate({
+        where: {
+          status: 'Pending',
+          userId: this.id
+        }
+      });
     }
   }
 } );

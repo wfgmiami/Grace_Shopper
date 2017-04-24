@@ -19,6 +19,18 @@ const categories = require( './jsondata/glasses-men.json' )
     return 0;
   } );
 
+let glassesCategories = [];
+glasses.map((gls, idx) => {
+  let attrs = gls.attr.filter( attr => { // only worry about some attributes
+    return attr.name === 'color' || attr.name === 'shape' || attr.name === 'ideal_face_shape' || attr.name === 'material';
+  } );
+  attrs.map(atr => {
+    let catId = categories.findIndex( tst => tst.name === atr.name && tst.value === atr.value );
+    glassesCategories.push({ glassId: idx + 1, categoryId: catId + 1 });
+  });
+});
+
+console.log(glassesCategories);
 
 const users = [
   { name: 'Arum', email: 'arum@google.com', password: '123', isAdmin: false },
@@ -40,14 +52,14 @@ const reviews = [
   { rating: 5, review_text: 'my fav', product_id: 5 }
 ];
 
-console.log( db.models );
-
+console.log(db.models);
 
 db.sync( { force: true } )
   .then( () => db.models.users.bulkCreate( users ) )
   .then( () => db.models.glasses.bulkCreate( glasses ) )
   .then( () => db.models.reviews.bulkCreate( reviews ) )
   .then( () => db.models.categories.bulkCreate( categories ) )
+  .then( () => db.models.glassesCategory.bulkCreate(glassesCategories))
   .then( () => console.log( chalk.green.bold.inverse( ` Seeded OK ` ) ) )
   .catch( error => console.error( error.stack ) );
 
