@@ -1,34 +1,62 @@
 'use strict';
 
-const Sequelize = require( 'sequelize' );
 const conn = require( '../conn' );
+const { Sequelize } = conn;
 const Category = require( './Category' );
 
 const Glasses = conn.define( 'glasses', {
 
   name: {
     type: Sequelize.STRING,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
   },
   category: {
     type: Sequelize.STRING
   },
   description: {
-    type: conn.Sequelize.STRING,
+    type: Sequelize.STRING,
     allowNull: false
   },
   price: {
-    type: conn.Sequelize.DECIMAL,
-    allowNull: false
+    type: Sequelize.DECIMAL,
+    allowNull: false,
+    validate: {
+      min: 0
+    }
   },
   inventory: {
-    type: conn.Sequelize.INTEGER,
-    allowNull: false
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    validate: {
+      min: 0
+    }
   },
   images: {
-    type: conn.Sequelize.ARRAY( Sequelize.STRING )
+    type: Sequelize.ARRAY( Sequelize.STRING ),
+    validate: {
+      containsURLs( imgArr ) {
+        return imgArr.filter( img => img.slice( 0, 4 ) !== 'DATA' );
+      }
+    }
   }
 }, {
+  scopes: {
+    inStock: {
+      inventory: { $gt: 0 }
+    },
+    outOfStock: {
+      inventory: 0
+    },
+    men: {
+      category: 'men'
+    },
+    women: {
+      category: 'women'
+    }
+  },
   classMethods: {
     getWithCategories() {
       return this.findAll( {
@@ -38,13 +66,6 @@ const Glasses = conn.define( 'glasses', {
           through: { attributes: [] }
         } ]
       } );
-    },
-    filterCategories(filterArr) {
-      let incl = filterArr.map(attr => ({
-        model: Category,
-        attributes: [ 'name', 'value' ],
-        through: { attributes: [] }
-      }));
     }
   }
 } );

@@ -70,20 +70,20 @@ Due Date: May 9, 2017
 
 #### Users
 
-* [ ] Users must have a valid email address
-* [ ] Users email must be unique
+* [x] Users must have a valid email address
+* [x] Users email must be unique
 
 #### Order
 
 * [ ] Orders must belong to a user OR guest session (authenticated vs unauthenticated)
-* [ ] Orders must contain line items that capture the price, current product ID and quantity
+* [x] Orders must contain line items that capture the price, current product ID and quantity
 * [ ] If a user completes an order, that order should keep the price of the item at the time when they checked out even if the price of the product later changes
 
 #### Reviews
 
-* [ ] All reviews must belong to a product
-* [ ] All reviews must belong to a user
-* [ ] All reviews must be at least X characters
+* [x] All reviews must belong to a product
+* [x] All reviews must belong to a user
+* [x] All reviews must be at least X characters
 
 ----
 

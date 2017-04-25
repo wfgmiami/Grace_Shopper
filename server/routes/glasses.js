@@ -1,19 +1,20 @@
 const router = require( 'express' ).Router();
 const { models } = require( '../../db' );
 
-router.get( '/', ( req, res, next ) => {
-  models.glasses.findAll( { order: 'name' } )
+router.get( '/:start', ( req, res, next ) => {
+  const start = ( req.params.start - 1 ) * 15;
+  models.glasses.findAll( { start, limit: 15 } )
     .then( glasses => res.json( glasses ) );
 } );
 
 router.get( '/test', ( req, res, next ) => {
-    // models.glasses.getWithCategories()
-    // .then( glasses => {
-    //   console.log( glasses.length );
-    //   res.json( glasses );
-    // } );
+  // models.glasses.getWithCategories()
+  // .then( glasses => {
+  //   console.log( glasses.length );
+  //   res.json( glasses );
+  // } );
 
-    models.glasses.findAll({
+  models.glasses.findAll( {
       include: [ {
         model: models.categories,
         where: {
@@ -36,8 +37,8 @@ router.get( '/test', ( req, res, next ) => {
         attributes: [ 'value' ],
         as: 'ideal_face_shape'
       } ]
-    })
-    .then(glasses => res.json(glasses));
+    } )
+    .then( glasses => res.json( glasses ) );
 } );
 
 module.exports = router;

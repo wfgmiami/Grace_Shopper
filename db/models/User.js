@@ -33,11 +33,17 @@ const User = conn.define( 'users', {
         user.password = md5( password, 'hex' );
       } );
       return users;
+    },
+    afterCreate( user ) {
+      return user.getOrder();
     }
   },
   classMethods: {
-    findByNamePassord( name, password ) {
-      return this.findOne( { where: { name, password: md5( password, 'hex' ) } } );
+    findByPassword( credentials ) {
+      if (!credentials) throw new Error('No credentials provided');
+      if (!credentials.password) throw new Error('Password must be included in credentials');
+      credentials.password = md5( credentials.password, 'hex' );
+      return this.findOne( { where: credentials } );
     }
   },
   instanceMethods: {

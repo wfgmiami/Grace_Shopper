@@ -26,7 +26,7 @@ Category.belongsToMany( Glasses, { through: 'glassesCategory' } );
 Glasses.hasMany( Review );
 User.hasMany( Review );
 Review.belongsTo( Glasses );
-Review.belongsTo( User, { through: 'userReview' } );
+Review.belongsTo( User );
 
 module.exports = {
   Category,

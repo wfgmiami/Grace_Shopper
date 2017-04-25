@@ -1,17 +1,15 @@
 const router = require( 'express' ).Router();
 const models = require( '../../db/models' );
-const jwt = require('jwt-simple');
+const jwt = require( 'jwt-simple' );
 const secret = process.env.SECRET || '1701-FLX-NY';
-
-console.log(models);
 
 module.exports = router;
 
 router.post( '/', ( req, res, next ) => {
-  models.User.findByNamePassord(
-      req.body.name,
-      req.body.password
-    )
+  models.User.findByPassword( {
+      name: req.body.name,
+      password: req.body.password
+    } )
     .then( user => {
       if ( user ) {
         const token = jwt.encode( { id: user.id }, secret );
@@ -33,7 +31,7 @@ router.get( '/:token', ( req, res, next ) => {
         res.send( user );
       } );
   } catch ( err ) {
-    console.log(err.stack);
+    console.log( err.stack );
     res.sendStatus( 500 );
   }
 } );

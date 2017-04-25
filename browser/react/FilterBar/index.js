@@ -12,12 +12,9 @@ class FilterBar extends React.Component {
       <sidebar>
         <ul className="list-group">
           <li className="list-group-item">
-            Filter Bar
-          </li>
-          <li className="list-group-item">
             <p>Filter by Color:</p>
-            { this.props.categories.color.map(cat => (
-              <p>
+            { this.props.categories.color.map((cat, idx) => (
+              <p key={idx}>
                 <label>
                   <input type="checkbox" /> { cat }
                 </label>
@@ -26,8 +23,8 @@ class FilterBar extends React.Component {
           </li>
           <li className="list-group-item">
             <p>Filter by Shape:</p>
-            { this.props.categories.shape.map(cat => (
-              <p>
+            { this.props.categories.shape.map((cat, idx) => (
+              <p key={idx}>
                 <label>
                   <input type="checkbox" /> { cat }
                 </label>
@@ -36,8 +33,8 @@ class FilterBar extends React.Component {
           </li>
           <li className="list-group-item">
             <p>Filter by Material:</p>
-            { this.props.categories.material.map(cat => (
-              <p>
+            { this.props.categories.material.map((cat, idx) => (
+              <p key={idx}>
                 <label>
                   <input type="checkbox" /> { cat }
                 </label>
@@ -46,8 +43,8 @@ class FilterBar extends React.Component {
           </li>
           <li className="list-group-item">
             <p>Filter by Ideal Face Shape:</p>
-            { this.props.categories.ideal_face_shape.map(cat => (
-              <p>
+            { this.props.categories.ideal_face_shape.map((cat, idx) => (
+              <p key={idx}>
                 <label>
                   <input type="checkbox" /> { cat }
                 </label>

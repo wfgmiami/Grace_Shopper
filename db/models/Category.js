@@ -7,11 +7,18 @@ const Category = conn.define('categories', {
   name: {
     type: Sequelize.STRING,
     allowNull: false,
-    unique: 'compositeIndex'
+    unique: 'compositeIndex',
+    validate: {
+      notEmpty: true
+    }
   },
   value: {
     type: Sequelize.STRING,
-    unique: 'compositeIndex'
+    allowNull: false,
+    unique: 'compositeIndex',
+    validate: {
+      notEmpty: true
+    }
   }
 });
 

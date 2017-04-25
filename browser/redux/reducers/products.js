@@ -20,7 +20,7 @@ const loadProductSuccess = ( products ) => ( {
 
 const loadProducts = () => {
   return ( dispatch ) => {
-    axios.get( '/api/glasses' )
+    axios.get( '/api/glasses/1' )
       .then( response => dispatch( loadProductSuccess( response.data ) ) );
   };
 };
