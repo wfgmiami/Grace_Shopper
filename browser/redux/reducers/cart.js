@@ -13,15 +13,10 @@ const cartReducer = ( state = {}, action ) => {
   return state;
 };
 
-const loadProductSuccess = ( products ) => ( {
-  type: LOAD_PRODUCTS_SUCCESS,
-  products: products
-} );
-
 const addToCart = item => dispatch => {
   let currentCart = JSON.parse( localStorage.getItem( 'cart' ) );
   if (!currentCart) currentCart = {};
-  currentCart[item.name] = currentCart[item.name] ? 1 : currentCart[item.name] + item.quantity;
+  currentCart[item.name] = currentCart[item.name] ? currentCart[item.name] * 1 + item.quantity * 1 : 1;
   localStorage.setItem( 'cart', JSON.stringify( currentCart ) );
   console.log(currentCart);
   dispatch( { type: 'UPDATE_CART', cart: currentCart } );

@@ -36,7 +36,7 @@ const loadCategories = () => {
             memo[cat.name].push(cat.value);
           }
           return memo;
-        }, {});
+        }, Object.assign({}, initialState));
         dispatch( loadCategorieSuccess( data ) );
       } );
   };
