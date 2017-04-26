@@ -45,16 +45,28 @@ const Glasses = conn.define( 'glasses', {
 }, {
   scopes: {
     inStock: {
+      attributes: { exclude: [ 'createdAt', 'updatedAt' ] },
       inventory: { $gt: 0 }
     },
     outOfStock: {
+      attributes: { exclude: [ 'createdAt', 'updatedAt' ] },
       inventory: 0
     },
     men: {
+      attributes: { exclude: [ 'createdAt', 'updatedAt' ] },
       category: 'men'
     },
     women: {
+      attributes: { exclude: [ 'createdAt', 'updatedAt' ] },
       category: 'women'
+    },
+    categories: {
+      attributes: { exclude: [ 'createdAt', 'updatedAt' ] },
+      include: [ {
+        model: Category,
+        attributes: [ 'name', 'value' ],
+        through: { attributes: [] }
+      } ]
     }
   },
   classMethods: {

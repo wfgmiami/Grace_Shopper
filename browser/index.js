@@ -19,7 +19,7 @@ const app = (
   <Provider store = { store } >
     <Router history = { browserHistory }>
       <Route path="/" component={ Main }>
-        <IndexRoute component={ Home } />
+        <IndexRoute component={ CategoryList } />
         <Route path="/eyeglasses" component={ CategoryList } />
         <Route path="/sunglasses" component={ CategoryList } />
         {/*<Route path="login" component={ LoginPage } />*/}

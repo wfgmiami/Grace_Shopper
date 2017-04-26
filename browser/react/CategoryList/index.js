@@ -12,7 +12,7 @@ const ProductListItem = ({ product, addToCart, removeFromCart }) => (
           <span style={{ paddingRight: '15px' }}>
             ${ product.price }
           </span>
-          <button className="glyphicon glyphicon-shopping-cart pull-right" onClick={ () => addToCart({name: product.name, quantity: 1}) } />
+          <button className="glyphicon glyphicon-shopping-cart pull-right" onClick={ () => addToCart( Object.assign( product, { lineitems: { quantity: 1 } } ) ) } />
         </span>
       </div>
     </div>
@@ -20,7 +20,6 @@ const ProductListItem = ({ product, addToCart, removeFromCart }) => (
 );
 
 const CategoryList = ({ products, addToCart, removeFromCart }) => {
-  console.log(products);
   return (
   <div className="row">
     { products.map( product => (

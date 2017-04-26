@@ -10,7 +10,7 @@ Due Date: May 9, 2017
 
 #### Unauthenticated Users:
 
-* [x] View products (catalog)
+* [ ] View products (catalog)
  * [ ] Refine listing by category
  * [ ] Search product listing
  * [ ] View a product's details

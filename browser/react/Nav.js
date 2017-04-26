@@ -8,8 +8,9 @@ class Nav extends React.Component {
   }
 
   render() {
-    const cartItems = Object.keys(this.props.cart).reduce((memo, item) => {
-      return memo + this.props.cart[item] * 1;
+    let cart = typeof this.props.cart === 'string' ? JSON.parse(this.props.cart) : this.props.cart;
+    const cartItems = cart.reduce((memo, item) => {
+      return memo + item.lineitems.quantity * 1;
     }, 0);
     return (
       <div>
@@ -25,16 +26,14 @@ class Nav extends React.Component {
             </div>
             <div className="collapse navbar-collapse" id="myNavbar">
               <ul className="nav navbar-nav">
-                <li className="dropdown
-                active">
+                <li className="dropdown active">
                   <a className="dropdown-toggle" data-toggle="dropdown" href="#">
                     <span className="glyphicon glyphicon-search" />
                     { ' ' }
                     Search
                   </a>
                 </li>
-                <li className="dropdown
-                active">
+                <li>
                   <a className="dropdown-toggle" data-toggle="dropdown" href="#">
                     Cart { cartItems }
                   </a>
