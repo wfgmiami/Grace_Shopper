@@ -10,13 +10,13 @@ Due Date: May 9, 2017
 
 #### Unauthenticated Users:
 
-.* [x] View products (catalog)
-..* [ ] Refine listing by category
-..* [ ] Search product listing
-..* [ ] View a product's details
-..* [ ] Product information
-..* [x] Photo(s)
-..* [ ] View reviews left by authenticated users
+* [x] View products (catalog)
+ * [ ] Refine listing by category
+ * [ ] Search product listing
+ * [ ] View a product's details
+ * [ ] Product information
+ * [x] Photo(s)
+ * [ ] View reviews left by authenticated users
 * [ ] Manage their cart
  * [ ] Add an item to the cart from product listing or product detail pages
  * [ ] Remove an item from the cart
