@@ -24,15 +24,6 @@ const LineItem = sequelize.define( 'lineitems', {
   // productId through association
   // userId through association
   // addressId through association
-}, {
-  hooks: {
-    beforeValidate() {
-      console.log('beforeValidate');
-    },
-    // afterValidate(instance) {
-    //   // if (instance) instance.quantity = instance.quantity;
-    // }
-  }
 } );
 
 module.exports = LineItem;
