@@ -22,7 +22,7 @@ const LineItem = sequelize.define( 'lineitems', {
     }
   },
   // productId through association
-  // userId/guestId through association
+  // userId through association
   // addressId through association
 } );
 

@@ -1,11 +1,17 @@
 import { LOAD_PRODUCTS_SUCCESS } from '../constants';
 import axios from 'axios';
 
-const productsReducer = ( state = [], action ) => {
+const initialState = {
+  products: [],
+  offset: 1,
+  numberProducts: 950
+};
+
+const productsReducer = ( state = initialState, action ) => {
 
   switch ( action.type ) {
   case LOAD_PRODUCTS_SUCCESS:
-    state = action.products;
+    state = Object.assign({}, state, action.payload);
     break;
   default:
     break;
@@ -13,15 +19,15 @@ const productsReducer = ( state = [], action ) => {
   return state;
 };
 
-const loadProductSuccess = ( products ) => ( {
+const loadProductSuccess = ( products, offset, count ) => ( {
   type: LOAD_PRODUCTS_SUCCESS,
-  products: products
+  payload: { products, offset, numberProducts: count }
 } );
 
-const loadProducts = () => {
+const loadProducts = (offset) => {
   return ( dispatch ) => {
-    axios.get( '/api/glasses/1' )
-      .then( response => dispatch( loadProductSuccess( response.data ) ) );
+    axios.get( `/api/glasses/${offset}`)
+      .then( response => dispatch( loadProductSuccess( response.data.glasses, offset, response.data.count ) ) );
   };
 };
 

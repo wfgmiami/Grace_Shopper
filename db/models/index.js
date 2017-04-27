@@ -2,12 +2,13 @@
 // Require our models. Running each module registers the model into sequelize
 // so any other part of the application could call sequelize.model('User')
 // to get access to the User model.
-const User = require( './User' );
-const Glasses = require( './Glasses' );
-const Review = require( './Review' );
-const Order = require( './Order' );
-const LineItem = require( './LineItem' );
 const Category = require( './Category' );
+const Glasses = require( './Glasses' );
+const LineItem = require( './LineItem' );
+const Order = require( './Order' );
+const Payment = require( './Payment' );
+const Review = require( './Review' );
+const User = require( './User' );
 
 User.hasMany( Order );
 Order.belongsTo( User );
@@ -33,6 +34,7 @@ module.exports = {
   Glasses,
   LineItem,
   Order,
+  Payment,
   Review,
   User,
 };

@@ -30,6 +30,7 @@ const Review = conn.define( 'reviews', {
       review.rating = Math.round( review.rating );
       if ( review.rating > 5 ) review.rating = 5;
       if ( review.rating < 1 ) review.rating = 1;
+      review.review_text = review.review_text.trim();
     }
   }
 } );
