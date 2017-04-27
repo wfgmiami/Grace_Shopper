@@ -7,13 +7,13 @@ class FilterBar extends React.Component {
   }
 
   render() {
-    console.log(this.props);
+    const { categories } = this.props;
     return (
       <sidebar>
         <ul className="list-group">
           <li className="list-group-item">
             <p>Filter by Color:</p>
-            { this.props.categories.color.map((cat, idx) => (
+            { categories.color.map((cat, idx) => (
               <p key={idx}>
                 <label>
                   <input type="checkbox" /> { cat }
@@ -23,7 +23,7 @@ class FilterBar extends React.Component {
           </li>
           <li className="list-group-item">
             <p>Filter by Shape:</p>
-            { this.props.categories.shape.map((cat, idx) => (
+            { categories.shape.map((cat, idx) => (
               <p key={idx}>
                 <label>
                   <input type="checkbox" /> { cat }
@@ -33,7 +33,7 @@ class FilterBar extends React.Component {
           </li>
           <li className="list-group-item">
             <p>Filter by Material:</p>
-            { this.props.categories.material.map((cat, idx) => (
+            { categories.material.map((cat, idx) => (
               <p key={idx}>
                 <label>
                   <input type="checkbox" /> { cat }
@@ -43,7 +43,7 @@ class FilterBar extends React.Component {
           </li>
           <li className="list-group-item">
             <p>Filter by Ideal Face Shape:</p>
-            { this.props.categories.ideal_face_shape.map((cat, idx) => (
+            { categories.ideal_face_shape.map((cat, idx) => (
               <p key={idx}>
                 <label>
                   <input type="checkbox" /> { cat }

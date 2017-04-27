@@ -70,13 +70,22 @@ const Glasses = conn.define( 'glasses', {
     }
   },
   classMethods: {
-    getWithCategories() {
+    getWithCategories( offset, categories ) {
       return this.findAll( {
-        include: [ {
+        // offset,
+        // limit: 15,
+        include: Object.keys( categories ).map( attr => ( {
           model: Category,
           attributes: [ 'name', 'value' ],
-          through: { attributes: [] }
-        } ]
+          where: {
+            name: attr,
+            value: {
+              $or: Array.isArray( categories[ attr ] ) ? categories[ attr ] : [ categories[ attr ] ]
+            }
+          },
+          through: { attributes: [] },
+          as: attr
+        } ) )
       } );
     }
   }

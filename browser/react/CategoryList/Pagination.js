@@ -14,12 +14,12 @@ const mapDispatchToProps = dispatch => ({
 
 export const Pagination = ({ loadProducts, products }) => {
   let pages = [];
-  const { numberProducts, offset } = products;
+  const { count, offset } = products;
   products = products.products;
 
   let start = 1;
   let end = 10;
-  const maxPossible = Math.ceil(numberProducts / (products.length || 15));
+  const maxPossible = Math.ceil(count / (products.length || 15));
 
   if (offset >= 10) {
     start = offset - 5;

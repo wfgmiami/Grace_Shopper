@@ -11,26 +11,27 @@ import reducer from '../reducers';
 let store = createStore(
   reducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  applyMiddleware(thunk)
+  applyMiddleware( thunk )
 );
 
 export default store;
 
-store.dispatch(loadProducts(1));
-store.dispatch(loadCategories());
-store.dispatch(me());
+store.dispatch( loadProducts( 1 ) );
+store.dispatch( loadCategories() );
+store.dispatch( me() );
 
-let token = localStorage.getItem('token');
+let token = localStorage.getItem( 'token' );
 
-if (token) {
-  store.dispatch(loadCart(token));
+if ( token ) {
+  store.dispatch( loadCart( token ) );
 } else {
-  let currentCart = localStorage.getItem('cart');
-  if (!currentCart) {
-    localStorage.setItem('cart', JSON.stringify({}));
+  let currentCart = localStorage.getItem( 'cart' );
+  if ( !currentCart ) {
+    localStorage.setItem( 'cart', JSON.stringify( [] ) );
   }
-  currentCart = localStorage.getItem('cart');
-  console.log(currentCart);
+  currentCart = localStorage.getItem( 'cart' );
+  console.log( currentCart );
 
-  store.dispatch({ type: 'UPDATE_CART', cart: currentCart });
+  store.dispatch( { type: 'UPDATE_CART', cart: currentCart } );
 }
+

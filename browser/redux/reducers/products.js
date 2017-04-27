@@ -4,14 +4,14 @@ import axios from 'axios';
 const initialState = {
   products: [],
   offset: 1,
-  numberProducts: 950
+  count: 950
 };
 
 const productsReducer = ( state = initialState, action ) => {
 
   switch ( action.type ) {
   case LOAD_PRODUCTS_SUCCESS:
-    state = Object.assign({}, state, action.payload);
+    state = Object.assign( {}, state, action.payload );
     break;
   default:
     break;
@@ -21,12 +21,12 @@ const productsReducer = ( state = initialState, action ) => {
 
 const loadProductSuccess = ( products, offset, count ) => ( {
   type: LOAD_PRODUCTS_SUCCESS,
-  payload: { products, offset, numberProducts: count }
+  payload: { products, offset, count }
 } );
 
-const loadProducts = (offset) => {
+const loadProducts = ( offset, filters ) => {
   return ( dispatch ) => {
-    axios.get( `/api/glasses/${offset}`)
+    axios.get( `/api/glasses/${offset}`, { params: { shape: 'Square', ideal_face_shape: 'Round' } } )
       .then( response => dispatch( loadProductSuccess( response.data.glasses, offset, response.data.count ) ) );
   };
 };
