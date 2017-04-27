@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import Nav from './Nav';
 import LoginForm from './LoginForm';
 import FilterBar from './FilterBar';
+import Cart from './Cart';
 
 class Main extends React.Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class Main extends React.Component {
               { this.props.children }
             </div>
             <div className="col-sm-3">
-              <LoginForm />
+              <Cart items = {[{name: "this"}, {name: "other this"}]} />
             </div>
           </div>
         </div>
