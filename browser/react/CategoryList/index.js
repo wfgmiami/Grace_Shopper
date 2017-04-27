@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { addToCart, removeFromCart } from '../../redux/reducers/cart';
+import Pagination from './Pagination';
 
 const ProductListItem = ({ product, addToCart, removeFromCart }) => (
   <div className="col-xs-4">
@@ -20,13 +21,18 @@ const ProductListItem = ({ product, addToCart, removeFromCart }) => (
 );
 
 const CategoryList = ({ products, addToCart, removeFromCart }) => {
+  console.log(products);
   return (
-  <div className="row">
-    { products.map( product => (
-    <ProductListItem key={ product.id } product={ product } addToCart={ addToCart } removeFromCart={ removeFromCart } /> )
-    ) }
-  </div>
-)};
+    <div>
+      <div className="row">
+        { products.products.map( product => (
+        <ProductListItem key={ product.id } product={ product } addToCart={ addToCart } removeFromCart={ removeFromCart } /> )
+        ) }
+      </div>
+      <Pagination />
+    </div>
+  );
+};
 
 const mapStateToProps = ({ products, cart }) => (
   { products, cart }

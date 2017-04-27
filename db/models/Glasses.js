@@ -38,7 +38,7 @@ const Glasses = conn.define( 'glasses', {
     type: Sequelize.ARRAY( Sequelize.STRING ),
     validate: {
       containsURLs( imgArr ) {
-        return imgArr.filter( img => img.slice( 0, 4 ) !== 'DATA' );
+        return imgArr.filter( img => img.slice( 0, 4 ) !== 'data' );
       }
     }
   }

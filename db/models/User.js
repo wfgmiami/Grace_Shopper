@@ -12,7 +12,7 @@ const User = conn.define( 'users', {
     allowNull: false,
     validate: {
       notEmpty: true,
-      len: [ 5, 255 ]
+      len: [ 2, 255 ]
     }
   },
   email: {

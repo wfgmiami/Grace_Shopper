@@ -16,7 +16,7 @@ let store = createStore(
 
 export default store;
 
-store.dispatch(loadProducts());
+store.dispatch(loadProducts(1));
 store.dispatch(loadCategories());
 store.dispatch(me());
 

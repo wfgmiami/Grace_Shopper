@@ -22,7 +22,7 @@ Due Date: May 9, 2017
  * [ ] Remove an item from the cart
  * [ ] Edit/update quantities of items in the cart
  * [ ] Log in and continue editing the cart
- * [ ] Refresh the page without being logged in and have the cart persist (you may use sessionStorage, localStorage, Cookies or JWT for this)
+ * [x] Refresh the page without being logged in and have the cart persist (you may use sessionStorage, localStorage, Cookies or JWT for this)
 * [ ] Account Management
  * [ ] Create an account
  * [ ] Login with Facebook and/or Google
@@ -33,7 +33,7 @@ Due Date: May 9, 2017
  * [ ] Receive notification emails upon order shipping, then order delivery
 
 #### Authenticated Users:
-* [ ] Logout
+* [x] Logout
 * [ ] Account management
  * [ ] View past order list
  * [ ] View order detail
