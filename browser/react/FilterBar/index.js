@@ -28,13 +28,25 @@ class FilterBar extends React.Component {
 
   render() {
     const { categories: { color, shape, material, ideal_face_shape } } = this.props;
+    const categories = [
+      { name: 'color', title: 'Color', category: color },
+      { name: 'material', title: 'Material', category: material },
+      { name: 'shape', title: 'Shape', category: shape },
+      { name: 'ideal_face_shape', title: 'Ideal Face Shape', category: ideal_face_shape }
+    ];
     return (
       <sidebar>
         <ul className="list-group">
-          <Filtergroup category={ color } title="Color" catName="color" modFilter={ this.modFilter } />
-          <Filtergroup category={ shape } title="Shape" catName="shape" modFilter={ this.modFilter } />
-          <Filtergroup category={ material } title="Material" catName="material" modFilter={ this.modFilter } />
-          <Filtergroup category={ ideal_face_shape } title="Ideal Face Shape" catName="ideal_face_shape" modFilter={ this.modFilter } />
+          { categories.map((cat, idx) => (
+            <Filtergroup
+              key={ idx }
+              category={ cat.category }
+              title={ cat.title }
+              catName={ cat.name }
+              modFilter={ this.modFilter }
+              filter={this.state.filter}
+            />
+            )) }
         </ul>
       </sidebar>
     );
