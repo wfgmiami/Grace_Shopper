@@ -34,6 +34,7 @@ export const Pagination = ({ loadProducts, products }) => {
   for (let i = start; i <= end; i++) {
     pages.push((
       <li
+        key={ i }
         className={ offset === i && 'active' }
         onClick={ () => loadProducts( i ) }
       >

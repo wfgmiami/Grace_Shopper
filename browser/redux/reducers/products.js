@@ -4,7 +4,8 @@ import axios from 'axios';
 const initialState = {
   products: [],
   offset: 1,
-  count: 950
+  count: 950,
+  filter: {}
 };
 
 const productsReducer = ( state = initialState, action ) => {
@@ -12,6 +13,9 @@ const productsReducer = ( state = initialState, action ) => {
   switch ( action.type ) {
   case LOAD_PRODUCTS_SUCCESS:
     state = Object.assign( {}, state, action.payload );
+    break;
+  case 'CHANGE_FILTER':
+    state = Object.assign( {}, state, action.filter );
     break;
   default:
     break;
@@ -24,13 +28,18 @@ const loadProductSuccess = ( products, offset, count ) => ( {
   payload: { products, offset, count }
 } );
 
-const loadProducts = ( offset, filters ) => {
+const changeFilter = ( offset, filter) => dispatch => {
+  dispatch({ type: 'CHANGE_FILTER', filter});
+  dispatch(loadProducts( offset, filter ));
+};
+
+const loadProducts = ( offset, filter ) => {
   return ( dispatch ) => {
-    axios.get( `/api/glasses/${offset}`, { params: { shape: 'Square', ideal_face_shape: 'Round' } } )
+    axios.get( `/api/glasses/${offset}`, { params: filter } )
       .then( response => dispatch( loadProductSuccess( response.data.glasses, offset, response.data.count ) ) );
   };
 };
 
-export { loadProducts };
+export { loadProducts, changeFilter };
 export default productsReducer;
 

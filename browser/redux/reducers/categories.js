@@ -28,17 +28,17 @@ const loadCategorieSuccess = ( categories ) => ( {
 const loadCategories = () => {
   return ( dispatch ) => {
     axios.get( '/api/categories' )
-      .then( ({ data }) => {
-        data = data.reduce((memo, cat) => {
-          if (!memo[cat.name]) {
-            memo[cat.name] = [cat.value];
+      .then( ( { data } ) => {
+        data = data.reduce( ( memo, cat ) => {
+          if ( !memo[ cat.name ] ) {
+            memo[ cat.name ] = [ cat.value ];
           } else {
-            memo[cat.name].push(cat.value);
+            memo[ cat.name ].push( cat.value );
           }
           return memo;
-        }, Object.assign({}, initialState));
+        }, Object.assign( {}, initialState ) );
 
-        Object.keys(data).forEach(category => data[category] = data[category].sort());
+        Object.keys( data ).forEach( category => { data[ category ] = data[ category ].sort(); } );
 
         dispatch( loadCategorieSuccess( data ) );
       } );

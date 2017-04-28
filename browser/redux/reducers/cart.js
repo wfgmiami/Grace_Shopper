@@ -1,11 +1,11 @@
-import { LOAD_PRODUCTS_SUCCESS } from '../constants';
+import { UPDATE_CART } from '../constants';
 import axios from 'axios';
 import store from '../store';
 
 const cartReducer = ( state = [], action ) => {
 
   switch ( action.type ) {
-  case 'UPDATE_CART':
+  case UPDATE_CART:
     state = action.cart;
     break;
   default:
@@ -43,7 +43,7 @@ const addToCart = item => dispatch => {
     } )
     .then(({data}) => {
       if (data === 'Created') {
-        dispatch( { type: 'UPDATE_CART', cart: currentCart } );
+        dispatch( { type: UPDATE_CART, cart: currentCart } );
       }
     });
   } else {
@@ -53,7 +53,7 @@ const addToCart = item => dispatch => {
     currentCart.push( item );
 
     localStorage.setItem( 'cart', JSON.stringify( currentCart ) );
-    dispatch( { type: 'UPDATE_CART', cart: currentCart } );
+    dispatch( { type: UPDATE_CART, cart: currentCart } );
   }
   console.log( currentCart );
 };
@@ -65,16 +65,32 @@ const removeFromCart = item => dispatch => {
 
   localStorage.setItem( 'cart', JSON.stringify( currentCart ) );
   console.log( currentCart );
-  dispatch( { type: 'UPDATE_CART', cart: currentCart } );
+  dispatch( { type: UPDATE_CART, cart: currentCart } );
 };
 
 const loadCart = token => dispatch => {
   axios.get( `/api/order/pending/${token}` )
     .then( ( { data } ) => {
-      dispatch( { type: 'UPDATE_CART', cart: data } );
+      dispatch( { type: UPDATE_CART, cart: data } );
     } );
 };
 
-export { addToCart, removeFromCart, loadCart };
+const getCart = () => dispatch => {
+  const token = localStorage.getItem( 'token' );
+
+  if ( token ) {
+    dispatch( loadCart( token ) );
+  } else {
+    let currentCart = localStorage.getItem( 'cart' );
+    if ( !currentCart ) {
+      localStorage.setItem( 'cart', JSON.stringify( [] ) );
+    }
+    currentCart = localStorage.getItem( 'cart' );
+
+    dispatch( { type: 'UPDATE_CART', cart: currentCart } );
+  }
+};
+
+export { addToCart, removeFromCart, getCart };
 export default cartReducer;
 

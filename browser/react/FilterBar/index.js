@@ -1,56 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import Filtergroup from './Filtergroup';
+import { changeFilter } from '../../redux/reducers/products';
 
 class FilterBar extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props);
   }
 
   render() {
-    const { categories } = this.props;
+    const { categories: { color, shape, material, ideal_face_shape } } = this.props;
     return (
       <sidebar>
         <ul className="list-group">
-          <li className="list-group-item">
-            <p>Filter by Color:</p>
-            { categories.color.map((cat, idx) => (
-              <p key={idx}>
-                <label>
-                  <input type="checkbox" /> { cat }
-                </label>
-              </p>
-            )) }
-          </li>
-          <li className="list-group-item">
-            <p>Filter by Shape:</p>
-            { categories.shape.map((cat, idx) => (
-              <p key={idx}>
-                <label>
-                  <input type="checkbox" /> { cat }
-                </label>
-              </p>
-            )) }
-          </li>
-          <li className="list-group-item">
-            <p>Filter by Material:</p>
-            { categories.material.map((cat, idx) => (
-              <p key={idx}>
-                <label>
-                  <input type="checkbox" /> { cat }
-                </label>
-              </p>
-            )) }
-          </li>
-          <li className="list-group-item">
-            <p>Filter by Ideal Face Shape:</p>
-            { categories.ideal_face_shape.map((cat, idx) => (
-              <p key={idx}>
-                <label>
-                  <input type="checkbox" /> { cat }
-                </label>
-              </p>
-            )) }
-          </li>
+          <Filtergroup category={ color } title="Color" />
+          <Filtergroup category={ shape } title="Shape" />
+          <Filtergroup category={ material } title="Material" />
+          <Filtergroup category={ ideal_face_shape } title="Ideal Face Shape" />
         </ul>
       </sidebar>
     );
@@ -58,7 +25,12 @@ class FilterBar extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  categories: state.categories
+  categories: state.categories,
+  offset: state.products.offset
 });
 
-export default connect(mapStateToProps)(FilterBar);
+const mapDispatchToProps = dispatch => ({
+  changeFilter: (offset, filter) => dispatch(changeFilter(offset, filter))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FilterBar);

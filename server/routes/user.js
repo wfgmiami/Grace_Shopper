@@ -1,8 +1,8 @@
 const router = require( 'express' ).Router();
-const { models } = require( '../../db' );
+const { User } = require( '../../db' );
 
 router.get( '/', ( req, res, next ) => {
-  models.users.create( {
+  User.create( {
       name: 'Test',
       password: 'test',
       email: 'test@test.test',

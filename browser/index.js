@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import store from './redux/store';
+import { Provider } from 'react-redux';
 
 import {
   IndexRoute,
@@ -8,17 +10,25 @@ import {
   browserHistory
 } from 'react-router';
 
-import store from './redux/store';
-import Home from './react/Home';
-import { Provider } from 'react-redux';
+import { loadProducts } from './redux/reducers/products';
+import { loadCategories } from './redux/reducers/categories';
+import { getCart } from './redux/reducers/cart';
+import { me } from './redux/reducers/auth';
 
 import Main from './react/Main';
 import CategoryList from './react/CategoryList';
 
+const init = () => {
+  store.dispatch( loadProducts( 1 ) );
+  store.dispatch( loadCategories() );
+  store.dispatch( me() );
+  store.dispatch( getCart() );
+};
+
 const app = (
   <Provider store = { store } >
     <Router history = { browserHistory }>
-      <Route path="/" component={ Main }>
+      <Route path="/" component={ Main } onEnter={ init }>
         <IndexRoute component={ CategoryList } />
         <Route path="/eyeglasses" component={ CategoryList } />
         <Route path="/sunglasses" component={ CategoryList } />
