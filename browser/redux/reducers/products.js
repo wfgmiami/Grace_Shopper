@@ -28,16 +28,16 @@ const loadProductSuccess = ( products, offset, count ) => ( {
   payload: { products, offset, count }
 } );
 
-const changeFilter = ( offset, filter) => dispatch => {
-  dispatch({ type: 'CHANGE_FILTER', filter});
-  dispatch(loadProducts( offset, filter ));
-};
-
 const loadProducts = ( offset, filter ) => {
   return ( dispatch ) => {
     axios.get( `/api/glasses/${offset}`, { params: filter } )
       .then( response => dispatch( loadProductSuccess( response.data.glasses, offset, response.data.count ) ) );
   };
+};
+
+const changeFilter = ( offset, filter) => dispatch => {
+  dispatch({ type: 'CHANGE_FILTER', filter});
+  dispatch(loadProducts( offset, filter ));
 };
 
 export { loadProducts, changeFilter };

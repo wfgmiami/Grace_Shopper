@@ -30,8 +30,6 @@ const app = (
     <Router history = { browserHistory }>
       <Route path="/" component={ Main } onEnter={ init }>
         <IndexRoute component={ CategoryList } />
-        <Route path="/eyeglasses" component={ CategoryList } />
-        <Route path="/sunglasses" component={ CategoryList } />
         {/*<Route path="login" component={ LoginPage } />*/}
         </Route>
     </Router>
