@@ -12,17 +12,17 @@ class FilterBar extends React.Component {
 
   modFilter({ name, value }) {
     let { filter } = this.state;
-    if ( filter[name] ) {
-      if (filter[name].indexOf(value) > -1 ) {
-        filter[name] = filter[name].filter(val => val !== value);
+    if ( filter[ name ] ) {
+      if (filter[ name ].indexOf( value ) > -1 ) {
+        filter[ name ] = filter[ name ].filter( val => val !== value );
       } else {
-        filter[name].push(value);
+        filter[ name ].push( value );
       }
     } else {
-      filter[name] = [value];
+      filter[ name ] = [ value ];
     }
-    this.setState(filter);
-    this.props.changeFilter(1, filter);
+    this.setState( filter );
+    this.props.changeFilter( 1, filter );
   }
 
 

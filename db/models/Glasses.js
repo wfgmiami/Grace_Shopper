@@ -52,14 +52,6 @@ const Glasses = conn.define( 'glasses', {
       attributes: { exclude: [ 'createdAt', 'updatedAt' ] },
       inventory: 0
     },
-    men: {
-      attributes: { exclude: [ 'createdAt', 'updatedAt' ] },
-      category: 'men'
-    },
-    women: {
-      attributes: { exclude: [ 'createdAt', 'updatedAt' ] },
-      category: 'women'
-    },
     categories: {
       attributes: { exclude: [ 'createdAt', 'updatedAt' ] },
       include: [ {

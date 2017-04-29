@@ -25,10 +25,23 @@ const Order = sequelize.define( 'orders', {
     values: [ 'Pending', 'Shipping', 'Delivered', 'Cancelled' ],
     defaultValue: 'Pending'
   },
+  shippingAddress: {
+    type: Sequelize.TEXT
+  }
   // productId through association
   // userId/guestId through association
   // addressId through association
 }, {
+  hooks: {
+    beforeValidate(order) {
+      if (order.status !== 'Pending' && !order.paymentId) {
+        throw new Error('There is no payment associated to the order');
+      }
+      if (order.status !== 'Pending' && !order.shippingAddress) {
+        throw new Error('There is no shipping address associated to the order');
+      }
+    }
+  },
   scopes: {
     pending: Object.assign( { status: 'Pending' }, includes ),
     shipping: Object.assign( { status: 'Shipping' }, includes ),

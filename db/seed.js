@@ -1,5 +1,7 @@
-const db = require( './index' );
+const models = require( './index' );
 const chalk = require( 'chalk' );
+const db = require('./conn');
+
 
 console.log( chalk.magenta( ' Formatting data ' ) );
 

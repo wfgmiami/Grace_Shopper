@@ -10,6 +10,7 @@ import FilterBar from './FilterBar';
 class Main extends React.Component {
   constructor(props) {
     super();
+    console.log(props);
   }
 
   render() {

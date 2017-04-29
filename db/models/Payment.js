@@ -23,6 +23,12 @@ const Payment = conn.define('payments', {
   billingAddress: {
     type: Sequelize.TEXT
   }
+}, {
+  scopes: {
+    expired: {
+      expiration: { $lt: new Date() }
+    }
+  }
 });
 
 module.exports = Payment;
