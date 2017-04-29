@@ -5,8 +5,8 @@ const db = require('./conn');
 
 console.log( chalk.magenta( ' Formatting data ' ) );
 
-const glasses = formatGlassesJSON( require( './jsondata/glasses-men.json' ), 'men' )
-  .concat( formatGlassesJSON( require( './jsondata/glasses-women.json' ), 'women' ) );
+const glasses = formatGlassesJSON( require( './jsondata/glasses-men.json' ), 'Men' )
+  .concat( formatGlassesJSON( require( './jsondata/glasses-women.json' ), 'Women' ) );
 const categories = generateCategories();
 const glassesCategories = generateGlassesCategories( glasses );
 
