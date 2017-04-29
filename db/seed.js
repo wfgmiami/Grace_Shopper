@@ -32,7 +32,7 @@ db.sync( { force: true } )
 
 // Finagle with the data structure
 function formatGlassesJSON( arr, category ) {
-  return arr.map( prod => {
+   return arr.map( prod => {
       if ( !prod.price || !prod.name ) return null;
       prod.price = parseInt( prod.price.replace( /\$/g, '' ), 10 );
       prod.category = category;
@@ -40,19 +40,23 @@ function formatGlassesJSON( arr, category ) {
       prod.inventory = Math.floor( 100 * Math.random() );
       return prod;
     } )
-    .filter( prod => prod )
-    .filter( prod => prod.name );
+    //.filter( prod => prod )
+    //.filter( prod => prod.name );
 }
 
 function generateCategories() {
   return require( './jsondata/glasses-men.json' )
     .concat( require( './jsondata/glasses-women.json' ) )
-    .map( prod => prod.attr ) // get only the attributes
+    .map( prod => {
+      prod.attr.push({name:'gender', value: prod.category})
+      delete prod.category;
+      return prod.attr;
+    }) // get only the attributes
 
   .reduce( ( master, attr ) => master.concat( attr ), [] ) // put all attributes into one array
 
   .filter( attr => { // only worry about some attributes
-    return attr.name === 'color' || attr.name === 'shape' || attr.name === 'ideal_face_shape' || attr.name === 'material';
+    return attr.name === 'color' || attr.name === 'shape' || attr.name === 'ideal_face_shape' || attr.name === 'material' || attr.name === 'gender';
   } )
 
   .filter( ( attr, idx, self ) => // get uniques

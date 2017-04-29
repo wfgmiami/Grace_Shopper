@@ -5,7 +5,8 @@ const initialState = {
   color: [],
   shape: [],
   ideal_face_shape: [],
-  material: []
+  material: [],
+  gender:[]
 };
 
 const categoriesReducer = ( state = initialState, action ) => {

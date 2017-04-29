@@ -27,8 +27,9 @@ class FilterBar extends React.Component {
 
 
   render() {
-    const { categories: { color, shape, material, ideal_face_shape } } = this.props;
+    const { categories: { color, shape, material, ideal_face_shape, gender } } = this.props;
     const categories = [
+      { name: 'gender', title: 'Gender', category: gender },
       { name: 'color', title: 'Color', category: color },
       { name: 'material', title: 'Material', category: material },
       { name: 'shape', title: 'Shape', category: shape },
