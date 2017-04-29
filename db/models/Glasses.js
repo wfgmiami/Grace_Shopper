@@ -13,9 +13,6 @@ const Glasses = conn.define( 'glasses', {
       notEmpty: true
     }
   },
-  category: {
-    type: Sequelize.STRING
-  },
   description: {
     type: Sequelize.STRING,
     allowNull: false
