@@ -24,7 +24,7 @@ db.sync( { force: true } )
   .then( () => db.models.lineitems.create({ orderId: 1, glassId: 1, date: new Date(), price: 210, quantity: 1 }) )
   .then( () => db.models.lineitems.create({ orderId: 2, glassId: 45, date: new Date(), price: 109, quantity: 1 }) )
   .then( () => console.log( chalk.green.bold.inverse( ` Seeded OK ` ) ) )
-  .catch( error => console.error( error.stack ) );
+  .catch( error => console.error( error ) );
 
 // ---------- Reformatting Data below, nothing to see, keep calm and carry on ----------
 
@@ -66,12 +66,8 @@ function generateCategories() {
 function generateGlassesCategories( _glasses ) {
   let _glassesCategories = [];
 
-  _glasses.map( ( gls, idx ) => {
-    let attrs = gls.attr.filter( attr => { // only worry about some attributes
-      return attr.name === 'color' || attr.name === 'shape' || attr.name === 'ideal_face_shape' || attr.name === 'material';
-    } );
-
-    attrs.map( atr => {
+  _glasses.forEach( ( gls, idx ) => {
+    gls.attr.map( atr => {
       let catId = categories.findIndex( tst => tst.name === atr.name && tst.value === atr.value );
       _glassesCategories.push( { glassId: idx + 1, categoryId: catId + 1 } );
     } );

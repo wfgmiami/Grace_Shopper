@@ -1,36 +1,26 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
 import { addToCart, removeFromCart } from '../../redux/reducers/cart';
-
-const ProductListItem = ({ product, addToCart, removeFromCart }) => (
-  <div className="col-xs-4">
-    <div style={{ maxwidth: '300px', margin: 'auto', marginBottom: '10%' }}>
-      <img style={{ marginBottom: '0' }} className="img-responsive" src={ product.images[0] } />
-      <div id = 'product details'> 
-        <div id = 'product name' style={{maxwidth: '80%'}}>
-        { product.name } 
-        </div>
-        <span className="pull-right">
-          <span style={{ paddingRight: '15px' }}>
-            ${ product.price }
-          </span>
-          <button className="glyphicon glyphicon-shopping-cart pull-right" onClick={ () => addToCart({name: product.name, quantity: 1}) } />
-        </span>
-      </div>
-    </div>
-  </div>
-);
+import Pagination from './Pagination';
+import ProductListItem from './ProductListItem';
 
 const CategoryList = ({ products, addToCart, removeFromCart }) => {
-  console.log(products);
   return (
-  <div className="row">
-    { products.map( product => (
-    <ProductListItem key={ product.id } product={ product } addToCart={ addToCart } removeFromCart={ removeFromCart } /> )
-    ) }
-  </div>
-)};
+    <div>
+      <div className="row">
+        { products.products.map( product => (
+          <ProductListItem
+            key={ product.id }
+            product={ product }
+            addToCart={ addToCart }
+            removeFromCart={ removeFromCart }
+          /> )
+        ) }
+      </div>
+      <Pagination />
+    </div>
+  );
+};
 
 const mapStateToProps = ({ products, cart }) => (
   { products, cart }

@@ -4,19 +4,33 @@ const md5 = require( 'crypto-md5' );
 
 const Sequelize = require( 'sequelize' );
 const conn = require( '../conn' );
-const Order = require('./Order');
+const Order = require( './Order' );
 
 const User = conn.define( 'users', {
-  name: Sequelize.STRING,
+  name: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+      len: [ 2, 255 ]
+    }
+  },
   email: {
     type: Sequelize.STRING,
     unique: true,
+    allowNull: false,
     validate: {
       isEmail: true,
       notEmpty: true
     }
   },
-  password: Sequelize.STRING,
+  password: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
+  },
   isAdmin: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
@@ -40,20 +54,20 @@ const User = conn.define( 'users', {
   },
   classMethods: {
     findByPassword( credentials ) {
-      if (!credentials) throw new Error('No credentials provided');
-      if (!credentials.password) throw new Error('Password must be included in credentials');
+      if ( !credentials ) throw new Error( 'No credentials provided' );
+      if ( !credentials.password ) throw new Error( 'Password must be included in credentials' );
       credentials.password = md5( credentials.password, 'hex' );
       return this.findOne( { where: credentials } );
     }
   },
   instanceMethods: {
     getOrder() {
-      return Order.findOrCreate({
+      return Order.findOrCreate( {
         where: {
           status: 'Pending',
           userId: this.id
         }
-      });
+      } );
     }
   }
 } );

@@ -36,7 +36,10 @@ const loadCategories = () => {
             memo[cat.name].push(cat.value);
           }
           return memo;
-        }, {});
+        }, Object.assign({}, initialState));
+
+        Object.keys(data).forEach(category => data[category] = data[category].sort());
+
         dispatch( loadCategorieSuccess( data ) );
       } );
   };

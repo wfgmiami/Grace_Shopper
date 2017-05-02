@@ -38,33 +38,54 @@ const Glasses = conn.define( 'glasses', {
     type: Sequelize.ARRAY( Sequelize.STRING ),
     validate: {
       containsURLs( imgArr ) {
-        return imgArr.filter( img => img.slice( 0, 4 ) !== 'DATA' );
+        return imgArr.filter( img => img.slice( 0, 4 ) !== 'data' );
       }
     }
   }
 }, {
   scopes: {
     inStock: {
+      attributes: { exclude: [ 'createdAt', 'updatedAt' ] },
       inventory: { $gt: 0 }
     },
     outOfStock: {
+      attributes: { exclude: [ 'createdAt', 'updatedAt' ] },
       inventory: 0
     },
     men: {
+      attributes: { exclude: [ 'createdAt', 'updatedAt' ] },
       category: 'men'
     },
     women: {
+      attributes: { exclude: [ 'createdAt', 'updatedAt' ] },
       category: 'women'
+    },
+    categories: {
+      attributes: { exclude: [ 'createdAt', 'updatedAt' ] },
+      include: [ {
+        model: Category,
+        attributes: [ 'name', 'value' ],
+        through: { attributes: [] }
+      } ]
     }
   },
   classMethods: {
-    getWithCategories() {
+    getWithCategories( offset, categories ) {
       return this.findAll( {
-        include: [ {
+        // offset,
+        // limit: 15,
+        include: Object.keys( categories ).map( attr => ( {
           model: Category,
           attributes: [ 'name', 'value' ],
-          through: { attributes: [] }
-        } ]
+          where: {
+            name: attr,
+            value: {
+              $or: Array.isArray( categories[ attr ] ) ? categories[ attr ] : [ categories[ attr ] ]
+            }
+          },
+          through: { attributes: [] },
+          as: attr
+        } ) )
       } );
     }
   }

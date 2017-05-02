@@ -14,6 +14,7 @@ class Main extends React.Component {
   }
 
   render() {
+    var seedData = [{name: "this"}, {name: "other this"}];
     return (
       <div className="container-fluid">
         <Nav />
