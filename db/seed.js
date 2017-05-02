@@ -1,6 +1,6 @@
 const models = require( './index' );
 const chalk = require( 'chalk' );
-const db = require('./conn');
+const db = require( './conn' );
 
 
 console.log( chalk.magenta( ' Formatting data ' ) );
@@ -23,8 +23,8 @@ db.sync( { force: true } )
   .then( () => db.models.reviews.bulkCreate( require( './jsondata/reviews' ) ) )
   .then( () => db.models.categories.bulkCreate( categories ) )
   .then( () => db.models.glassesCategory.bulkCreate( glassesCategories ) )
-  .then( () => db.models.lineitems.create({ orderId: 1, glassId: 1, date: new Date(), price: 210, quantity: 1 }) )
-  .then( () => db.models.lineitems.create({ orderId: 2, glassId: 45, date: new Date(), price: 109, quantity: 1 }) )
+  .then( () => db.models.lineitems.create( { orderId: 1, glassId: 1, date: new Date(), price: 210, quantity: 1 } ) )
+  .then( () => db.models.lineitems.create( { orderId: 2, glassId: 45, date: new Date(), price: 109, quantity: 1 } ) )
   .then( () => console.log( chalk.green.bold.inverse( ` Seeded OK ` ) ) )
   .catch( error => console.error( error ) );
 
@@ -32,14 +32,14 @@ db.sync( { force: true } )
 
 // Finagle with the data structure
 function formatGlassesJSON( arr, category ) {
-   return arr.map( prod => {
+  return arr.map( prod => {
       if ( !prod.price || !prod.name ) return null;
       prod.price = parseInt( prod.price.replace( /\$/g, '' ), 10 );
       prod.category = category;
       prod.description = 'lorem ipsum';
       prod.inventory = Math.floor( 100 * Math.random() );
       return prod;
-    } )
+    } );
     //.filter( prod => prod )
     //.filter( prod => prod.name );
 }
@@ -48,10 +48,10 @@ function generateCategories() {
   return require( './jsondata/glasses-men.json' )
     .concat( require( './jsondata/glasses-women.json' ) )
     .map( prod => {
-      prod.attr.push({name:'gender', value: prod.category})
+      prod.attr.push( { name: 'gender', value: prod.category } );
       delete prod.category;
       return prod.attr;
-    }) // get only the attributes
+    } ) // get only the attributes
 
   .reduce( ( master, attr ) => master.concat( attr ), [] ) // put all attributes into one array
 

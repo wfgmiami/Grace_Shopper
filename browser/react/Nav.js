@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 
 class Nav extends React.Component {
 
@@ -49,11 +50,11 @@ class Nav extends React.Component {
                   </a>
                 </li>
                 <li className="">
-                  <a href="/user/feedback/">
+                  <Link to="/signup">
                     <span className="glyphicon glyphicon-heart"></span>
                     { ' ' }
                     Sign Up
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

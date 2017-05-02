@@ -19,7 +19,14 @@ router.use( '/pending/:token', ( req, res, next ) => {
 router.get( '/pending/:token', ( req, res, next ) => {
   const { userId } = req;
   Order.scope( 'pending' ).findOne( { where: { userId } } )
-    .then( order => res.json( order.get().glasses ) )
+    .then( order => {
+      if (order) {
+        res.json( order.get().glasses );
+      } else {
+        res.sendStatus(404);
+        next();
+      }
+    } )
     .catch( next );
 } );
 

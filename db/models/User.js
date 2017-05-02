@@ -12,6 +12,7 @@ const User = conn.define( 'users', {
     allowNull: false,
     validate: {
       notEmpty: true,
+      isAlpha: true,
       len: [ 2, 255 ]
     }
   },

@@ -1,5 +1,15 @@
 import { LOGIN_SUCCESS, LOGOUT_SUCCESS, INVALID_LOGIN } from '../constants';
 import axios from 'axios';
+import { browserHistory } from 'react-router';
+
+export const createUser = userProps => dispatch => {
+  axios.post('/api/user', userProps)
+    .then(({ data }) => {
+      // Sign in the new user and take them to the homepage
+      localStorage.setItem('token', data.token);
+      browserHistory.push('/');
+    });
+};
 
 const loginSuccess = ( user ) => ( {
   type: LOGIN_SUCCESS,
@@ -26,7 +36,8 @@ const me = () => {
     if ( !token ) return;
     return axios.get( `/api/session/${token}` )
       .then( response => response.data )
-      .then( user => dispatch( loginSuccess( user ) ) );
+      .then( user => dispatch( loginSuccess( user ) ) )
+      .catch(() => localStorage.removeItem('token'));
   };
 };
 

@@ -72,7 +72,11 @@ const loadCart = token => dispatch => {
   axios.get( `/api/order/pending/${token}` )
     .then( ( { data } ) => {
       dispatch( { type: UPDATE_CART, cart: data } );
-    } );
+    } )
+    .catch(() => {
+      // If something goes wrong, it's because of the token
+      localStorage.removeItem('token');
+    });
 };
 
 const getCart = () => dispatch => {
