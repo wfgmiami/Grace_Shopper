@@ -3,6 +3,7 @@
 const conn = require( '../conn' );
 const { Sequelize } = conn;
 const Category = require( './Category' );
+const Review = require( './Review' );
 
 const Glasses = conn.define( 'glasses', {
 
@@ -12,9 +13,6 @@ const Glasses = conn.define( 'glasses', {
     validate: {
       notEmpty: true
     }
-  },
-  category: {
-    type: Sequelize.STRING
   },
   description: {
     type: Sequelize.STRING,
@@ -43,6 +41,19 @@ const Glasses = conn.define( 'glasses', {
     }
   }
 }, {
+  getterMethods: {
+    reviewSummary() {
+      if ( this.reviews ) {
+        if ( this.reviews.length ) {
+          return Math.round( this.reviews.reduce( ( total, review ) => total + review.rating, 0 ) * 10 / this.reviews.length ) / 10;
+        } else {
+          return 'No reviews yet';
+        }
+      } else {
+        return 'Reviews were not included';
+      }
+    }
+  },
   scopes: {
     inStock: {
       attributes: { exclude: [ 'createdAt', 'updatedAt' ] },
@@ -52,20 +63,14 @@ const Glasses = conn.define( 'glasses', {
       attributes: { exclude: [ 'createdAt', 'updatedAt' ] },
       inventory: 0
     },
-    men: {
-      attributes: { exclude: [ 'createdAt', 'updatedAt' ] },
-      category: 'men'
-    },
-    women: {
-      attributes: { exclude: [ 'createdAt', 'updatedAt' ] },
-      category: 'women'
-    },
     categories: {
       attributes: { exclude: [ 'createdAt', 'updatedAt' ] },
       include: [ {
         model: Category,
         attributes: [ 'name', 'value' ],
         through: { attributes: [] }
+      }, {
+        model: Review
       } ]
     }
   },

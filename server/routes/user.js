@@ -1,15 +1,24 @@
 const router = require( 'express' ).Router();
-const { models } = require( '../../db' );
+const { User } = require( '../../db' );
+const jwt = require('jwt-simple');
+const secret = process.env.SECRET || '1701-FLX-NY';
 
-router.get( '/', ( req, res, next ) => {
-  models.users.create( {
-      name: 'Test',
-      password: 'test',
-      email: 'test@test.test',
+router.post( '/', ( req, res, next ) => {
+  const newUser = Object.keys( req.body ).filter( param => {
+    return param === 'name' || param === 'password' || param === 'email';
+  } ).reduce( ( memo, param ) => {
+    memo[ param ] = req.body[ param ];
+    return memo;
+  }, {} );
+
+  User.create( newUser )
+    .then( user => {
+      if (!user) return res.sendStatus( 401 );
+      res.send( {
+        token: jwt.encode( { id: user.id }, secret )
+      } );
     } )
-    .then( user => res.json( user ) )
-    .catch( next );
-} );
+    .catch( err => console.log(err) );
+  } );
 
 module.exports = router;
-

@@ -11,6 +11,7 @@ import Cart from './Cart';
 class Main extends React.Component {
   constructor(props) {
     super();
+    console.log(props);
   }
 
   render() {

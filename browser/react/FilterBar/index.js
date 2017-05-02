@@ -1,56 +1,53 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import Filtergroup from './Filtergroup';
+import { changeFilter } from '../../redux/reducers/products';
 
 class FilterBar extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { filter: {} };
+    this.modFilter = this.modFilter.bind(this);
   }
 
+  modFilter({ name, value }) {
+    let { filter } = this.state;
+    if ( filter[ name ] ) {
+      if (filter[ name ].indexOf( value ) > -1 ) {
+        filter[ name ] = filter[ name ].filter( val => val !== value );
+      } else {
+        filter[ name ].push( value );
+      }
+    } else {
+      filter[ name ] = [ value ];
+    }
+    this.setState( filter );
+    this.props.changeFilter( 1, filter );
+  }
+
+
   render() {
-    const { categories } = this.props;
+    const { categories: { color, shape, material, ideal_face_shape, gender } } = this.props;
+    const categories = [
+      { name: 'gender', title: 'Gender', category: gender },
+      { name: 'color', title: 'Color', category: color },
+      { name: 'material', title: 'Material', category: material },
+      { name: 'shape', title: 'Shape', category: shape },
+      { name: 'ideal_face_shape', title: 'Ideal Face Shape', category: ideal_face_shape }
+    ];
     return (
       <sidebar>
         <ul className="list-group">
-          <li className="list-group-item">
-            <p>Filter by Color:</p>
-            { categories.color.map((cat, idx) => (
-              <p key={idx}>
-                <label>
-                  <input type="checkbox" /> { cat }
-                </label>
-              </p>
+          { categories.map((cat, idx) => (
+            <Filtergroup
+              key={ idx }
+              category={ cat.category }
+              title={ cat.title }
+              catName={ cat.name }
+              modFilter={ this.modFilter }
+              filter={this.state.filter}
+            />
             )) }
-          </li>
-          <li className="list-group-item">
-            <p>Filter by Shape:</p>
-            { categories.shape.map((cat, idx) => (
-              <p key={idx}>
-                <label>
-                  <input type="checkbox" /> { cat }
-                </label>
-              </p>
-            )) }
-          </li>
-          <li className="list-group-item">
-            <p>Filter by Material:</p>
-            { categories.material.map((cat, idx) => (
-              <p key={idx}>
-                <label>
-                  <input type="checkbox" /> { cat }
-                </label>
-              </p>
-            )) }
-          </li>
-          <li className="list-group-item">
-            <p>Filter by Ideal Face Shape:</p>
-            { categories.ideal_face_shape.map((cat, idx) => (
-              <p key={idx}>
-                <label>
-                  <input type="checkbox" /> { cat }
-                </label>
-              </p>
-            )) }
-          </li>
         </ul>
       </sidebar>
     );
@@ -58,7 +55,12 @@ class FilterBar extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  categories: state.categories
+  categories: state.categories,
+  offset: state.products.offset
 });
 
-export default connect(mapStateToProps)(FilterBar);
+const mapDispatchToProps = dispatch => ({
+  changeFilter: (offset, filter) => dispatch(changeFilter(offset, filter))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FilterBar);

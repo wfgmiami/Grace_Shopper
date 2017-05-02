@@ -12,6 +12,7 @@ const User = conn.define( 'users', {
     allowNull: false,
     validate: {
       notEmpty: true,
+      isAlpha: true,
       len: [ 2, 255 ]
     }
   },
@@ -31,11 +32,23 @@ const User = conn.define( 'users', {
       notEmpty: true
     }
   },
+  passwordExpired: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
   isAdmin: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },
 }, {
+  scopes: {
+    admin: {
+      isAdmin: true
+    },
+    resetPassword: {
+      passwordExpired: true
+    }
+  },
   hooks: {
     beforeCreate( user ) {
       let password = user.password;
@@ -62,11 +75,8 @@ const User = conn.define( 'users', {
   },
   instanceMethods: {
     getOrder() {
-      return Order.findOrCreate( {
-        where: {
-          status: 'Pending',
-          userId: this.id
-        }
+      return Order.scope('pending').findOrCreate( {
+        where: { userId: this.id }
       } );
     }
   }

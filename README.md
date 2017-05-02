@@ -11,7 +11,7 @@ Due Date: May 9, 2017
 #### Unauthenticated Users:
 
 * [ ] View products (catalog)
- * [ ] Refine listing by category
+ * [x] Refine listing by category
  * [ ] Search product listing
  * [ ] View a product's details
  * [ ] Product information
@@ -21,10 +21,10 @@ Due Date: May 9, 2017
  * [ ] Add an item to the cart from product listing or product detail pages
  * [ ] Remove an item from the cart
  * [ ] Edit/update quantities of items in the cart
- * [ ] Log in and continue editing the cart
+ * [x] Log in and continue editing the cart
  * [x] Refresh the page without being logged in and have the cart persist (you may use sessionStorage, localStorage, Cookies or JWT for this)
 * [ ] Account Management
- * [ ] Create an account
+ * [x] Create an account
  * [ ] Login with Facebook and/or Google
 * [ ] Checkout
  * [ ] Purchase items from cart
@@ -55,7 +55,7 @@ Due Date: May 9, 2017
  * [ ] Filter orders by status (Created, Processing, Cancelled, Completed)
  * [ ] Change the status of the order (Created -> Processing, Processing -> Cancelled || Completed)
  * [ ] View details of a specific order
-* [ ] User mnagement
+* [ ] User management
  * [ ] Promote other user accounts to have admin status
  * [ ] Delete a user
  * [ ] Trigger password reset for a user (next time they successfully log in—with their old password—they are prompted for a new one)
