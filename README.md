@@ -24,7 +24,7 @@ Due Date: May 9, 2017
  * [ ] Log in and continue editing the cart
  * [x] Refresh the page without being logged in and have the cart persist (you may use sessionStorage, localStorage, Cookies or JWT for this)
 * [ ] Account Management
- * [ ] Create an account
+ * [x] Create an account
  * [ ] Login with Facebook and/or Google
 * [ ] Checkout
  * [ ] Purchase items from cart

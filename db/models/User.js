@@ -75,11 +75,8 @@ const User = conn.define( 'users', {
   },
   instanceMethods: {
     getOrder() {
-      return Order.findOrCreate( {
-        where: {
-          status: 'Pending',
-          userId: this.id
-        }
+      return Order.scope('pending').findOrCreate( {
+        where: { userId: this.id }
       } );
     }
   }

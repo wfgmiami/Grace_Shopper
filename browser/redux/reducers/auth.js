@@ -1,6 +1,7 @@
 import { LOGIN_SUCCESS, LOGOUT_SUCCESS, INVALID_LOGIN } from '../constants';
 import axios from 'axios';
 import { browserHistory } from 'react-router';
+import { getCart } from './cart';
 
 export const createUser = userProps => dispatch => {
   axios.post('/api/user', userProps)
@@ -56,7 +57,8 @@ const login = ( credentials ) => {
         localStorage.setItem( 'token', token );
         return axios.get( `/api/session/${token}` )
           .then( response => response.data )
-          .then( user => dispatch( loginSuccess( user ) ) );
+          .then( user => dispatch( loginSuccess( user ) ) )
+          .then( () => dispatch(getCart()) );
       } )
       .catch( () => dispatch( invalidLogin( loginFail() ) ) );
   };
