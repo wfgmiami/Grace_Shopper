@@ -28,7 +28,7 @@ class Main extends React.Component {
               { this.props.children }
             </div>
             <div className="col-sm-3">
-              <Cart items = {[{name: "this"}, {name: "other this"}]} />
+              <Cart />
             </div>
           </div>
         </div>

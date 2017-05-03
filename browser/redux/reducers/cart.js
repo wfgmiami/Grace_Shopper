@@ -74,7 +74,7 @@ const addToCart = item => dispatch => {
 
 const removeFromCart = item => dispatch => {
   let currentCart = JSON.parse( localStorage.getItem( 'cart' ) );
-
+  console.log(item)
   currentCart = currentCart.filter( lineitem => lineitem.id !== item.id );
 
   localStorage.setItem( 'cart', JSON.stringify( currentCart ) );
