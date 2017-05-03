@@ -2,9 +2,12 @@ import React from 'react';
 
 const ProductListItem = ({ product, addToCart, removeFromCart }) => (
   <div className="col-xs-4">
-    <div style={{ width: '100%', margin: 'auto', marginBottom: '10%' }}>
-      <img style={{ width:'100%', marginBottom: '0' }} className="thumbnail" src={ product.images[0] } />
-      <div> { product.name }
+    <div style={{ maxwidth: '300px', margin: 'auto', marginBottom: '10%' }}>
+      <img style={{ marginBottom: '0' }} className="img-responsive" src={ product.images[0] } />
+      <div id = 'product details'> 
+        <div id = 'product name' style={{maxwidth: '80%'}}>
+        { product.name } 
+        </div>
         <span className="pull-right">
           <span style={{ paddingRight: '15px' }}>
             ${ product.price }

@@ -3,6 +3,7 @@
 const conn = require( '../conn' );
 const { Sequelize } = conn;
 const Category = require( './Category' );
+const Review = require( './Review' );
 
 const Glasses = conn.define( 'glasses', {
 
@@ -40,6 +41,19 @@ const Glasses = conn.define( 'glasses', {
     }
   }
 }, {
+  getterMethods: {
+    reviewSummary() {
+      if ( this.reviews ) {
+        if ( this.reviews.length ) {
+          return Math.round( this.reviews.reduce( ( total, review ) => total + review.rating, 0 ) * 10 / this.reviews.length ) / 10;
+        } else {
+          return 'No reviews yet';
+        }
+      } else {
+        return 'Reviews were not included';
+      }
+    }
+  },
   scopes: {
     inStock: {
       attributes: { exclude: [ 'createdAt', 'updatedAt' ] },
@@ -55,6 +69,8 @@ const Glasses = conn.define( 'glasses', {
         model: Category,
         attributes: [ 'name', 'value' ],
         through: { attributes: [] }
+      }, {
+        model: Review
       } ]
     }
   },

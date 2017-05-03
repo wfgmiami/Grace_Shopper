@@ -7,6 +7,7 @@ import Nav from './Nav';
 import LoginForm from './LoginForm';
 import FilterBar from './FilterBar';
 import SearchBar from './SearchBar';  
+import Cart from './Cart';
 
 class Main extends React.Component {
   constructor(props) {
@@ -15,6 +16,7 @@ class Main extends React.Component {
   }
 
   render() {
+    var seedData = [{name: "this"}, {name: "other this"}];
     return (
       <div className="container-fluid">
         <Nav />
@@ -31,7 +33,7 @@ class Main extends React.Component {
               { this.props.children }
             </div>
             <div className="col-sm-3">
-              <LoginForm />
+              <Cart />
             </div>
           </div>
         </div>

@@ -17,6 +17,7 @@ import { me } from './redux/reducers/auth';
 
 import Main from './react/Main';
 import CategoryList from './react/CategoryList';
+import SignUp from './react/SignUp';
 
 const init = () => {
   store.dispatch( loadProducts( 1 ) );
@@ -31,7 +32,8 @@ const app = (
       <Route path="/" component={ Main } onEnter={ init }>
         <IndexRoute component={ CategoryList } />
         {/*<Route path="login" component={ LoginPage } />*/}
-        </Route>
+      </Route>
+      <Route path="/signup" component={ SignUp } />
     </Router>
   </Provider>
 );

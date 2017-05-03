@@ -1,5 +1,7 @@
 const router = require( 'express' ).Router();
 const { User } = require( '../../db' );
+const jwt = require('jwt-simple');
+const secret = process.env.SECRET || '1701-FLX-NY';
 
 router.post( '/', ( req, res, next ) => {
   const newUser = Object.keys( req.body ).filter( param => {
@@ -9,11 +11,14 @@ router.post( '/', ( req, res, next ) => {
     return memo;
   }, {} );
 
-
   User.create( newUser )
-    .then( user => res.json( user ) )
-    .catch( next );
-} );
+    .then( user => {
+      if (!user) return res.sendStatus( 401 );
+      res.send( {
+        token: jwt.encode( { id: user.id }, secret )
+      } );
+    } )
+    .catch( err => console.log(err) );
+  } );
 
 module.exports = router;
-
