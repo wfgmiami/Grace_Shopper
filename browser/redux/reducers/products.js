@@ -5,7 +5,9 @@ const initialState = {
   products: [],
   offset: 1,
   count: 950,
-  filter: {}
+  filter: {},
+  
+
 };
 
 const productsReducer = ( state = initialState, action ) => {
@@ -17,9 +19,13 @@ const productsReducer = ( state = initialState, action ) => {
   case 'CHANGE_FILTER':
     state = Object.assign( {}, state, action.filter );
     break;
+  case 'SEARCH_FILTER':
+    state = Object.assign({}, state, action.search);
+
   default:
     break;
-  }
+
+        }
   return state;
 };
 
@@ -35,11 +41,23 @@ const loadProducts = ( offset, filter ) => {
   };
 };
 
+const loadSearchProducts = (input)=>{
+  return (dispatch) =>{
+    axios.get(`/api/glasses/search`, {params: input})
+      .then(res => dispatch(loadProductSuccess(res.data.glasses, offset, res.data.count)));
+  }
+}
 const changeFilter = ( offset, filter) => dispatch => {
   dispatch({ type: 'CHANGE_FILTER', filter});
   dispatch(loadProducts( offset, filter ));
 };
 
-export { loadProducts, changeFilter };
+const searchFilter = (input) => dispatch => {
+  dispatch({ type: 'SEARCH_FILTER', search:{products:input} });
+    //dispatch(loadSearchProducts(input));
+  
+}
+
+export { loadProducts, changeFilter, searchFilter };
 export default productsReducer;
 

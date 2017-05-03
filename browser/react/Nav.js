@@ -27,13 +27,9 @@ class Nav extends React.Component {
             </div>
             <div className="collapse navbar-collapse" id="myNavbar">
               <ul className="nav navbar-nav">
-                <li className="dropdown active">
-                  <a className="dropdown-toggle" data-toggle="dropdown" href="#">
-                    <span className="glyphicon glyphicon-search" />
-                    { ' ' }
-                    Search
-                  </a>
-                </li>
+                  <li className="dropdown active">            
+                    
+                  </li>
                 <li>
                   <a className="dropdown-toggle" data-toggle="dropdown" href="#">
                     Cart { cartItems }
