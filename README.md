@@ -55,10 +55,10 @@ Due Date: May 9, 2017
  * [ ] Filter orders by status (Created, Processing, Cancelled, Completed)
  * [ ] Change the status of the order (Created -> Processing, Processing -> Cancelled || Completed)
  * [ ] View details of a specific order
-* [ ] User management
- * [ ] Promote other user accounts to have admin status
- * [ ] Delete a user
- * [ ] Trigger password reset for a user (next time they successfully log in—with their old password—they are prompted for a new one)
+* [x] User management
+ * [x] Promote other user accounts to have admin status
+ * [x] Delete a user
+ * [x] Trigger password reset for a user (next time they successfully log in—with their old password—they are prompted for a new one)
 
 ### Data Validations
 

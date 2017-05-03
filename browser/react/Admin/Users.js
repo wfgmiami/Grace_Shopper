@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import UserListItem from './UserListItem';
+import { destroyUser } from '../../redux/reducers/admin/users';
+
 
 const Users = ({ users }) => {
   return (
@@ -16,5 +18,9 @@ const Users = ({ users }) => {
 const mapStateToProps = ({ users }) => ({
   users
 });
+
+// const mapDispatchToProps = dispatch => ({
+//   destroyUser: user => dispatch(destroyUser(user))
+// });
 
 export default connect(mapStateToProps)(Users);
