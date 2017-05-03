@@ -28,7 +28,7 @@ const mapStateToProps = ({ products, cart }) => (
 
 const mapDispatchToProps = dispatch => ({
   addToCart: item => dispatch(addToCart(item)),
-  removeFromCart: item => dispatch(removeFromCart(addToCart(item)))
+  removeFromCart: item => dispatch(removeFromCart(item))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategoryList);

@@ -13,6 +13,11 @@ class Nav extends React.Component {
     const cartItems = cart.reduce((memo, item) => {
       return memo + item.lineitems.quantity * 1;
     }, 0);
+    let token;
+    console.log(this.props.user);
+    if (this.props.user && this.props.user.isAdmin) {
+      token = localStorage.getItem( 'token' );
+    }
     return (
       <div>
         <nav id="mainNavbar" className="navbar navbar-default navbar-fixed-top">
@@ -25,11 +30,8 @@ class Nav extends React.Component {
               </button>
               <a className="navbar-brand">Grace Shopper</a>
             </div>
-            <div className="collapse navbar-collapse" id="myNavbar">
+            <div className="collapse navbar-collapse">
               <ul className="nav navbar-nav">
-                  <li className="dropdown active">            
-                    
-                  </li>
                 <li>
                   <a className="dropdown-toggle" data-toggle="dropdown" href="#">
                     Cart { cartItems }
@@ -38,6 +40,14 @@ class Nav extends React.Component {
                 <li className="divider" />
               </ul>
               <ul className="nav navbar-nav navbar-right">
+                {
+                  token &&
+                  <li className="">
+                    <Link href={`/admin`}>
+                      Admin
+                    </Link>
+                  </li>
+                }
                 <li className="">
                   <a href="/user/settings/">
                     <span className="glyphicon glyphicon-user" />
@@ -61,8 +71,9 @@ class Nav extends React.Component {
   }
 }
 
-const mapStateToProps = ({ cart }) => ({
-  cart
+const mapStateToProps = ({ cart, auth }) => ({
+  cart,
+  user: auth.user
 });
 
 export default connect(mapStateToProps)(Nav);

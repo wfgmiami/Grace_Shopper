@@ -1,5 +1,6 @@
 const router = require('express').Router();
 
+router.use('/admin', require('./admin'));
 router.use('/categories', require('./categories'));
 router.use('/glasses', require('./glasses'));
 router.use('/session', require('./session'));

@@ -6,13 +6,12 @@ import { connect } from 'react-redux';
 import Nav from './Nav';
 import LoginForm from './LoginForm';
 import FilterBar from './FilterBar';
-import SearchBar from './SearchBar';  
+import SearchBar from './SearchBar';
 import Cart from './Cart';
 
 class Main extends React.Component {
   constructor(props) {
     super();
-    console.log('main page',props.state.products);
   }
 
   render() {
@@ -21,18 +20,16 @@ class Main extends React.Component {
       <div className="container-fluid">
         <Nav />
         <div style={{ marginTop: '65px' }}>
-
           <div className="row">
           <SearchBar products={this.props.state.products}/>
             <div className="col-sm-2">
-              
               <FilterBar />
-              
             </div>
             <div className="col-sm-7">
               { this.props.children }
             </div>
             <div className="col-sm-3">
+              <LoginForm />
               <Cart />
             </div>
           </div>

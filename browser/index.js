@@ -14,16 +14,23 @@ import { loadProducts } from './redux/reducers/products';
 import { loadCategories } from './redux/reducers/categories';
 import { getCart } from './redux/reducers/cart';
 import { me } from './redux/reducers/auth';
+import { getUsers } from './redux/reducers/admin/users';
 
 import Main from './react/Main';
 import CategoryList from './react/CategoryList';
 import SignUp from './react/SignUp';
+import Admin from './react/Admin';
+import Users from './react/Admin/Users';
 
 const init = () => {
   store.dispatch( loadProducts( 1 ) );
   store.dispatch( loadCategories() );
   store.dispatch( me() );
   store.dispatch( getCart() );
+};
+
+const admin = () => {
+  store.dispatch(getUsers());
 };
 
 const app = (
@@ -34,6 +41,9 @@ const app = (
         {/*<Route path="login" component={ LoginPage } />*/}
       </Route>
       <Route path="/signup" component={ SignUp } />
+      <Route path="/admin" component={ Admin } onEnter={ admin }>
+        <Route path="users" component={ Users } />
+      </Route>
     </Router>
   </Provider>
 );
