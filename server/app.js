@@ -41,6 +41,6 @@ app.use( ( req, res, next ) => {
 app.use( ( err, req, res, next ) => {
   res.status( 500 );
   console.log( `Status 500: ${chalk.magenta.inverse(req.method)} ${chalk.blue.inverse(req.url)}` );
-  next( err.stack );
+  console.log( err );
 } );
 

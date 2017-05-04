@@ -14,7 +14,6 @@ class Nav extends React.Component {
       return memo + item.lineitems.quantity * 1;
     }, 0);
     let token;
-    console.log(this.props.user);
     if (this.props.user && this.props.user.isAdmin) {
       token = localStorage.getItem( 'token' );
     }

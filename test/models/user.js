@@ -55,7 +55,6 @@ describe( 'User model', () => {
       } );
     } );
   } );
-  // console.log(Object.keys(users));
 } );
 
 function notNullOrEmpty( obj ) {

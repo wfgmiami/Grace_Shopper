@@ -2,15 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addToCart, removeFromCart } from '../../redux/reducers/cart';
 
-// const Cart = ({} =>{
-
-// })
 class Cart extends Component{
   constructor(props){
     super();
   }
 
-  render(){
+  render() {
     var items = this.props.cart || [{name: 'this', price: 1.99, quantity: 2}, {name: 'other this', price: 2.99, quantity: 1}];
     if (typeof items === 'string'){
       items = JSON.parse(items);
@@ -24,30 +21,32 @@ class Cart extends Component{
               <th>Price</th>
               <th>Quantity</th>
               <th>Subtotal</th>
-              <th></th>
+              <th />
             </tr>
           </thead>
           <tbody>
-            {items.map(item => (
+            { items.map(item => (
               <tr key={item.id}>
-                <td data-th='Product' className="text-center">{item.name}</td>
-                <td data-th="Price" className="text-center">${item.price}</td>
-                <td data-th="Quatntity" className="text-center">{item.lineitems.quantity}</td>
-                <td data-th="Subtotal" className="text-center" className="text-center">{item.price * item.lineitems.quantity}</td>
+                <td data-th="Product" className="text-center">{ item.name }</td>
+                <td data-th="Price" className="text-center">${ item.lineitems.price }</td>
+                <td data-th="Quatntity" className="text-center">{ item.lineitems.quantity }</td>
+                <td data-th="Subtotal" className="text-center">{ item.lineitems.price * item.lineitems.quantity }</td>
                 <td className="actions" data-th="">
-                  <button className="btn btn-danger btn-xs" onClick={()=>this.props.removeFromCart(item)}><span className="glyphicon glyphicon-trash"></span> Remove</button>
+                  <button className="btn btn-danger btn-xs" onClick={ () => this.props.removeFromCart(item) }>
+                    <span className="glyphicon glyphicon-trash" /> Remove
+                  </button>
                 </td>
               </tr>
-            ))}
+            )) }
           </tbody>
           <tfoot>
       <tr>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td />
+        <td />
+        <td />
         <td className="hidden-xs text-center">
           <strong>
-            Total ${items.reduce(function(sum,item){return (sum+(item.price*item.lineitems.quantity))},0).toString().substring(0,4)}
+            Total ${items.reduce((sum, item) => ( sum + ((item.lineitems.price * 1) * (item.lineitems.quantity * 1)) ), 0).toString().substring(0, 4)}
           </strong>
         </td>
         <td>
@@ -57,7 +56,7 @@ class Cart extends Component{
      </tfoot>
         </table>
       </div>
-    )
+    );
   }
 }
 

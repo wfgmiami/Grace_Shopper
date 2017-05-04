@@ -1,5 +1,5 @@
 const router = require( 'express' ).Router();
-const { Order, Glasses, User } = require( '../../db' );
+const { Order, Glasses, User, LineItem } = require( '../../db' );
 const jwt = require( 'jwt-simple' );
 const secret = process.env.SECRET || '1701-FLX-NY';
 
@@ -36,10 +36,24 @@ router.post( '/pending/:token', ( req, res, next ) => {
       Order.scope( 'pending' ).findOne( { where: { userId } } ),
     ].concat( cart.map( glasses => Glasses.findById( glasses.id ) ) ) )
     .then( ( [ order, ...glasses ] ) => Promise.all(
-      glasses.map( ( glass, idx ) => order.addGlass( glass, { quantity: cart[ idx ].quantity, price: 100, date: new Date() }, { updatesOnDuplicate: true } ) )
+      glasses.map( ( glass, idx ) => order.addGlass( glass, {
+        quantity: cart[ idx ].lineitems.quantity,
+        price: cart[ idx ].lineitems.price,
+        date: new Date()
+      }, { updatesOnDuplicate: true } ) )
     ) )
     .then( () => res.sendStatus( 201 ) )
     .catch( next );
+} );
+
+router.delete( '/pending/:token/:itemId', ( req, res, next ) => {
+  const { userId } = req;
+  Promise.all( [
+      Order.scope( 'pending' ).findOne( { where: { userId } } ),
+      Glasses.findById( req.params.itemId )
+    ] )
+    .then( ( [ order, glasses ] ) => order.removeGlass( glasses ) )
+    .then( order => res.json( order ) );
 } );
 
 router.post( '/integrate/:token', ( req, res, next ) => {
@@ -61,7 +75,7 @@ router.post( '/integrate/:token', ( req, res, next ) => {
       return Promise.all(
         glasses.map( ( glass, idx ) => order.addGlass( glass, {
           quantity: cart[ idx ].lineitems.quantity,
-          price: 100,
+          price: cart[ idx ].lineitems.price,
           date: new Date()
         }, { updatesOnDuplicate: true } ) )
       );

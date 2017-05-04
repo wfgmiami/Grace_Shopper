@@ -15,7 +15,7 @@ const includes = {
         'inventory', 'createdAt', 'updatedAt', 'price', 'description'
       ]
     },
-    through: { attributes: [ 'quantity' ] }
+    through: { attributes: [ 'quantity', 'price' ] }
   } ]
 };
 

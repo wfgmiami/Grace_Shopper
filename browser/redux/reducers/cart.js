@@ -6,85 +6,82 @@ const cartReducer = ( state = [], action ) => {
 
   switch ( action.type ) {
   case UPDATE_CART:
-    state = action.cart;
+    state = Array.from( action.cart );
     break;
   default:
     break;
   }
   return state;
+
 };
 
 const addToCart = item => dispatch => {
   const token = localStorage.getItem( 'token' );
   let currentCart;
   if ( token ) {
-    currentCart = store.getState().cart;
-
-    // Check if item is alrady in the cart
-    const itemInCart = currentCart.filter( glass => glass.id === item.id ).length;
-    let itemQuantity = 1;
-
-    if ( itemInCart ) {
-      currentCart = currentCart.map( glass => {
-        if ( glass.id === item.id ) {
-          glass.lineitems.quantity++;
-          itemQuantity = glass.lineitems.quantity;
-        }
-        return glass;
-      } );
-    } else {
-      currentCart.push( item );
-    }
-
-    item.quantity = itemQuantity;
+    let newInfo = newCart( store.getState().cart, item );
+    currentCart = newInfo.currentCart;
+    console.log(currentCart);
+    item = newInfo.item;
 
     axios.post( `/api/order/pending/${token}`, {
         cart: [ item ]
       } )
-      .then( ( { data } ) => {
-        if ( data === 'Created' ) {
-          dispatch( { type: UPDATE_CART, cart: currentCart } );
-        }
+      .then( () => {
+        dispatch( { type: UPDATE_CART, cart: currentCart } );
       } );
   } else {
-    currentCart = JSON.parse( localStorage.getItem( 'cart' ) );
-    if ( !currentCart ) currentCart = [];
+    currentCart = JSON.parse( localStorage.getItem( 'cart' ) ) || [];
+    item.lineitems.price = item.price;
 
-    // Check if item is alrady in the cart
-    const itemInCart = currentCart.filter( glass => glass.id === item.id ).length;
-    // let itemQuantity = 1;
-
-    if ( itemInCart ) {
-      currentCart = currentCart.map( glass => {
-        if ( glass.id === item.id ) {
-          glass.lineitems.quantity++;
-          // itemQuantity = glass.lineitems.quantity;
-        }
-        return glass;
-      } );
-    } else {
-      currentCart.push( item );
-    }
+    currentCart = newCart( currentCart, item );
 
     localStorage.setItem( 'cart', JSON.stringify( currentCart ) );
     dispatch( { type: UPDATE_CART, cart: currentCart } );
   }
   console.log( currentCart );
+
+  function newCart( cart, insItem ) {
+    // Check if item is alrady in the cart
+    const itemInCart = cart.filter( glass => glass.id === insItem.id ).length;
+    let itemQuantity = 1;
+    let updatedCart = cart;
+
+    if ( itemInCart ) {
+      updatedCart = cart.map( glass => {
+        if ( glass.id === insItem.id ) {
+          glass.lineitems.quantity++;
+          itemQuantity = glass.lineitems.quantity;
+        }
+        glass.lineitems.price = glass.price || glass.lineitems.price;
+        return Object.assign({}, glass);
+      } );
+      insItem.lineitems = { quantity: itemQuantity, price: item.price };
+    } else {
+      insItem.lineitems = { quantity: 1, price: insItem.price };
+      updatedCart.push( insItem );
+    }
+    return {currentCart: updatedCart, item: insItem};
+  }
 };
 
 const removeFromCart = item => dispatch => {
-  let currentCart = JSON.parse( localStorage.getItem( 'cart' ) );
-  console.log(item)
+  const token = localStorage.getItem( 'token' );
+  let currentCart = JSON.parse( localStorage.getItem( 'cart' ) ) || store.getState().cart;
   currentCart = currentCart.filter( lineitem => lineitem.id !== item.id );
-
-  localStorage.setItem( 'cart', JSON.stringify( currentCart ) );
+  if ( token ) {
+    axios.delete( `/api/order/pending/${token}/${item.id}` )
+      .then( ( { data } ) => console.log( data ) );
+  } else {
+    localStorage.setItem( 'cart', JSON.stringify( currentCart ) );
+  }
   console.log( currentCart );
   dispatch( { type: UPDATE_CART, cart: currentCart } );
 };
 
 const integrateCart = ( localCart, token ) => {
   console.log( 'integrateCart' );
-  return axios.post( `api/order/integrate/${token}`, { cart: JSON.parse( localCart ) } );
+  return axios.post( `/api/order/integrate/${token}`, { cart: JSON.parse( localCart ) } );
 };
 
 const loadCart = ( token, dispatch ) => {
