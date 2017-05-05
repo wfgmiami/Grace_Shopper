@@ -8,7 +8,6 @@ class SearchBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = { input: '' };
-    //this.modFilter = this.modFilter.bind(this);
     this.changeSearch = this.changeSearch.bind(this);
     this.doSearch = this.doSearch.bind(this);
   }
@@ -48,7 +47,7 @@ class SearchBar extends React.Component {
 		    			      
 		      <div className="input-group-btn">
 
-		       		 <button className="btn btn-default" type="submit">
+		       		<button className="btn btn-default" type="submit">
 		        	<i className="glyphicon glyphicon-search" />
 		        	</button>
 		      	</div>

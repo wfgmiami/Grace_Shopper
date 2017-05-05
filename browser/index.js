@@ -18,6 +18,7 @@ import { getUsers } from './redux/reducers/admin/users';
 
 import Main from './react/Main';
 import CategoryList from './react/CategoryList';
+import ProductDetail from './react/ProductDetail'
 import SignUp from './react/SignUp';
 import Admin from './react/Admin';
 import Users from './react/Admin/Users';
@@ -39,6 +40,7 @@ const app = (
       <Route path="/" component={ Main } onEnter={ init }>
         <IndexRoute component={ CategoryList } />
         {/*<Route path="login" component={ LoginPage } />*/}
+        <Route path='/detail/:productId' components={ProductDetail} />
       </Route>
       <Route path="/signup" component={ SignUp } />
       <Route path="/admin" component={ Admin } onEnter={ admin }>
