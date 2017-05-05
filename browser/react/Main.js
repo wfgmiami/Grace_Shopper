@@ -16,12 +16,13 @@ class Main extends React.Component {
 
   render() {
     var seedData = [{name: "this"}, {name: "other this"}];
+    console.log('this.props.children********',this.props.children)
     return (
       <div className="container-fluid">
         <Nav />
         <div style={{ marginTop: '65px' }}>
           <div className="row">
-          <SearchBar products={this.props.state.products}/>
+          <SearchBar/>
             <div className="col-sm-2">
               <FilterBar />
             </div>

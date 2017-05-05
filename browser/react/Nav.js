@@ -28,7 +28,7 @@ class Nav extends React.Component {
                 <span className="icon-bar" />
                 <span className="icon-bar" />
               </button>
-              <a className="navbar-brand">Grace Shopper</a>
+              <c className="navbar-brand"><Link to='/'>Grace Shopper</Link></c>
             </div>
             <div className="collapse navbar-collapse">
               <ul className="nav navbar-nav">

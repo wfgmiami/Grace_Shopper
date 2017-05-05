@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 const ProductListItem = ({ product, addToCart, removeFromCart }) => (
   <div className="col-lg-4 col-md-6 col-sm-12">
@@ -14,7 +15,10 @@ const ProductListItem = ({ product, addToCart, removeFromCart }) => (
         </span>
         <img style={{ width: '100%', marginBottom: '0' }} className="img-responsive" src={ product.images[0] } />
       </div>
-      <div className="panel-footer"> <b>{ product.name }</b>
+      <div className="panel-footer">
+        <Link to={`/detail/${product.id}`}> 
+          <b>{ product.name }</b>
+        </Link>
       </div>
     </div>
   </div>
