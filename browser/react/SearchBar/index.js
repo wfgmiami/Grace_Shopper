@@ -8,7 +8,6 @@ class SearchBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = { input: '' };
-    //this.modFilter = this.modFilter.bind(this);
     this.changeSearch = this.changeSearch.bind(this);
     this.doSearch = this.doSearch.bind(this);
   }
@@ -32,15 +31,24 @@ class SearchBar extends React.Component {
     //console.log('search result', this.props);
     console.log('search input', this.state);
     return (
-      <div>
-        <form className="navbar-form" onSubmit={ this.doSearch }>
-        <div className="input-group">
-          <input className="form-control" placeholder="Search" type="text" value={this.state.input} onChange={this.changeSearch} />
-          <span className="input-group-btn">
-            <button className="btn btn-default glyphicon glyphicon-search" type="submit" />
-          </span>
-        </div>
-      </form>
+    	<div>
+
+	      <form className="navbar-form" onSubmit={
+	      	this.doSearch }>
+
+		    <div className="input-group add-on">
+
+		    	<input className="form-control" placeholder="Search" type="text" value={this.state.input} onChange={this.changeSearch}/>
+
+		      <div className="input-group-btn">
+
+		       		<button className="btn btn-default" type="submit">
+		        	<i className="glyphicon glyphicon-search" />
+		        	</button>
+		      	</div>
+		    </div>
+
+		  </form>
      </div>
     );
   }

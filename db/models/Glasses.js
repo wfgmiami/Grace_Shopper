@@ -47,7 +47,7 @@ const Glasses = conn.define( 'glasses', {
         if ( this.reviews.length ) {
           return Math.round( this.reviews.reduce( ( total, review ) => total + review.rating, 0 ) * 10 / this.reviews.length ) / 10;
         } else {
-          return 'No reviews yet';
+          return 'Leave the first review here';
         }
       } else {
         return 'Reviews were not included';

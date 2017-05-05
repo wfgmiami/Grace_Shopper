@@ -20,6 +20,12 @@ router.get('/search', ( req,res,next )=>{
 
 })
 
+router.get('/detail/:id', (req,res,next)=>{
+  console.log('Selected Glass: ', req.params.id)
+  Glasses.findById(req.params.id)
+    .then( glass => res.json(glass))
+})
+
 router.get( '/:offset', ( req, res, next ) => {
   const offset = ( req.params.offset - 1 ) * 15;
   if ( Object.keys( req.query ).length ) {
