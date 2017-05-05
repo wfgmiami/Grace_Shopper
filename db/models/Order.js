@@ -29,7 +29,7 @@ const Order = sequelize.define( 'orders', {
     type: Sequelize.TEXT
   }
   // productId through association
-  // userId/guestId through association
+  // userId through association
   // addressId through association
 }, {
   hooks: {

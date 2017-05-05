@@ -9,6 +9,7 @@ class Nav extends React.Component {
   }
 
   render() {
+    console.log(this.props.cart);
     let cart = typeof this.props.cart === 'string' ? JSON.parse(this.props.cart) : this.props.cart;
     const cartItems = cart.reduce((memo, item) => {
       return memo + item.lineitems.quantity * 1;

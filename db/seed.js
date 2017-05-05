@@ -36,14 +36,11 @@ function formatGlassesJSON( arr, category ) {
     prod.inventory = Math.floor( 100 * Math.random() );
     return prod;
   } );
-  //.filter( prod => prod )
-  //.filter( prod => prod.name );
 }
 
 function createReviews( products ) {
   const options = require( './jsondata/reviews' );
   const reviews = [];
-  // console.log(products);
   products.map( ( product, idx ) => {
     for ( let userId = 1; userId < 5; userId++ ) {
       let review = Object.assign({}, options[ Math.floor( Math.random() * options.length ) ]);
