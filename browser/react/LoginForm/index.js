@@ -13,6 +13,7 @@ const LoginForm = ({ invalidLogin, login, name, password, onNameChange, onPasswo
      { user ? <h3 style={h3Style}>Sign Out</h3> : <h3 style={h3Style}>Sign In</h3>}
      { user && `Hello, ${ user.name }` }
      { invalidLogin ? <div style={{ color: 'red' }}>Invalid Login</div> : null }
+      <div className="buffer local">
       <form onSubmit={ submitFn }>
         {!user && (<div>
           <div className="form-group">
@@ -22,25 +23,36 @@ const LoginForm = ({ invalidLogin, login, name, password, onNameChange, onPasswo
             <input className="form-control" type="password" placeholder="password" value={ password } onChange={ onPasswordChange } />
           </div>
           </div>)}
-          <div>
+
             <button className="btn btn-primary">{ user ? `Sign Out` : `Sign In` }</button>
-            {' '}<span>OR</span>{' '}
-            <a href="/api/auth/google" className="btn btn-social btn-google">
-              <i className="fa fa-google" />{' '}
-              <span> Sign in with Google </span>
-            </a>
-          </div>
+
+
       </form>
-      <br />
-<pre>
-Login:<br />
-<br />
-name: Arum, password: 123<br />
-name: Richard, password: 1234<br />
-name: Evan, password: 12345<br />
-name: Alex, password: 123456
-</pre>
-    </div>
+      </div>
+
+      <div className="or buffer">
+        <div className="back-line">
+          <span>OR</span>
+        </div>
+      </div>
+      <div className="buffer oauth">
+        <p>
+          <a href="/api/auth/google" className="btn btn-social btn-google">
+            <i className="fa fa-google" />
+            <span>Sign In With Google</span>
+          </a>
+        </p>
+      </div>
+
+      <pre>
+        Login:
+        <br />
+        name: Arum, password: 123<br />
+        name: Richard, password: 1234<br />
+        name: Evan, password: 12345<br />
+        name: Alex, password: 123456
+      </pre>
+  </div>
  );
 };
 

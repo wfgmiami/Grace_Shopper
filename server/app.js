@@ -19,6 +19,7 @@ db.sync()
 app.use( require( 'body-parser' ).json() );
 app.use( '/vendor', express.static( path.join( __dirname, '..', 'node_modules' ) ) );
 app.use( '/dist', express.static( path.join( __dirname, '..', 'dist' ) ) );
+app.use( '/stylesheets', express.static( path.join( __dirname, '..','browser/stylesheets') ) );
 app.use( '/api', require( './routes' ) );
 
 app.use( requestId );
