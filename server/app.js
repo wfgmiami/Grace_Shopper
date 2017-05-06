@@ -4,6 +4,8 @@ const db = require( '../db' );
 const path = require( 'path' );
 const chalk = require( 'chalk' );
 const cuid = require( 'cuid' );
+const session = require('express-session');
+// const seed = require( '../db/seed' );
 
 const requestId = ( req, res, next ) => {
   req.requestId = cuid();
@@ -21,6 +23,28 @@ app.use( '/api', require( './routes' ) );
 
 app.use( requestId );
 
+app.use( session({
+  secret: 'glasses',
+  resave: false,
+  saveUnitialized: false
+}));
+
+app.use(require('./passport.middleware.js'))
+
+app.use((req, res, next) => {
+  req.session.counter = req.session.counter || 0;
+  req.session.counter++;
+  next();
+});
+
+app.use('/api/auth', (req, res, next) => {
+  console.log('passport user', req.user && req.user.name);
+  console.log('session', req.session);
+  next();
+});
+
+app.use( '/api/auth', require( './api/auth' ) );
+
 app.get( '*', ( req, res, next ) => {
   res.sendFile( path.join( __dirname, '..', 'browser/index.html' ) );
 } );
@@ -28,7 +52,6 @@ app.get( '*', ( req, res, next ) => {
 const port = process.env.PORT || 3000;
 app.listen( port, () => console.log( `Listening on port ${port}` ) );
 
-//db.seed();
 
 // Handle file not found
 app.use( ( req, res, next ) => {
@@ -44,3 +67,5 @@ app.use( ( err, req, res, next ) => {
   console.log( err );
 } );
 
+// seed()
+// .then( e => console.log(e));
