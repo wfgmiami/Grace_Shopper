@@ -4,6 +4,7 @@
 
 const sequelize = require( '../conn' );
 const Glasses = require( './Glasses' );
+const User = require( './User' );
 
 const { Sequelize } = sequelize;
 
@@ -32,21 +33,23 @@ const Order = sequelize.define( 'orders', {
   // userId through association
   // addressId through association
 }, {
+  scopes: {
+    pending: Object.assign( { where: { status: 'Pending', userId: { $ne: null } } }, includes ),
+    shipping: Object.assign( { where: { status: 'Shipping', userId: { $ne: null } } }, includes ),
+    delivered: Object.assign( { where: { status: 'Delivered', userId: { $ne: null } } }, includes ),
+    cancelled: Object.assign( { where: { status: 'Cancelled', userId: { $ne: null } } }, includes ),
+    all: Object.assign( { where: { userId: { $ne: null } } }, includes ),
+    user: { include: [ User ] }
+  },
   hooks: {
-    beforeValidate(order) {
-      if (order.status !== 'Pending' && !order.paymentId) {
-        throw new Error('There is no payment associated to the order');
+    beforeValidate( order ) {
+      if ( order.status !== 'Pending' && !order.paymentId ) {
+        throw new Error( 'There is no payment associated to the order' );
       }
-      if (order.status !== 'Pending' && !order.shippingAddress) {
-        throw new Error('There is no shipping address associated to the order');
+      if ( order.status !== 'Pending' && !order.shippingAddress ) {
+        throw new Error( 'There is no shipping address associated to the order' );
       }
     }
-  },
-  scopes: {
-    pending: Object.assign( { status: 'Pending' }, includes ),
-    shipping: Object.assign( { status: 'Shipping' }, includes ),
-    delivered: Object.assign( { status: 'Delivered' }, includes ),
-    cancelled: Object.assign( { status: 'Cancelled' }, includes )
   }
 } );
 

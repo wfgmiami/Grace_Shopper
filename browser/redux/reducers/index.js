@@ -8,6 +8,7 @@ import categories from './categories';
 import authReducer from './auth';
 import cart from './cart';
 import users from './admin/users';
+import adminOrders from './admin/orders';
 
 export default combineReducers( {
   app: rootReducer,
@@ -15,6 +16,7 @@ export default combineReducers( {
   products,
   categories,
   cart,
-  users
+  users,
+  adminOrders
 } );
 

@@ -31,7 +31,7 @@ class UserListItem extends React.Component {
     const selStyle = JSON.parse(this.state.isAdmin) ? { color: 'blue', fontWeight: 'bold' } : {};
     console.log(this.props);
     return (
-      <li className="list-group-item form-inline">
+      <div>
         <button className="glyphicon glyphicon-remove btn btn-danger btn-xs pull-right" onClick={ () => this.props.destroyUser(user) } />
         <p>
           <b>ID:</b> { user.id }
@@ -59,7 +59,7 @@ class UserListItem extends React.Component {
             <option value="false">false</option>
           </select>
         </p>
-      </li>
+      </div>
     );
   }
 }

@@ -57,11 +57,11 @@ const Glasses = conn.define( 'glasses', {
   scopes: {
     inStock: {
       attributes: { exclude: [ 'createdAt', 'updatedAt' ] },
-      inventory: { $gt: 0 }
+      where: { inventory: { $gt: 0 } }
     },
     outOfStock: {
       attributes: { exclude: [ 'createdAt', 'updatedAt' ] },
-      inventory: 0
+      where: { inventory: 0 }
     },
     categories: {
       attributes: { exclude: [ 'createdAt', 'updatedAt' ] },
