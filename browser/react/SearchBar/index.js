@@ -27,28 +27,18 @@ class SearchBar extends React.Component {
   }
 
   render() {
-
-    //console.log('search result', this.props);
-    console.log('search input', this.state);
     return (
-    	<div>
-
-	      <form className="navbar-form" onSubmit={
-	      	this.doSearch }>
-
-		    <div className="input-group add-on">
-
-		    	<input className="form-control" placeholder="Search" type="text" value={this.state.input} onChange={this.changeSearch}/>
-
-		      <div className="input-group-btn">
-
-		       		<button className="btn btn-default" type="submit">
-		        	<i className="glyphicon glyphicon-search" />
-		        	</button>
-		      	</div>
-		    </div>
-
-		  </form>
+      <div>
+        <form className="navbar-form" onSubmit={ this.doSearch }>
+        <div className="input-group">
+          <input className="form-control" placeholder="Search" type="text" value={this.state.input} onChange={this.changeSearch} />
+          <span className="input-group-btn">
+            <button className="btn btn-default" type="submit">
+              <span className="glyphicon glyphicon-search" />
+            </button>
+          </span>
+        </div>
+      </form>
      </div>
     );
   }
