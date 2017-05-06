@@ -22,8 +22,16 @@ const LoginForm = ({ invalidLogin, login, name, password, onNameChange, onPasswo
             <input className="form-control" type="password" placeholder="password" value={ password } onChange={ onPasswordChange } />
           </div>
           </div>)}
-        <button className="btn btn-primary">{ user ? `Sign Out` : `Sign In` }</button>
+          <div>
+            <button className="btn btn-primary">{ user ? `Sign Out` : `Sign In` }</button>
+            {' '}<span>OR</span>{' '}
+            <a href="/api/auth/google" className="btn btn-social btn-google">
+              <i className="fa fa-google" />{' '}
+              <span> Sign in with Google </span>
+            </a>
+          </div>
       </form>
+      <br />
 <pre>
 Login:<br />
 <br />
