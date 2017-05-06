@@ -90,3 +90,19 @@ function generateGlassesCategories( _glasses ) {
   return _glassesCategories;
 }
 
+// below is used in heroku deployment
+// const seed = () => {
+//   return db.sync( { force: true } )
+//   .then( () => console.log( chalk.yellow( ' Beginning seed ' ) ) )
+//   .then( () => Promise.all( users.map( user => db.models.users.create( user ) ) ) )
+//   .then( () => db.models.glasses.bulkCreate( glasses ) )
+//   .then( () => db.models.reviews.bulkCreate( createReviews( glasses ) ) )
+//   .then( () => db.models.categories.bulkCreate( categories ) )
+//   .then( () => db.models.glassesCategory.bulkCreate( glassesCategories ) )
+//   .then( () => db.models.lineitems.create( { orderId: 1, glassId: 1, date: new Date(), price: 210, quantity: 1 } ) )
+//   .then( () => db.models.lineitems.create( { orderId: 2, glassId: 45, date: new Date(), price: 109, quantity: 1 } ) )
+//   .then( () => console.log( chalk.green.bold.inverse( ` Seeded OK ` ) ) )
+//   .catch( error => console.error( error.stack ) );
+// }
+
+// module.exports = seed;

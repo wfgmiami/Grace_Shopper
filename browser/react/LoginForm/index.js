@@ -14,20 +14,18 @@ const LoginForm = ({ invalidLogin, login, name, password, onNameChange, onPasswo
      { user && `Hello, ${ user.name }` }
      { invalidLogin ? <div style={{ color: 'red' }}>Invalid Login</div> : null }
       <div className="buffer local">
-      <form onSubmit={ submitFn }>
-        {!user && (<div>
-          <div className="form-group">
-            <input className="form-control" placeholder="name" value={ name } onChange={ onNameChange } />
-          </div>
-          <div className="form-group">
-            <input className="form-control" type="password" placeholder="password" value={ password } onChange={ onPasswordChange } />
-          </div>
-          </div>)}
+        <form onSubmit={ submitFn }>
+          {!user && (<div>
+            <div className="form-group">
+              <input className="form-control" placeholder="name" value={ name } onChange={ onNameChange } />
+            </div>
+            <div className="form-group">
+              <input className="form-control" type="password" placeholder="password" value={ password } onChange={ onPasswordChange } />
+            </div>
+            </div>)}
 
-            <button className="btn btn-primary">{ user ? `Sign Out` : `Sign In` }</button>
-
-
-      </form>
+              <button className="btn btn-primary">{ user ? `Sign Out` : `Sign In` }</button>
+        </form>
       </div>
 
       <div className="or buffer">

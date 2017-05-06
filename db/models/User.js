@@ -12,7 +12,7 @@ const User = conn.define( 'users', {
     allowNull: false,
     validate: {
       notEmpty: true,
-      isAlpha: true,
+      //isAlpha: true,
       len: [ 2, 255 ]
     }
   },
@@ -39,6 +39,9 @@ const User = conn.define( 'users', {
   isAdmin: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
+  },
+   googleId: {
+    type: Sequelize.STRING
   },
 }, {
   scopes: {
@@ -75,6 +78,7 @@ const User = conn.define( 'users', {
   },
   instanceMethods: {
     getOrder() {
+      console.log('............thisid',this.id)
       return Order.scope('pending').findOrCreate( {
         where: { userId: this.id }
       } );

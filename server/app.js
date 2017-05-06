@@ -68,5 +68,6 @@ app.use( ( err, req, res, next ) => {
   console.log( err );
 } );
 
+// below is used in heroku deployment
 // seed()
 // .then( e => console.log(e));
