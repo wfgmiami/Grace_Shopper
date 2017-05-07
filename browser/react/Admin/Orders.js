@@ -4,53 +4,37 @@ import { getOrders } from '../../redux/reducers/admin/orders';
 
 import Order from './Order';
 
-class AdminOrders extends React.Component {
-  constructor() {
-    super();
-    this.state = { filter: 'all' };
-    this.onGetOrders = this.onGetOrders.bind(this);
-  }
+const AdminOrders = ( { orders: { orders, scope }, getOrders } ) => (
 
-  onGetOrders(filter) {
-    this.setState( { filter } );
-    this.props.getOrders(filter);
-  }
+<div className="container">
+  <p className="text-center">
+    Filter: { ' ' }
+    <span className="btn-group">
+      <button role="button" className={`btn btn-default ${ (scope === 'all' || !scope) && 'active' }`} onClick={ () => getOrders('all') }>
+        All
+      </button>
+      <button role="button" className={`btn btn-default ${ scope === 'pending' && 'active' }`} onClick={ () => getOrders('pending') }>
+        Pending
+      </button>
+      <button role="button" className={`btn btn-default ${ scope === 'shipping' && 'active' }`} onClick={ () => getOrders('shipping') }>
+        Shipping
+      </button>
+      <button role="button" className={`btn btn-default ${ scope === 'delivered' && 'active' }`} onClick={ () => getOrders('delivered') }>
+        Delivered
+      </button>
+      <button role="button" className={`btn btn-default ${ scope === 'cancelled' && 'active' }`} onClick={ () => getOrders('cancelled') }>
+        Cancelled
+      </button>
+    </span>
+  </p>
+  <h3>Admin Orders</h3>
+  { !orders.length && (<h4>No orders to display</h4>) }
+  <ul className="list-group">
+    { orders.map(order => <Order key={order.id} order={order} />) }
+  </ul>
+</div>
 
-  render() {
-    const { orders, getOrders } = this.props;
-    const { filter } = this.state;
-    return (
-      <div className="container">
-        <p className="text-center">
-          Filter: { ' ' }
-          <span className="btn-group">
-            <button role="button" className={`btn btn-default ${ filter === 'all' && 'active' }`} onClick={ () => this.onGetOrders('all') }>
-              All
-            </button>
-            <button role="button" className={`btn btn-default ${ filter === 'pending' && 'active' }`} onClick={ () => this.onGetOrders('pending') }>
-              Pending
-            </button>
-            <button role="button" className={`btn btn-default ${ filter === 'shipping' && 'active' }`} onClick={ () => this.onGetOrders('shipping') }>
-              Shipping
-            </button>
-            <button role="button" className={`btn btn-default ${ filter === 'delivered' && 'active' }`} onClick={ () => this.onGetOrders('delivered') }>
-              Delivered
-            </button>
-            <button role="button" className={`btn btn-default ${ filter === 'cancelled' && 'active' }`} onClick={ () => this.onGetOrders('cancelled') }>
-              Cancelled
-            </button>
-          </span>
-        </p>
-        <h3>Admin Orders</h3>
-        { !orders.length && (<h4>No orders to display</h4>) }
-        <ul className="list-group">
-          { orders.map(order => <Order key={order.id} order={order} />) }
-        </ul>
-      </div>
-    );
-
-  }
-}
+);
 
 
 const mapStateToProps = ({ adminOrders }) => ({
