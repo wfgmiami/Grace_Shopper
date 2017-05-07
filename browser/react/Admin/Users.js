@@ -6,7 +6,7 @@ const Users = ({ users }) => {
   console.log(users);
   return (
     <div className="container">
-      <h1>Users</h1>
+      <h3>Users</h3>
       <ul className="list-group">
         { users.map(user => (
           <li key={user.id} className="list-group-item form-inline">

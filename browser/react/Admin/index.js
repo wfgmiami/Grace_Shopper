@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import Nav from './Nav';
+
 function mapStateToProps(state) {
   return {
 
@@ -16,6 +18,7 @@ export class Admin extends React.Component {
     return (
       <div className="container-fluid">
         <h1>Admin</h1>
+        <Nav />
         { this.props.children }
       </div>
     );

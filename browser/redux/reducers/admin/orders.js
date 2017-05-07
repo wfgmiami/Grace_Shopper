@@ -8,7 +8,12 @@ const users = ( state = [], action ) => {
     state = action.users;
     break;
   case 'MODIFY_ORDER':
-    state = state.filter( user => user.id !== action.user.id );
+    state = state.map( order => {
+      if (order.id === action.order.id) {
+        order.status = action.order.status;
+      }
+      return order;
+    } );
     break;
   default:
     break;
@@ -22,7 +27,7 @@ export const getOrders = scope => dispatch => {
 };
 
 export const modifyOrder = ( order, status ) => dispatch => {
-  axios.put( `/api/admin/order/${token}/${order.id}`, status )
+  axios.put( `/api/admin/order/${token}/${order.id}`, { status } )
     .then( modOrder => dispatch( { type: 'MODIFY_ORDER', order: modOrder } ) );
 };
 

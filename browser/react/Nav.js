@@ -9,7 +9,6 @@ class Nav extends React.Component {
   }
 
   render() {
-    console.log(this.props.cart);
     let cart = typeof this.props.cart === 'string' ? JSON.parse(this.props.cart) : this.props.cart;
     const cartItems = cart.reduce((memo, item) => {
       return memo + item.lineitems.quantity * 1;
@@ -28,7 +27,7 @@ class Nav extends React.Component {
                 <span className="icon-bar" />
                 <span className="icon-bar" />
               </button>
-              <c className="navbar-brand"><Link to='/'>Grace Shopper</Link></c>
+              <c className="navbar-brand"><Link to="/">Grace Shopper</Link></c>
             </div>
             <div className="collapse navbar-collapse">
               <ul className="nav navbar-nav">
@@ -49,15 +48,8 @@ class Nav extends React.Component {
                   </li>
                 }
                 <li className="">
-                  <a href="/user/settings/">
-                    <span className="glyphicon glyphicon-user" />
-                    { ' ' }
-                    Sign In
-                  </a>
-                </li>
-                <li className="">
                   <Link to="/signup">
-                    <span className="glyphicon glyphicon-heart"></span>
+                    <span className="glyphicon glyphicon-heart" />
                     { ' ' }
                     Sign Up
                   </Link>

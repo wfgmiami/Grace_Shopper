@@ -27,20 +27,25 @@ router.get( '/:token', ( req, res, next ) => {
 } );
 
 router.put( '/:token/:orderId', ( req, res, next ) => {
+  console.log({ userId: req.userId, id: req.params.orderId });
   isAdmin( req )
-    .then( () => Order
-      .findOne( { where: { userId: req.userId, id: req.params.orderId } } ) )
+    .then( () => Order.findOne( { where: { id: req.params.orderId } } ) )
     .then( order => {
       order.status = req.body.status;
       return order.save();
     } )
-    .then( order => res.json( order ) );
+    .then( order => res.json( order ) )
+    .catch( next );
 } );
 
 
 // Don't use the default error handler, use this instead
 router.use( ( err, req, res, next ) => {
   if ( err.message === 'User is not an admin' ) res.sendStatus( 401 );
+  // else {
+  //   res.sendStatus(500);
+  // }
+  next(err);
 } );
 
 module.exports = router;
