@@ -21,9 +21,9 @@ export const getOrders = scope => dispatch => {
     .then( ( { data } ) => dispatch( { type: 'LOAD_ORDERS', users: data } ) );
 };
 
-export const modifyOrder = ( order, mods ) => dispatch => {
-  axios.put( `/api/admin/order/${token}/${order.id}`, mods )
-    .then( modOrder => dispatch( { type: 'MODIFY_ORDER', user: modOrder } ) );
+export const modifyOrder = ( order, status ) => dispatch => {
+  axios.put( `/api/admin/order/${token}/${order.id}`, status )
+    .then( modOrder => dispatch( { type: 'MODIFY_ORDER', order: modOrder } ) );
 };
 
 export default users;

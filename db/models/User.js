@@ -6,6 +6,7 @@ const Sequelize = require( 'sequelize' );
 const conn = require( '../conn' );
 const Order = require( './Order' );
 
+
 const User = conn.define( 'users', {
   name: {
     type: Sequelize.STRING,
@@ -40,9 +41,9 @@ const User = conn.define( 'users', {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },
-   googleId: {
+  googleId: {
     type: Sequelize.STRING
-  },
+  }
 }, {
   scopes: {
     admin: {
@@ -78,7 +79,7 @@ const User = conn.define( 'users', {
   },
   instanceMethods: {
     getOrder() {
-      return Order.scope('pending').findOrCreate( {
+      return Order.scope( 'pending' ).findOrCreate( {
         where: { userId: this.id }
       } );
     }

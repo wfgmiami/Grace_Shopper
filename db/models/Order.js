@@ -4,7 +4,6 @@
 
 const sequelize = require( '../conn' );
 const Glasses = require( './Glasses' );
-const User = require( './User' );
 
 const { Sequelize } = sequelize;
 
@@ -38,8 +37,7 @@ const Order = sequelize.define( 'orders', {
     shipping: Object.assign( { where: { status: 'Shipping', userId: { $ne: null } } }, includes ),
     delivered: Object.assign( { where: { status: 'Delivered', userId: { $ne: null } } }, includes ),
     cancelled: Object.assign( { where: { status: 'Cancelled', userId: { $ne: null } } }, includes ),
-    all: Object.assign( { where: { userId: { $ne: null } } }, includes ),
-    user: { include: [ User ] }
+    all: Object.assign( { where: { userId: { $ne: null } } }, includes )
   },
   hooks: {
     beforeValidate( order ) {
@@ -54,4 +52,3 @@ const Order = sequelize.define( 'orders', {
 } );
 
 module.exports = Order;
-

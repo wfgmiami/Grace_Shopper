@@ -19,11 +19,22 @@ function isAdmin( req ) {
 router.get( '/:token', ( req, res, next ) => {
   isAdmin( req )
     .then( () => Order
-      .scope( 'user', req.query.scope || 'all' )
-      .findAll()
+      .scope( req.query.scope || 'all' )
+      .findAll( { include: [ User ] } )
     )
     .then( orders => res.json( orders ) )
     .catch( next );
+} );
+
+router.put( '/:token/:orderId', ( req, res, next ) => {
+  isAdmin( req )
+    .then( () => Order
+      .findOne( { where: { userId: req.userId, id: req.params.orderId } } ) )
+    .then( order => {
+      order.status = req.body.status;
+      return order.save();
+    } )
+    .then( order => res.json( order ) );
 } );
 
 
