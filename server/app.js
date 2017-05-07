@@ -38,11 +38,11 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/api/auth', (req, res, next) => {
-  console.log('passport user', req.user && req.user.name);
-  console.log('session', req.session);
-  next();
-});
+// app.use('/api/auth', (req, res, next) => {
+//   console.log('passport user', req.user && req.user.name);
+//   console.log('session', req.session);
+//   next();
+// });
 
 app.use( '/api/auth', require( './api/auth' ) );
 

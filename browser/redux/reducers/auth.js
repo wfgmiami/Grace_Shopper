@@ -34,18 +34,30 @@ const invalidLogin = () => {
 const me = () => {
   return ( dispatch ) => {
     const token = localStorage.getItem( 'token' );
-    if ( !token ) return;
-    return axios.get( `/api/session/${token}` )
+    if ( !token ){
+      return axios.get('/api/auth/me')
+      .then( response => response.data )
+      .then( user => dispatch( loginSuccess( user ) ) )
+    }else{
+      return axios.get( `/api/session/${token}` )
       .then( response => response.data )
       .then( user => dispatch( loginSuccess( user ) ) )
       .catch(() => localStorage.removeItem('token'));
+    }
+
   };
 };
 
 const logout = ( user ) => {
-  localStorage.setItem( 'token', '' );
+  const token = localStorage.getItem( 'token' );
   return ( dispatch ) => {
-    dispatch( logoutSuccess() );
+    if ( !token ){
+      axios.delete('/api/auth/me')
+      .then( () => dispatch( logoutSuccess() ) );
+    }else{
+      localStorage.setItem( 'token', '' );
+       dispatch( logoutSuccess() );
+    }
   };
 };
 
