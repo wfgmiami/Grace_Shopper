@@ -3,6 +3,8 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const User = require('../../../db/models/User');
 
+const Order = require('../../../db/models/Order');
+
 passport.use(
   new GoogleStrategy({
     clientID:
@@ -22,7 +24,10 @@ passport.use(
       defaults: info
     })
     .spread( user => {
-      //console.log(user)
+      Order.findOrCreate({
+          where: { userId: user.id },
+          defaults: { userId: this.id, status: 'Pending' }
+      })
       done(null, user)
     })
     .catch(done);

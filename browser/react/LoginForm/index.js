@@ -7,7 +7,6 @@ const LoginForm = ({ invalidLogin, login, name, password, onNameChange, onPasswo
 
   const submitFn = user ? logout : login;
   const h3Style = { marginTop: '0px' };
-
  return (
    <div>
      { user ? <h3 style={h3Style}>Sign Out</h3> : <h3 style={h3Style}>Sign In</h3>}
@@ -27,20 +26,21 @@ const LoginForm = ({ invalidLogin, login, name, password, onNameChange, onPasswo
               <button className="btn btn-primary">{ user ? `Sign Out` : `Sign In` }</button>
         </form>
       </div>
-
-      <div className="or buffer">
-        <div className="back-line">
-          <span>OR</span>
+      {!user && (<div>
+        <div className="or buffer">
+          <div className="back-line">
+            <span>OR</span>
+          </div>
         </div>
-      </div>
-      <div className="buffer oauth">
-        <p>
-          <a href="/api/auth/google" className="btn btn-social btn-google">
-            <i className="fa fa-google" />
-            <span>Sign In With Google</span>
-          </a>
-        </p>
-      </div>
+        <div className="buffer oauth">
+          <p>
+            <a href="/api/auth/google" className="btn btn-social btn-google">
+              <i className="fa fa-google" />
+              <span>Sign In With Google</span>
+            </a>
+          </p>
+        </div>
+      </div>)}
 
       <pre>
         Login:
@@ -89,7 +89,6 @@ class LoginPage extends Component{
   }
 
   render(){
-
     return (
       <LoginForm
         invalidLogin={ this.props.invalidLogin }

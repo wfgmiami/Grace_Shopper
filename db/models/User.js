@@ -65,7 +65,8 @@ const User = conn.define( 'users', {
       return users;
     },
     afterCreate( user ) {
-      return user.getOrder();
+      if(!user.googleId)
+        return user.getOrder();
     }
   },
   classMethods: {

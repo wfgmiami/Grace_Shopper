@@ -16,7 +16,7 @@ class Main extends React.Component {
 
   render() {
     var seedData = [{name: "this"}, {name: "other this"}];
-    console.log('this.props.children********',this.props.children)
+    console.log('this.props.children********',this.props)
     return (
       <div className="container-fluid">
         <Nav />
