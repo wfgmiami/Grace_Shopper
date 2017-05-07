@@ -5,7 +5,6 @@ const path = require( 'path' );
 const chalk = require( 'chalk' );
 const cuid = require( 'cuid' );
 const session = require( 'express-session' );
-// const seed = require( '../db/seed' );
 
 const requestId = ( req, res, next ) => {
   req.requestId = cuid();
@@ -61,8 +60,4 @@ app.use( ( err, req, res, next ) => {
   console.log( `Status 500: ${chalk.magenta.inverse(req.method)} ${chalk.blue.inverse(req.url)}` );
   console.log( err );
 } );
-
-// below is used in heroku deployment
-// seed()
-// .then( e => console.log(e));
 
