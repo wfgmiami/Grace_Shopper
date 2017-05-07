@@ -32,11 +32,7 @@ const Order = sequelize.define( 'orders', {
   // userId through association
   // addressId through association
 }, {
-    // scopes: {
-    // pending: Object.assign( { status: 'Pending' }, includes ),
-    // shipping: Object.assign( { status: 'Shipping' }, includes ),
-    // delivered: Object.assign( { status: 'Delivered' }, includes ),
-    // cancelled: Object.assign( { status: 'Cancelled' }, includes )
+
   scopes: {
     pending: Object.assign( { where: { status: 'Pending', userId: { $ne: null } } }, includes ),
     shipping: Object.assign( { where: { status: 'Shipping', userId: { $ne: null } } }, includes ),
