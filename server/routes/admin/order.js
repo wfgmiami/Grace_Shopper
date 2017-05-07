@@ -27,7 +27,6 @@ router.get( '/:token', ( req, res, next ) => {
 } );
 
 router.put( '/:token/:orderId', ( req, res, next ) => {
-  console.log({ userId: req.userId, id: req.params.orderId });
   isAdmin( req )
     .then( () => Order.findOne( { where: { id: req.params.orderId } } ) )
     .then( order => {

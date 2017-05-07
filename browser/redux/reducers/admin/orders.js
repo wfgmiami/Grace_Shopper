@@ -16,7 +16,7 @@ const users = ( state = initialState, action ) => {
   case 'MODIFY_ORDER':
     state = Object.assign( {}, state, action.payload );
     state.orders = state.orders.map( order => {
-      if ( order.id === action.order.id ) {
+      if ( order.id === action.payload.order.id ) {
         order.status = action.order.status;
       }
       return order;
