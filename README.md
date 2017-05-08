@@ -4,6 +4,11 @@ Due Date: May 9, 2017
 
 ----
 
+## Site:
+[Grace Shopper](http://grace-shopper.herokuapp.com)
+
+----
+
 ## Requirements
 
 ### Users
@@ -23,7 +28,7 @@ Due Date: May 9, 2017
  * [ ] Edit/update quantities of items in the cart
  * [x] Log in and continue editing the cart
  * [x] Refresh the page without being logged in and have the cart persist (you may use sessionStorage, localStorage, Cookies or JWT for this)
-* [ ] Account Management
+* [x] Account Management
  * [x] Create an account
  * [x] Login with Facebook and/or Google
 * [ ] Checkout

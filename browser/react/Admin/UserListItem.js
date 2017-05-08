@@ -2,6 +2,39 @@ import React from 'react';
 import { destroyUser, modifyUser } from '../../redux/reducers/admin/users';
 import { connect } from 'react-redux';
 
+const UserItem = ({ user, destroyUser, updatePassExp, passwordExpired, requireNewPassword, isAdmin }) => {
+  const selStyle = JSON.parse(isAdmin) ? { color: 'blue', fontWeight: 'bold' } : {};
+  const passButtonClass = passwordExpired ? 'btn btn-default pull-right' : 'btn btn-warning pull-right';
+  const passButtonText = passwordExpired ? 'Password Required Sent' : 'Require New Password';
+  return (
+  <div>
+    <button className="glyphicon glyphicon-remove btn btn-danger btn-xs pull-right" onClick={ () => destroyUser(user) } />
+    <p>
+      <b>ID:</b> { user.id }
+    </p>
+    <p>
+      <b>Name:</b> { user.name }
+    </p>
+    <p>
+      <b>Email:</b> { user.email }
+    </p>
+    <button className={ passButtonClass } onClick={ () => requireNewPassword( user ) } disabled={ passwordExpired }>
+      { passButtonText }
+    </button>
+    <p>
+      <b>Admin:</b> { ' ' }
+      <select
+        onChange={ ev => updatePassExp(ev, user) }
+        defaultValue={ JSON.parse( isAdmin ) }
+        style={ selStyle }
+        className="form-control"
+      >
+        <option value="true">true</option>
+        <option value="false">false</option>
+      </select>
+    </p>
+  </div>
+)};
 
 class UserListItem extends React.Component {
   constructor(props) {
@@ -31,35 +64,14 @@ class UserListItem extends React.Component {
     const selStyle = JSON.parse(this.state.isAdmin) ? { color: 'blue', fontWeight: 'bold' } : {};
     console.log(this.props);
     return (
-      <div>
-        <button className="glyphicon glyphicon-remove btn btn-danger btn-xs pull-right" onClick={ () => this.props.destroyUser(user) } />
-        <p>
-          <b>ID:</b> { user.id }
-        </p>
-        <p>
-          <b>Name:</b> { user.name }
-        </p>
-        <p>
-          <b>Email:</b> { user.email }
-        </p>
-        <button
-          className={ this.state.passwordExpired ? 'btn btn-default pull-right' : 'btn btn-warning pull-right'}
-          onClick={ () => this.requireNewPassword( user ) }
-          disabled={ this.state.passwordExpired }
-        >{this.state.passwordExpired ? 'Password Required Sent' : 'Require New Password'}</button>
-        <p>
-          <b>Admin:</b> { ' ' }
-          <select
-            onChange={ ev => this.updatePassExp(ev, user) }
-            defaultValue={ JSON.parse( this.state.isAdmin ) }
-            style={ selStyle }
-            className="form-control"
-          >
-            <option value="true">true</option>
-            <option value="false">false</option>
-          </select>
-        </p>
-      </div>
+      <UserItem
+        user={ user }
+        isAdmin={ this.state.isAdmin }
+        destroyUser={ this.props.destroyUser }
+        updatePassExp={ this.updatePassExp }
+        passwordExpired={ this.state.passwordExpired }
+        requireNewPassword={ this.requireNewPassword }
+      />
     );
   }
 }

@@ -6,22 +6,16 @@ router.get( '/search', ( req, res, next ) => {
 
   Glasses.findAll( {
       where: {
-        name: {
-          $iLike: `%${req.query.name}%`
-        }
+        name: { $iLike: `%${req.query.name}%` }
       }
     } )
-    .then( glasses => {
-      console.log( '"Glasses from search bar"', res );
-      return res.json( glasses );
-    } )
+    .then( glasses => res.json( glasses ) )
     .catch( next );
-
 } );
 
 router.get( '/detail/:id', ( req, res, next ) => {
   console.log( 'Selected Glass: ', req.params.id );
-  Glasses.scope('categories').findById( req.params.id/*, { include: [ { all: true } ] }*/ )
+  Glasses.scope( 'categories' ).findById( req.params.id )
     .then( glass => res.json( glass ) );
 } );
 

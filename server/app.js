@@ -43,6 +43,10 @@ app.use( ( req, res, next ) => {
 
 app.use( '/api/auth', require( './api/auth' ) );
 
+app.get( '/github', (req, res, next) => {
+  res.redirect('http://github.com/wfgmiami/Grace_Shopper');
+});
+
 app.get( '*', ( req, res, next ) => {
   res.sendFile( path.join( __dirname, '..', 'browser/index.html' ) );
 } );

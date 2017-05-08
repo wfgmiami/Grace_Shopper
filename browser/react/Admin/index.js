@@ -2,20 +2,12 @@ import React from 'react';
 
 import Nav from './Nav';
 
-export class Admin extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <div className="container-fluid">
-        <h1>Admin</h1>
-        <Nav />
-        { this.props.children }
-      </div>
-    );
-  }
-}
+const Admin = ({ children }) => (
+  <div className="container-fluid">
+    <h1>Admin</h1>
+    <Nav />
+    { children }
+  </div>
+);
 
 export default Admin;

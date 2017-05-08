@@ -32,11 +32,14 @@ class Nav extends React.Component {
             <div className="collapse navbar-collapse">
               <ul className="nav navbar-nav">
                 <li>
-                  <a className="dropdown-toggle" data-toggle="dropdown" href="#">
+                  <a href="#">
                     Cart { cartItems }
                   </a>
                 </li>
                 <li className="divider" />
+                <li>
+                  <a href="/github">Github</a>
+                </li>
               </ul>
               <ul className="nav navbar-nav navbar-right">
                 {

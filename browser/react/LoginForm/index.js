@@ -41,15 +41,6 @@ const LoginForm = ({ invalidLogin, login, name, password, onNameChange, onPasswo
           </p>
         </div>
       </div>)}
-
-      <pre>
-        Login:
-        <br />
-        name: Arum, password: 123<br />
-        name: Richard, password: 1234<br />
-        name: Evan, password: 12345<br />
-        name: Alex, password: 123456
-      </pre>
   </div>
  );
 };

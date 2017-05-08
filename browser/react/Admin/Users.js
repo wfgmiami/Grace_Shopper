@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import UserListItem from './UserListItem';
 
 const Users = ({ users }) => {
-  console.log(users);
   return (
     <div className="container">
       <h3>Users</h3>

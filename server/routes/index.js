@@ -1,6 +1,7 @@
 const router = require( 'express' ).Router();
 const app = require('../app');
 
+// Keep this above the middleware in this file
 router.use( '/admin', require( './admin' ) );
 
 router.use((req, res, next) => {
