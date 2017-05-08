@@ -21,6 +21,16 @@ db.sync( { force: true } )
   .then( () => db.models.glassesCategory.bulkCreate( glassesCategories ) )
   .then( () => db.models.lineitems.create( { orderId: 1, glassId: 1, date: new Date(), price: 210, quantity: 1 } ) )
   .then( () => db.models.lineitems.create( { orderId: 2, glassId: 45, date: new Date(), price: 109, quantity: 1 } ) )
+  .then( () => db.models.payments.bulkCreate( require( './jsondata/payments' ) ) )
+  .then( () => Promise.all( [
+    db.models.orders.findById( 1 ),
+    db.models.payments.findById( 1 )
+  ] ) )
+  .then( ( [ order, payment ] ) => order.setPayment( payment ) )
+  .then( order => {
+    order.shippingAddress = '23fkmfs';
+    return order.save();
+  })
   .then( () => console.log( chalk.green.bold.inverse( ` Seeded OK ` ) ) )
   .catch( error => console.error( error.stack ) );
 
@@ -43,7 +53,7 @@ function createReviews( products ) {
   const reviews = [];
   products.map( ( product, idx ) => {
     for ( let userId = 1; userId < 5; userId++ ) {
-      let review = Object.assign({}, options[ Math.floor( Math.random() * options.length ) ]);
+      let review = Object.assign( {}, options[ Math.floor( Math.random() * options.length ) ] );
       review.glassId = idx + 1;
       review.userId = userId;
       reviews.push( review );
@@ -90,19 +100,3 @@ function generateGlassesCategories( _glasses ) {
   return _glassesCategories;
 }
 
-// below is used in heroku deployment
-// const seed = () => {
-//   return db.sync( { force: true } )
-//   .then( () => console.log( chalk.yellow( ' Beginning seed ' ) ) )
-//   .then( () => Promise.all( users.map( user => db.models.users.create( user ) ) ) )
-//   .then( () => db.models.glasses.bulkCreate( glasses ) )
-//   .then( () => db.models.reviews.bulkCreate( createReviews( glasses ) ) )
-//   .then( () => db.models.categories.bulkCreate( categories ) )
-//   .then( () => db.models.glassesCategory.bulkCreate( glassesCategories ) )
-//   .then( () => db.models.lineitems.create( { orderId: 1, glassId: 1, date: new Date(), price: 210, quantity: 1 } ) )
-//   .then( () => db.models.lineitems.create( { orderId: 2, glassId: 45, date: new Date(), price: 109, quantity: 1 } ) )
-//   .then( () => console.log( chalk.green.bold.inverse( ` Seeded OK ` ) ) )
-//   .catch( error => console.error( error.stack ) );
-// }
-
-// module.exports = seed;
