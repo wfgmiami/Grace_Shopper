@@ -50,7 +50,7 @@ const Glasses = conn.define( 'glasses', {
           return 'Leave the first review here';
         }
       } else {
-        return 'Reviews were not included';
+        return 'Leave the first review here';
       }
     }
   },

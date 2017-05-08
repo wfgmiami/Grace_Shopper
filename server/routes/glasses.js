@@ -22,7 +22,7 @@ router.get('/search', ( req,res,next )=>{
 
 router.get('/detail/:id', (req,res,next)=>{
   console.log('Selected Glass: ', req.params.id)
-  Glasses.findById(req.params.id)
+  Glasses.findById(req.params.id, {include: [{ all: true }]})
     .then( glass => res.json(glass))
 })
 
