@@ -2,13 +2,25 @@ import axios from 'axios';
 
 const token = localStorage.getItem( 'token' );
 
-const users = ( state = [], action ) => {
+const initialState = {
+  scope: 'all',
+  orders: []
+};
+
+const users = ( state = initialState, action ) => {
   switch ( action.type ) {
   case 'LOAD_ORDERS':
-    state = action.users;
+    state = Object.assign( {}, state, action.payload );
+    // state = action.orders;
     break;
   case 'MODIFY_ORDER':
-    state = state.filter( user => user.id !== action.user.id );
+    state = Object.assign( {}, state, action.payload );
+    state.orders = state.orders.map( order => {
+      if ( order.id === action.payload.order.id ) {
+        order.status = action.order.status;
+      }
+      return order;
+    } ).filter( order => order.status === state.scope );
     break;
   default:
     break;
@@ -18,12 +30,12 @@ const users = ( state = [], action ) => {
 
 export const getOrders = scope => dispatch => {
   axios.get( `/api/admin/order/${token}`, { params: { scope } || { scope: 'all' } } )
-    .then( ( { data } ) => dispatch( { type: 'LOAD_ORDERS', users: data } ) );
+    .then( ( { data } ) => dispatch( { type: 'LOAD_ORDERS', payload: { orders: data, scope } } ) );
 };
 
-export const modifyOrder = ( order, mods ) => dispatch => {
-  axios.put( `/api/admin/order/${token}/${order.id}`, mods )
-    .then( modOrder => dispatch( { type: 'MODIFY_ORDER', user: modOrder } ) );
+export const modifyOrder = ( order, status ) => dispatch => {
+  axios.put( `/api/admin/order/${token}/${order.id}`, { status } )
+    .then( modOrder => dispatch( { type: 'MODIFY_ORDER', payload: { order: modOrder } } ) );
 };
 
 export default users;

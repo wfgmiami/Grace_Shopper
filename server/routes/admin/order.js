@@ -19,10 +19,21 @@ function isAdmin( req ) {
 router.get( '/:token', ( req, res, next ) => {
   isAdmin( req )
     .then( () => Order
-      .scope( 'user', req.query.scope || 'all' )
-      .findAll()
+      .scope( req.query.scope || 'all' )
+      .findAll( { include: [ User ] } )
     )
     .then( orders => res.json( orders ) )
+    .catch( next );
+} );
+
+router.put( '/:token/:orderId', ( req, res, next ) => {
+  isAdmin( req )
+    .then( () => Order.findOne( { where: { id: req.params.orderId } } ) )
+    .then( order => {
+      order.status = req.body.status;
+      return order.save();
+    } )
+    .then( order => res.json( order ) )
     .catch( next );
 } );
 
@@ -30,6 +41,10 @@ router.get( '/:token', ( req, res, next ) => {
 // Don't use the default error handler, use this instead
 router.use( ( err, req, res, next ) => {
   if ( err.message === 'User is not an admin' ) res.sendStatus( 401 );
+  // else {
+  //   res.sendStatus(500);
+  // }
+  next(err);
 } );
 
 module.exports = router;

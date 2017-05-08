@@ -50,11 +50,11 @@ Due Date: May 9, 2017
  * [ ] Create categories for items, each item can have multiple categories
  * [ ] Manage the availability of a product. If a product is no longer available, users will not see it while browsing, but they can view the product detail page if they've ordered it previously or have a direct link. On that product detail page, it should say "Currently Unavailable"
  * [ ] Add/remove categories from items
-* [ ] Order management
+* [x] Order management
  * [x] View a list of all orders
  * [x] Filter orders by status (Created, Processing, Cancelled, Completed)
- * [ ] Change the status of the order (Created -> Processing, Processing -> Cancelled || Completed)
- * [ ] View details of a specific order
+ * [x] Change the status of the order (Created -> Processing, Processing -> Cancelled || Completed)
+ * [x] View details of a specific order
 * [x] User management
  * [x] Promote other user accounts to have admin status
  * [x] Delete a user

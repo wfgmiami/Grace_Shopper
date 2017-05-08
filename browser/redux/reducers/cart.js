@@ -6,7 +6,6 @@ const cartReducer = ( state = [], action ) => {
 
   switch ( action.type ) {
   case UPDATE_CART:
-    console.log(action.cart);
     state = action.cart.slice();
     break;
   default:
@@ -111,7 +110,7 @@ const getCart = () => dispatch => {
     dispatch( retrieveCart( token ) );
   } else {
     let currentCart = localStorage.getItem( 'cart' );
-    console.log(currentCart);
+    // console.log(currentCart);
     if ( !currentCart ) {
       localStorage.setItem( 'cart', '[]' );
     }

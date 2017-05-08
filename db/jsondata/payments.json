@@ -1,0 +1,11 @@
+[
+  {
+    "cardType": "Credit",
+    "cardVendor": "Visa",
+    "expiration": "2017-10-07T17:21:14.803Z",
+    "name": "Richard",
+    "billingAddress": "23-35 broadway",
+    "userId": 1
+  }
+]
+
