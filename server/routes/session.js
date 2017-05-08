@@ -1,7 +1,6 @@
 const router = require( 'express' ).Router();
 const { User } = require( '../../db' );
 const jwt = require( 'jwt-simple' );
-const secret = process.env.SECRET || '1701-FLX-NY';
 
 module.exports = router;
 
@@ -12,7 +11,7 @@ router.post( '/', ( req, res, next ) => {
       if (!user) return res.sendStatus( 401 );
 
       res.send( {
-        token: jwt.encode( { id: user.id }, secret )
+        token: jwt.encode( { id: user.id }, res.locals.jwtSecret )
       } );
 
     } )
@@ -21,7 +20,7 @@ router.post( '/', ( req, res, next ) => {
 
 router.get( '/:token', ( req, res, next ) => {
   try {
-    const token = jwt.decode( req.params.token, secret );
+    const token = jwt.decode( req.params.token, res.locals.jwtSecret );
     User.findById( token.id )
       .then( user => {
         if ( !user ) return res.sendStatus( 401 );

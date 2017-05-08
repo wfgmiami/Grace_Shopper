@@ -7,7 +7,6 @@ import axios from 'axios';
 import StarRatingComponent from 'react-star-rating-component';
 
 
-
 class ProductDetail extends Component{
 
   constructor(props){
@@ -67,9 +66,12 @@ class ProductDetail extends Component{
 
         <div className="row">
           <div className="col-xs-8">
-
-            <img src={this.state.images['0']} />
-            <img src={this.state.images['1']} />
+          { this.state.images.length &&
+            <div>
+              <img src={this.state.images['0'].replace(/wid=300/, 'wid=800')} style={{ maxWidth: '100%' }} />
+              <img src={this.state.images['1'].replace(/wid=300/, 'wid=800')} style={{ maxWidth: '100%' }} />
+            </div>
+          }
 
           </div>
           <div className="col-xs-4">

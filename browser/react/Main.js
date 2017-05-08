@@ -19,8 +19,8 @@ class Main extends React.Component {
       <div className="container-fluid">
         <Nav />
         <div style={{ marginTop: '65px' }}>
-          <div className="row">
           <SearchBar/>
+          <div className="row">
             <div className="col-sm-2">
               <FilterBar />
             </div>

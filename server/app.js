@@ -6,10 +6,14 @@ const chalk = require( 'chalk' );
 const cuid = require( 'cuid' );
 const session = require( 'express-session' );
 
+module.exports = app;
+
 const requestId = ( req, res, next ) => {
   req.requestId = cuid();
   next();
 };
+
+require('./configure/app-variables')(app);
 
 // Syncing all the models at once. This promise is used by main.js.
 db.sync()

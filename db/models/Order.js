@@ -49,6 +49,43 @@ const Order = sequelize.define( 'orders', {
         throw new Error( 'There is no shipping address associated to the order' );
       }
     }
+  },
+  classMethods: {
+    integrate(userId, cart) {
+      return Promise.all( [
+        Order.scope( 'pending' ).findOne( { where: { userId } } ),
+      ].concat( cart.map( glasses => Glasses.findById( glasses.id ) ) ) )
+      .then( ( [ order, ...glasses ] ) => {
+
+        cart = cart.map( item => {
+          const ind = order.glasses.findIndex( tst => tst.id === item.id );
+          if ( ind > -1 ) {
+            item.lineitems.quantity += order.glasses[ ind ].lineitems.quantity;
+          }
+          return item;
+        } );
+
+        return Promise.all(
+          glasses.map( ( glass, idx ) => order.addGlass( glass, {
+            quantity: cart[ idx ].lineitems.quantity,
+            price: cart[ idx ].lineitems.price,
+            date: new Date()
+          }, { updatesOnDuplicate: true } ) )
+        );
+      } );
+    },
+    itemAdd(userId, cart) {
+      return Promise.all( [
+        Order.scope( 'pending' ).findOne( { where: { userId } } ),
+      ].concat( cart.map( glasses => Glasses.findById( glasses.id ) ) ) )
+      .then( ( [ order, ...glasses ] ) => Promise.all(
+        glasses.map( ( glass, idx ) => order.addGlass( glass, {
+          quantity: cart[ idx ].lineitems.quantity,
+          price: cart[ idx ].lineitems.price,
+          date: new Date()
+        }, { updatesOnDuplicate: true } ) )
+      ) );
+    }
   }
 } );
 
