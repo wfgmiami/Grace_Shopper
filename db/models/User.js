@@ -52,38 +52,39 @@ const User = conn.define( 'users', {
       passwordExpired: true
     }
   },
-  hooks: {
-    beforeCreate( user ) {
-      let password = user.password;
-      user.password = md5( password, 'hex' );
-    },
-    beforeBulkCreate( users ) {
-      users = users.map( user => {
-        let password = user.password;
-        user.password = md5( password, 'hex' );
-      } );
-      return users;
-    },
-    afterCreate( user ) {
-      return user.getOrder();
-    }
-  },
-  classMethods: {
-    findByPassword( credentials ) {
-      if ( !credentials ) throw new Error( 'No credentials provided' );
-      if ( !credentials.password ) throw new Error( 'Password must be included in credentials' );
-      credentials.password = md5( credentials.password, 'hex' );
-      return this.findOne( { where: credentials } );
-    }
-  },
-  instanceMethods: {
-    getOrder() {
-      return Order.scope('pending').findOrCreate( {
-        where: { userId: this.id }
-      } );
-    }
-  }
-} );
+//   hooks: {
+//     beforeCreate( user ) {
+//       let password = user.password;
+//       user.password = md5( password, 'hex' );
+//     },
+//     beforeBulkCreate( users ) {
+//       users = users.map( user => {
+//         let password = user.password;
+//         user.password = md5( password, 'hex' );
+//       } );
+//       return users;
+//     },
+//     afterCreate( user ) {
+//       return user.getOrder();
+//     }
+//   },
+//   classMethods: {
+//     findByPassword( credentials ) {
+//       if ( !credentials ) throw new Error( 'No credentials provided' );
+//       if ( !credentials.password ) throw new Error( 'Password must be included in credentials' );
+//       credentials.password = md5( credentials.password, 'hex' );
+//       return this.findOne( { where: credentials } );
+//     }
+//   },
+//   instanceMethods: {
+//     getOrder() {
+//       return Order.scopes('pending').findOrCreate( {
+//         where: { userId: this.id }
+//       } );
+//     }
+//   }
+} 
+);
 
 module.exports = User;
 
