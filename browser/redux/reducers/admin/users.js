@@ -17,17 +17,17 @@ const users = ( state = [], action ) => {
 };
 
 export const getUsers = () => dispatch => {
-  axios.get( `/api/admin/users/${token}` )
+  return axios.get( `/api/admin/users/${token}` )
     .then( ( { data } ) => dispatch( { type: 'LOAD_USERS', users: data } ) );
 };
 
 export const destroyUser = user => dispatch => {
-  axios.delete( `/api/admin/users/${token}/${user.id}` )
+  return axios.delete( `/api/admin/users/${token}/${user.id}` )
     .then( () => dispatch( { type: 'DELETE_USER', user } ) );
 };
 
 export const modifyUser = (user, mods) => dispatch => {
-  axios.put( `/api/admin/users/${token}/${user.id}`, mods)
+  return axios.put( `/api/admin/users/${token}/${user.id}`, mods)
     .then( modUser => dispatch( { type: 'MODIFY_USER', user: modUser }));
 };
 

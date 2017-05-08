@@ -56,7 +56,7 @@ app.use( ( req, res, next ) => {
 
 // Handle internal server error
 app.use( ( err, req, res, next ) => {
-  res.sendStatus( 500 );
+  if (!res.headersSent) res.sendStatus( 500 );
   console.log( `Status 500: ${chalk.magenta.inverse(req.method)} ${chalk.blue.inverse(req.url)}` );
   console.log( err );
 } );

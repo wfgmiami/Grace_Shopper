@@ -33,8 +33,14 @@ const init = () => {
 };
 
 const admin = () => {
-  store.dispatch(getUsers());
-  store.dispatch(getOrders());
+  store.dispatch(getUsers())
+    .then(() => store.dispatch(getOrders()))
+    .catch(err => {
+      if (err.response.status === 401) {
+        alert('You must be an administrator to view this page');
+        browserHistory.push('/');
+      }
+    });
 };
 
 const app = (

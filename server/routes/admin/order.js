@@ -2,10 +2,22 @@ const router = require( 'express' ).Router();
 const { User, Order } = require( '../../../db' );
 const jwt = require( 'jwt-simple' );
 const secret = process.env.SECRET || '1701-FLX-NY';
+const chalk = require('chalk');
+
+router.get( '/', (req, res, next) => {
+  res.sendStatus(401);
+} );
 
 router.use( '/:token', ( req, res, next ) => {
-  req.userId = jwt.decode( req.params.token, secret ).id;
-  next();
+  let err;
+  try {
+    req.userId = jwt.decode( req.params.token, secret ).id;
+    err = null;
+  } catch (_err) {
+    err = _err;
+  } finally {
+    next(err);
+  }
 } );
 
 function isAdmin( req ) {
@@ -37,14 +49,10 @@ router.put( '/:token/:orderId', ( req, res, next ) => {
     .catch( next );
 } );
 
-
-// Don't use the default error handler, use this instead
 router.use( ( err, req, res, next ) => {
-  if ( err.message === 'User is not an admin' ) res.sendStatus( 401 );
-  // else {
-  //   res.sendStatus(500);
-  // }
-  next(err);
+  console.log(chalk.red(err.message));
+  if ( err.message === 'User is not an admin' || err.message === 'Not enough or too many segments' ) res.sendStatus( 401 );
+  next( err );
 } );
 
 module.exports = router;

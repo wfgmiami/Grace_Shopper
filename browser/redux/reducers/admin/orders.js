@@ -11,7 +11,6 @@ const users = ( state = initialState, action ) => {
   switch ( action.type ) {
   case 'LOAD_ORDERS':
     state = Object.assign( {}, state, action.payload );
-    // state = action.orders;
     break;
   case 'MODIFY_ORDER':
     state = Object.assign( {}, state, action.payload );
@@ -29,12 +28,12 @@ const users = ( state = initialState, action ) => {
 };
 
 export const getOrders = scope => dispatch => {
-  axios.get( `/api/admin/order/${token}`, { params: { scope } || { scope: 'all' } } )
+  return axios.get( `/api/admin/order/${token}`, { params: { scope } || { scope: 'all' } } )
     .then( ( { data } ) => dispatch( { type: 'LOAD_ORDERS', payload: { orders: data, scope } } ) );
 };
 
 export const modifyOrder = ( order, status ) => dispatch => {
-  axios.put( `/api/admin/order/${token}/${order.id}`, { status } )
+  return axios.put( `/api/admin/order/${token}/${order.id}`, { status } )
     .then( modOrder => dispatch( { type: 'MODIFY_ORDER', payload: { order: modOrder } } ) );
 };
 

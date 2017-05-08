@@ -10,22 +10,22 @@ Due Date: May 9, 2017
 
 #### Unauthenticated Users:
 
-* [ ] View products (catalog)
+* [x] View products (catalog)
  * [x] Refine listing by category
- * [ ] Search product listing
- * [ ] View a product's details
- * [ ] Product information
+ * [x] Search product listing
+ * [x] View a product's details
+ * [x] Product information
  * [x] Photo(s)
- * [ ] View reviews left by authenticated users
+ * [x] View reviews left by authenticated users
 * [ ] Manage their cart
- * [ ] Add an item to the cart from product listing or product detail pages
- * [ ] Remove an item from the cart
+ * [x] Add an item to the cart from product listing or product detail pages
+ * [x] Remove an item from the cart
  * [ ] Edit/update quantities of items in the cart
  * [x] Log in and continue editing the cart
  * [x] Refresh the page without being logged in and have the cart persist (you may use sessionStorage, localStorage, Cookies or JWT for this)
 * [ ] Account Management
  * [x] Create an account
- * [ ] Login with Facebook and/or Google
+ * [x] Login with Facebook and/or Google
 * [ ] Checkout
  * [ ] Purchase items from cart
  * [ ] Specify shipping address and email address

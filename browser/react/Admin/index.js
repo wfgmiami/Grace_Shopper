@@ -1,13 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
 import Nav from './Nav';
-
-function mapStateToProps(state) {
-  return {
-
-  };
-}
 
 export class Admin extends React.Component {
   constructor(props) {
@@ -25,4 +18,4 @@ export class Admin extends React.Component {
   }
 }
 
-export default connect(mapStateToProps)(Admin);
+export default Admin;

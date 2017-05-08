@@ -12,8 +12,16 @@ router.get( '/:id', ( req, res, next ) => {
 } );
 
 router.use( '/pending/:token', ( req, res, next ) => {
-  req.userId = jwt.decode( req.params.token, secret ).id;
-  next();
+  let err;
+  try {
+    req.userId = jwt.decode( req.params.token, secret ).id;
+    err = null;
+  } catch ( _err ) {
+    err = _err;
+    console.log( err );
+  } finally {
+    next( err );
+  }
 } );
 
 router.get( '/pending/:token', ( req, res, next ) => {
@@ -23,8 +31,9 @@ router.get( '/pending/:token', ( req, res, next ) => {
       if ( order ) {
         res.json( order.get().glasses );
       } else {
-        res.sendStatus( 404 );
-        next();
+        User.findById( userId )
+          .then( user => user.getOrder() )
+          .then( order => res.json( order ) );
       }
     } )
     .catch( next );
