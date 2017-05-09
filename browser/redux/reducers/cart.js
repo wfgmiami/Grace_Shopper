@@ -6,7 +6,7 @@ const cartReducer = ( state = [], action ) => {
 
   switch ( action.type ) {
   case UPDATE_CART:
-    state = Array.from( action.cart );
+    state = action.cart.slice();
     break;
   default:
     break;
@@ -34,7 +34,7 @@ const addToCart = item => dispatch => {
     currentCart = JSON.parse( localStorage.getItem( 'cart' ) ) || [];
     item.lineitems.price = item.price;
 
-    currentCart = newCart( currentCart, item );
+    currentCart = newCart( currentCart, item ).currentCart;
 
     localStorage.setItem( 'cart', JSON.stringify( currentCart ) );
     dispatch( { type: UPDATE_CART, cart: currentCart } );
@@ -64,6 +64,23 @@ const addToCart = item => dispatch => {
     return {currentCart: updatedCart, item: insItem};
   }
 };
+
+const decreaseQuantity = item => dispatch => {
+    let currentCart = JSON.parse( localStorage.getItem( 'cart' ) ) || store.getState().cart;
+    if(item.lineitems.quantity == 1){
+      removeFromCart(item)(dispatch)
+    } else {
+        let myNewCart = currentCart.map(glass => {
+        if(glass.id==item.id){
+          glass.lineitems.quantity--;
+        }
+        return Object.assign({}, glass)
+      })
+      console.log(myNewCart)
+      localStorage.setItem('cart', JSON.stringify(currentCart));
+      dispatch( { type: UPDATE_CART, cart: myNewCart } );
+      }
+}
 
 const removeFromCart = item => dispatch => {
   const token = localStorage.getItem( 'token' );
@@ -123,6 +140,6 @@ const getCart = () => dispatch => {
   }
 };
 
-export { addToCart, removeFromCart, getCart };
+export { addToCart, removeFromCart, getCart, decreaseQuantity };
 export default cartReducer;
 
