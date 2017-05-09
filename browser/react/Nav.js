@@ -41,6 +41,9 @@ class Nav extends React.Component {
                 <li>
                   <a href="/github">Github</a>
                 </li>
+                <li>
+                  <Link to="/orders">Orders</Link>
+                </li>
               </ul>
               <ul className="nav navbar-nav navbar-right">
                 {

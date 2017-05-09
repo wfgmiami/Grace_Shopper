@@ -16,31 +16,34 @@ import { getCart } from './redux/reducers/cart';
 import { me } from './redux/reducers/auth';
 import { getUsers } from './redux/reducers/admin/users';
 import { getOrders } from './redux/reducers/admin/orders';
+import { loadOrders } from './redux/reducers/orders';
 
 import Main from './react/Main';
 import Nav from './react/Nav';
 import CategoryList from './react/CategoryList';
 import ProductDetail from './react/ProductDetail';
 import SignUp from './react/SignUp';
+import Orders from './react/Orders';
+
 import Admin from './react/Admin';
 import Users from './react/Admin/Users';
 import AdminOrders from './react/Admin/Orders';
 import Checkout from './react/Checkout'
 
 const init = () => {
-  store.dispatch( loadProducts( 1 ) );
-  store.dispatch( loadCategories() );
-  store.dispatch( me() );
-  store.dispatch( getCart() );
+  store.dispatch( loadProducts( 1 ) )
+    .then( () => store.dispatch( loadCategories() ) )
+    .then( () => store.dispatch( me() ) )
+    .then( () => store.dispatch( getCart() ) );
 };
 
 const admin = () => {
-  store.dispatch(getUsers())
-    .then(() => store.dispatch(getOrders()))
+  store.dispatch( getUsers() )
+    .then( () => store.dispatch( getOrders() ) )
     .catch(err => {
-      if (err.response.status === 401) {
-        alert('You must be an administrator to view this page');
-        browserHistory.push('/');
+      if ( err.response.status === 401 ) {
+        alert( 'You must be an administrator to view this page' );
+        browserHistory.push( '/' );
       }
     });
 };
@@ -63,6 +66,7 @@ const app = (
         <Route path="orders" component={ AdminOrders } />
         
       </Route>
+      <Route path="/orders" component={ Orders } onEnter={ () => store.dispatch( loadOrders() ) } />
     </Router>
   </Provider>
 );

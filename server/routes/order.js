@@ -23,6 +23,14 @@ router.use( '/pending/:token', ( req, res, next ) => {
   }
 } );
 
+router.get( '/all/:token', ( req, res, next ) => {
+  const userId = jwt.decode( req.params.token, res.locals.jwtSecret ).id;
+  console.log( userId );
+  Order.scope( 'all' ).findAll( { where: { userId } } )
+    .then( orders => res.json( orders ) )
+    .catch( next );
+} );
+
 router.get( '/pending/:token', ( req, res, next ) => {
   const { userId } = req;
   Order.scope( 'pending' ).findOne( { where: { userId } } )

@@ -42,5 +42,3 @@ function notNullOrEmpty( obj ) {
     expect( obj.allowNull ).to.be.eql( false );
   } );
 }
-
-

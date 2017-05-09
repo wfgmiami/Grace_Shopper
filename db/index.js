@@ -28,7 +28,7 @@ User.hasMany( Payment );
 Order.belongsToMany( Glasses, { through: LineItem } );
 Glasses.belongsToMany( Order, { through: LineItem } );
 
-// Glasses have many categgories
+// Glasses have many categories
 [ 'color', 'shape', 'ideal_face_shape', 'material', 'gender' ].forEach( cat => {
   Glasses.belongsToMany( Category, { through: 'glassesCategory', as: cat } );
   Category.belongsToMany( Glasses, { through: 'glassesCategory', as: cat } );

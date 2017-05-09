@@ -4,12 +4,12 @@ import { browserHistory } from 'react-router';
 import { getCart } from './cart';
 
 export const createUser = userProps => dispatch => {
-  axios.post('/api/user', userProps)
-    .then(({ data }) => {
+  return axios.post( '/api/user', userProps )
+    .then( ( { data } ) => {
       // Sign in the new user and take them to the homepage
-      localStorage.setItem('token', data.token);
-      browserHistory.push('/');
-    });
+      localStorage.setItem( 'token', data.token );
+      browserHistory.push( '/' );
+    } );
 };
 
 const loginSuccess = ( user ) => ( {
@@ -34,15 +34,15 @@ const invalidLogin = () => {
 const me = () => {
   return ( dispatch ) => {
     const token = localStorage.getItem( 'token' );
-    if ( !token ){
-      return axios.get('/api/auth/me')
-      .then( response => response.data )
-      .then( user => dispatch( loginSuccess( user ) ) )
-    }else{
+    if ( !token ) {
+      return axios.get( '/api/auth/me' )
+        .then( response => response.data )
+        .then( user => dispatch( loginSuccess( user ) ) );
+    } else {
       return axios.get( `/api/session/${token}` )
-      .then( response => response.data )
-      .then( user => dispatch( loginSuccess( user ) ) )
-      .catch(() => localStorage.removeItem('token'));
+        .then( response => response.data )
+        .then( user => dispatch( loginSuccess( user ) ) )
+        .catch( () => localStorage.removeItem( 'token' ) );
     }
 
   };
@@ -51,26 +51,26 @@ const me = () => {
 const logout = ( user ) => {
   const token = localStorage.getItem( 'token' );
   return ( dispatch ) => {
-    if ( !token ){
-      axios.delete('/api/auth/me')
-      .then( () => dispatch( logoutSuccess() ) );
-    }else{
+    if ( !token ) {
+      return axios.delete( '/api/auth/me' )
+        .then( () => dispatch( logoutSuccess() ) );
+    } else {
       localStorage.setItem( 'token', '' );
-       dispatch( logoutSuccess() );
+      dispatch( logoutSuccess() );
     }
   };
 };
 
 const login = ( credentials ) => {
   return ( dispatch ) => {
-    axios.post( '/api/session', credentials )
+    return axios.post( '/api/session', credentials )
       .then( response => response.data )
       .then( ( { token } ) => {
         localStorage.setItem( 'token', token );
         return axios.get( `/api/session/${token}` )
           .then( response => response.data )
           .then( user => dispatch( loginSuccess( user ) ) )
-          .then( () => dispatch(getCart()) );
+          .then( () => dispatch( getCart() ) );
       } )
       .catch( () => dispatch( invalidLogin( loginFail() ) ) );
   };
