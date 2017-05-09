@@ -75,7 +75,7 @@ class ProductDetail extends Component{
 
           </div>
           <div className="col-xs-4">
-            <StarRatingComponent name="prior product rating" editing={false} starCount={5} value={+glass.reviewSummary} starColor={'orange'} emptyStarColor={'lightgray'}/> <text style={{color: 'grey', size:'5px'}}><i>({this.state.reviews.length} reviews)</i></text>
+            <StarRatingComponent name="prior product rating" editing={false} starCount={5} value={+glass.reviewSummary} starColor={'orange'} emptyStarColor={'lightgray'} /> <text style={{color: 'grey', size:'5px'}}><i>({this.state.reviews.length} reviews)</i></text>
 
             <div>Price: <h4>${glass.price}</h4></div>
               <div>Decription: {glass.description}</div>

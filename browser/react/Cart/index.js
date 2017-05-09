@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addToCart, removeFromCart, decreaseQuantity } from '../../redux/reducers/cart';
+import {Link} from 'react-router';
 
 class Cart extends Component{
   constructor(props){
@@ -56,7 +57,7 @@ class Cart extends Component{
           </strong>
         </td>
         <td>
-          <a href="#" className="btn btn-success btn-block">Checkout <i className="fa fa-angle-right"></i></a>
+          <Link href="/checkout" className="btn btn-success btn-block">Checkout <i className="fa fa-angle-right"></i></Link>
         </td>
       </tr>
      </tfoot>

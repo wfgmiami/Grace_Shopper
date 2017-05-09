@@ -40,11 +40,11 @@ Due Date: May 9, 2017
 #### Authenticated Users:
 * [x] Logout
 * [ ] Account management
- * [ ] View past order list
- * [ ] View order detail
- * [ ] Current order status
- * [ ] Items with quantity and subtotal
- * [ ] Link to the original product detail page
+ * [x] View past order list
+ * [x] View order detail
+ * [x] Current order status
+ * [x] Items with quantity and subtotal
+ * [x] Link to the original product detail page
  * [ ] Date/time order was created
 * [ ] Product reviews
  * [ ] Leave a review (with text and a 5-star rating) for a product

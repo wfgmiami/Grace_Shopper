@@ -7,7 +7,7 @@ const initialState = {
   orders: []
 };
 
-const users = ( state = initialState, action ) => {
+const orders = ( state = initialState, action ) => {
   switch ( action.type ) {
   case 'LOAD_ORDERS':
     state = Object.assign( {}, state, action.payload );
@@ -37,5 +37,5 @@ export const modifyOrder = ( order, status ) => dispatch => {
     .then( modOrder => dispatch( { type: 'MODIFY_ORDER', payload: { order: modOrder } } ) );
 };
 
-export default users;
+export default orders;
 

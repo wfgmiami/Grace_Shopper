@@ -1,5 +1,6 @@
 const router = require( 'express' ).Router();
 const { User } = require('../../../db');
+const chalk = require('chalk');
 
 router.use( ( req, res, next ) => {
   res.locals = {

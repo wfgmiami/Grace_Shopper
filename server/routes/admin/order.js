@@ -1,6 +1,5 @@
 const router = require( 'express' ).Router();
 const { User, Order } = require( '../../../db' );
-const chalk = require('chalk');
 
 module.exports = router;
 

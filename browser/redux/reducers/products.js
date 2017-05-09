@@ -37,14 +37,14 @@ const loadProductSuccess = ( products, offset, count ) => ( {
 
 const loadProducts = ( offset, filter ) => {
   return ( dispatch ) => {
-    axios.get( `/api/glasses/${offset}`, { params: filter } )
+    return axios.get( `/api/glasses/${offset}`, { params: filter } )
       .then( response => dispatch( loadProductSuccess( response.data.glasses, offset, response.data.count ) ) );
   };
 };
 
 const loadSearchProducts = ( input ) => {
   return ( dispatch ) => {
-    axios.get( `/api/glasses/search`, { params: input } )
+    return axios.get( `/api/glasses/search`, { params: input } )
       .then( res => dispatch( loadProductSuccess( res.data.glasses, offset, res.data.count ) ) );
   };
 };

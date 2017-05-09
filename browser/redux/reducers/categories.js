@@ -28,7 +28,7 @@ const loadCategorieSuccess = ( categories ) => ( {
 
 const loadCategories = () => {
   return ( dispatch ) => {
-    axios.get( '/api/categories' )
+    return axios.get( '/api/categories' )
       .then( ( { data } ) => {
         data = data.reduce( ( memo, cat ) => {
           if ( !memo[ cat.name ] ) {

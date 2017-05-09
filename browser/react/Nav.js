@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
+import PropTypes from 'prop-types';
 
 class Nav extends React.Component {
 
@@ -39,6 +40,9 @@ class Nav extends React.Component {
                 <li className="divider" />
                 <li>
                   <a href="/github">Github</a>
+                </li>
+                <li>
+                  <Link to="/orders">Orders</Link>
                 </li>
               </ul>
               <ul className="nav navbar-nav navbar-right">

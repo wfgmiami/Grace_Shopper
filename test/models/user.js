@@ -1,6 +1,7 @@
 const { expect } = require( 'chai' );
 
-const { models: { users } } = require( '../../db' );
+//const { models: { users } } = require( '../../db' );
+const users  = require( '../../db' ).User;
 
 describe( 'User model', () => {
 

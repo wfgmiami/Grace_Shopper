@@ -1,5 +1,5 @@
 const router = require( 'express' ).Router();
-const { Order, Glasses, User, LineItem } = require( '../../db' );
+const { Payment, Order, Glasses, User, LineItem } = require( '../../db' );
 const jwt = require( 'jwt-simple' );
 
 router.get( '/:id', ( req, res, next ) => {
@@ -23,6 +23,14 @@ router.use( '/pending/:token', ( req, res, next ) => {
   }
 } );
 
+router.get( '/all/:token', ( req, res, next ) => {
+  const userId = jwt.decode( req.params.token, res.locals.jwtSecret ).id;
+  console.log( userId );
+  Order.scope( 'all' ).findAll( { where: { userId } } )
+    .then( orders => res.json( orders ) )
+    .catch( next );
+} );
+
 router.get( '/pending/:token', ( req, res, next ) => {
   const { userId } = req;
   Order.scope( 'pending' ).findOne( { where: { userId } } )
@@ -37,6 +45,28 @@ router.get( '/pending/:token', ( req, res, next ) => {
     } )
     .catch( next );
 } );
+
+router.post('/checkout', (req,res,next)=>{
+  console.log('req.bodyreq.body',req.body)
+  let payment = req.body.payment;
+  payment = Object.assign({}, req.body.payment, {userId: req.body.userId});
+
+  let order;
+  
+  User.findById(req.body.userId)
+    .then( user => user.getOrder())
+    .then( _order => order = _order[0] )
+    .then( ()=> Payment.findOrCreate({where: payment}))
+    .then( pay => order.setPayment(pay[0]))
+    .then( ()=> {
+      order.shippingAddress = req.body.payment.billingAddress;
+      order.status = 'Shipping';
+      console.log('***order',order);
+      return order.save(); 
+     })
+    .then( createdOrder => res.json(createdOrder))
+    .catch(next)
+})
 
 router.post( '/pending/:token', ( req, res, next ) => {
   const { userId, body: { cart } } = req;

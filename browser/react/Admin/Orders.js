@@ -42,7 +42,7 @@ const mapStateToProps = ({ adminOrders }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getOrders: scope => dispatch(getOrders(scope))
+  getOrders: scope => dispatch( getOrders( scope ) )
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminOrders);
