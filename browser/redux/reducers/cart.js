@@ -21,7 +21,6 @@ const addToCart = item => dispatch => {
   if ( token ) {
     let newInfo = newCart( store.getState().cart, item );
     currentCart = newInfo.currentCart;
-    console.log(currentCart);
     item = newInfo.item;
 
     axios.post( `/api/order/pending/${token}`, {
@@ -31,7 +30,7 @@ const addToCart = item => dispatch => {
         dispatch( { type: UPDATE_CART, cart: currentCart } );
       } );
   } else {
-    currentCart = JSON.parse( localStorage.getItem( 'cart' ) ) || [];
+    currentCart = JSON.parse( localStorage.getItem( 'cart' ) );
     item.lineitems.price = item.price;
 
     currentCart = newCart( currentCart, item ).currentCart;
@@ -54,14 +53,14 @@ const addToCart = item => dispatch => {
           itemQuantity = glass.lineitems.quantity;
         }
         glass.lineitems.price = glass.price || glass.lineitems.price;
-        return Object.assign({}, glass);
+        return Object.assign( {}, glass );
       } );
       insItem.lineitems = { quantity: itemQuantity, price: item.price };
     } else {
       insItem.lineitems = { quantity: 1, price: insItem.price };
       updatedCart.push( insItem );
     }
-    return {currentCart: updatedCart, item: insItem};
+    return { currentCart: updatedCart, item: insItem };
   }
 };
 
@@ -97,12 +96,10 @@ const removeFromCart = item => dispatch => {
 };
 
 const integrateCart = ( localCart, token ) => {
-  console.log( 'integrateCart' );
   return axios.post( `/api/order/integrate/${token}`, { cart: JSON.parse( localCart ) } );
 };
 
 const loadCart = ( token, dispatch ) => {
-  console.log( 'loadCart' );
   axios.get( `/api/order/pending/${token}` )
     .then( ( { data } ) => {
       dispatch( { type: UPDATE_CART, cart: data } );
@@ -116,7 +113,6 @@ const retrieveCart = token => dispatch => {
     integrateCart( localStorage.getItem( 'cart' ), token )
       .then( () => localStorage.removeItem( 'cart' ) )
       .then( () => {
-        console.log( 'loading cart' );
         loadCart( token, dispatch );
       } );
   } else {
@@ -131,8 +127,9 @@ const getCart = () => dispatch => {
     dispatch( retrieveCart( token ) );
   } else {
     let currentCart = localStorage.getItem( 'cart' );
+    // console.log(currentCart);
     if ( !currentCart ) {
-      localStorage.setItem( 'cart', JSON.stringify( [] ) );
+      localStorage.setItem( 'cart', '[]' );
     }
     currentCart = localStorage.getItem( 'cart' );
 

@@ -1,59 +1,39 @@
 const router = require( 'express' ).Router();
 const { User } = require( '../../../db' );
-const jwt = require( 'jwt-simple' );
-const secret = process.env.SECRET || '1701-FLX-NY';
+const chalk = require( 'chalk' );
 
-router.use( '/:token', (req, res, next) => {
-  req.userId = jwt.decode( req.params.token, secret ).id;
-  next();
-});
+module.exports = router;
 
-router.get( '/:token', ( req, res, next ) => {
-  User.findById( req.userId )
-    .then( user => {
-      if ( !user ) return res.sendStatus( 401 );
-      return user.isAdmin;
-    } )
-    .then( isAdmin => {
-      if ( isAdmin ) return User.findAll( { order: [ 'name' ] } );
-    } )
-    .then( users => res.json( users ) );
+router.get( '/', ( req, res, next ) => {
+  res.sendStatus( 401 );
 } );
 
-router.delete( '/:token/:userId', (req, res, next) => {
-  User.findById( req.userId )
-    .then( user => {
-      if ( !user ) return res.sendStatus( 401 );
-      return user.isAdmin;
-    } )
-    .then( isAdmin => {
-      if ( isAdmin ) return User.findById( req.params.userId );
-    } )
-    .then( user => user.destroy())
-    .then(() => res.sendStatus(204))
-    .catch(next);
-});
+require( '../../configure/admin-middleware' )( router );
 
-router.put( '/:token/:userId', (req, res, next) => {
-  console.log(req.body);
+router.get( '/:token', ( req, res, next ) => {
+  res.locals.isAdmin( req )
+    .then( () => User.findAll( { order: [ 'name' ] } ) )
+    .then( users => res.json( users ) )
+    .catch( next );
+} );
+
+router.delete( '/:token/:userId', ( req, res, next ) => {
+  res.locals.isAdmin( req )
+    .then( () => User.findById( req.params.userId ) )
+    .then( user => user.destroy() )
+    .then( () => res.sendStatus( 204 ) )
+    .catch( next );
+} );
+
+router.put( '/:token/:userId', ( req, res, next ) => {
   const { mods } = req.body;
-  User.findById( req.userId )
-    .then( user => {
-      if ( !user ) return res.sendStatus( 401 );
-      return user.isAdmin;
-    } )
-    .then( isAdmin => {
-      if ( isAdmin ) return User.findById( req.params.userId );
-      else throw new Error('User is not an admin');
-    } )
+  res.locals.isAdmin( req )
+    .then( () => User.findById( req.params.userId ) )
     .then( user => {
       user.isAdmin = mods.isAdmin;
       user.passwordExpired = mods.passwordExpired;
       return user.save();
     } )
-    .then( user => res.json(user) )
-    .catch(next);
-});
-
-module.exports = router;
-
+    .then( user => res.json( user ) )
+    .catch( next );
+} );

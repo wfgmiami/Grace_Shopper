@@ -1,24 +1,23 @@
 const router = require( 'express' ).Router();
 const { Glasses } = require( '../../db' );
 
-router.get('/search', ( req,res,next )=>{
-  console.log('search query', req.query.name);
+router.get( '/search', ( req, res, next ) => {
+  console.log( 'search query', req.query.name );
 
-   Glasses.findAll({
-    where:{
-      name : {
-       $iLike: `%${req.query.name}%` 
-      } 
+  Glasses.findAll( {
+      where: {
+        name: { $iLike: `%${req.query.name}%` }
       }
-   }     
-  )
-    .then(glasses => {
-      console.log('"Glasses from search bar"', res);
-      return res.json(glasses);
-    })
-    .catch(next); 
+    } )
+    .then( glasses => res.json( glasses ) )
+    .catch( next );
+} );
 
-})
+router.get( '/detail/:id', ( req, res, next ) => {
+  console.log( 'Selected Glass: ', req.params.id );
+  Glasses.scope( 'categories' ).findById( req.params.id )
+    .then( glass => res.json( glass ) );
+} );
 
 router.get( '/:offset', ( req, res, next ) => {
   const offset = ( req.params.offset - 1 ) * 15;

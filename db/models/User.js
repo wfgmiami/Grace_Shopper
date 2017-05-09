@@ -6,13 +6,14 @@ const Sequelize = require( 'sequelize' );
 const conn = require( '../conn' );
 const Order = require( './Order' );
 
+
 const User = conn.define( 'users', {
   name: {
     type: Sequelize.STRING,
     allowNull: false,
     validate: {
       notEmpty: true,
-      isAlpha: true,
+      //isAlpha: true,
       len: [ 2, 255 ]
     }
   },
@@ -40,6 +41,9 @@ const User = conn.define( 'users', {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },
+  googleId: {
+    type: Sequelize.STRING
+  }
 }, {
   scopes: {
     admin: {
@@ -62,7 +66,8 @@ const User = conn.define( 'users', {
       return users;
     },
     afterCreate( user ) {
-      return user.getOrder();
+      if(!user.googleId)
+        return user.getOrder();
     }
   },
   classMethods: {
@@ -75,12 +80,13 @@ const User = conn.define( 'users', {
   },
   instanceMethods: {
     getOrder() {
-      return Order.scope('pending').findOrCreate( {
+      return Order.scope( 'pending' ).findOrCreate( {
         where: { userId: this.id }
       } );
     }
   }
 } );
+
 
 module.exports = User;
 

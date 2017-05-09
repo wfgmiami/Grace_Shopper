@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Filtergroup from './Filtergroup';
 import { changeFilter } from '../../redux/reducers/products';
+import { createNewFilter } from './modfilter';
 
 class FilterBar extends React.Component {
   constructor(props) {
@@ -11,16 +12,7 @@ class FilterBar extends React.Component {
   }
 
   modFilter({ name, value }) {
-    let { filter } = this.state;
-    if ( filter[ name ] ) {
-      if (filter[ name ].indexOf( value ) > -1 ) {
-        filter[ name ] = filter[ name ].filter( val => val !== value );
-      } else {
-        filter[ name ].push( value );
-      }
-    } else {
-      filter[ name ] = [ value ];
-    }
+    const filter = createNewFilter( this.state.filter, name, value );
     this.setState( filter );
     this.props.changeFilter( 1, filter );
   }

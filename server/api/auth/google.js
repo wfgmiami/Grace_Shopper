@@ -1,0 +1,52 @@
+const router = require('express').Router();
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const User = require('../../../db/models/User');
+
+const Order = require('../../../db/models/Order');
+
+passport.use(
+  new GoogleStrategy({
+
+    // localhost credentials
+    clientID:
+    '996228923588-ma414rr4i6oumg6939tsv45kcn95imv4.apps.googleusercontent.com',
+    clientSecret: '4XCnWYcRyxxeb3Xmldy_lIrF',
+    callbackURL: '/api/auth/google/verify'
+
+    // http://grace-shopper.herokuapp.com credentials
+    // clientID:
+    // '996228923588-5n2dv3lkb3td717c3llm0seh36n4bmgj.apps.googleusercontent.com',
+    // clientSecret: 'ovEQE8jpRPn0nK0xQSQGgs4w',
+    // callbackURL: '/api/auth/google/verify'
+  },
+  function verificationCallback(token, refreshToken, profile, done){
+    let info = {
+      name: profile.displayName,
+      email: profile.emails[0].value,
+      password: profile.id
+    };
+
+    User.findOrCreate({
+      where: { googleId: profile.id},
+      defaults: info
+    })
+    .spread( user => {
+      Order.findOrCreate({
+          where: { userId: user.id },
+          defaults: { userId: this.id, status: 'Pending' }
+      })
+      done(null, user)
+    })
+    .catch(done);
+  })
+)
+
+router.get('/', passport.authenticate('google', { scope: 'email' }))
+
+router.get('/verify', passport.authenticate('google', {
+   failureRedirect: '/',
+   successRedirect: '/'
+}));
+
+module.exports = router;

@@ -47,21 +47,21 @@ const Glasses = conn.define( 'glasses', {
         if ( this.reviews.length ) {
           return Math.round( this.reviews.reduce( ( total, review ) => total + review.rating, 0 ) * 10 / this.reviews.length ) / 10;
         } else {
-          return 'No reviews yet';
+          return 'Leave the first review here';
         }
       } else {
-        return 'Reviews were not included';
+        return 'Leave the first review here';
       }
     }
   },
   scopes: {
     inStock: {
       attributes: { exclude: [ 'createdAt', 'updatedAt' ] },
-      inventory: { $gt: 0 }
+      where: { inventory: { $gt: 0 } }
     },
     outOfStock: {
       attributes: { exclude: [ 'createdAt', 'updatedAt' ] },
-      inventory: 0
+      where: { inventory: 0 }
     },
     categories: {
       attributes: { exclude: [ 'createdAt', 'updatedAt' ] },

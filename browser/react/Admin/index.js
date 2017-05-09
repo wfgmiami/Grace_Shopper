@@ -1,25 +1,13 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
-function mapStateToProps(state) {
-  return {
+import Nav from './Nav';
 
-  };
-}
+const Admin = ({ children }) => (
+  <div className="container-fluid">
+    <h1>Admin</h1>
+    <Nav />
+    { children }
+  </div>
+);
 
-export class Admin extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <div className="container-fluid">
-        <h1>Admin</h1>
-        { this.props.children }
-      </div>
-    );
-  }
-}
-
-export default connect(mapStateToProps)(Admin);
+export default Admin;

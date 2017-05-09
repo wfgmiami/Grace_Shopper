@@ -4,11 +4,16 @@ const db = require( '../db' );
 const path = require( 'path' );
 const chalk = require( 'chalk' );
 const cuid = require( 'cuid' );
+const session = require( 'express-session' );
+
+module.exports = app;
 
 const requestId = ( req, res, next ) => {
   req.requestId = cuid();
   next();
 };
+
+require('./configure/app-variables')(app);
 
 // Syncing all the models at once. This promise is used by main.js.
 db.sync()
@@ -17,9 +22,30 @@ db.sync()
 app.use( require( 'body-parser' ).json() );
 app.use( '/vendor', express.static( path.join( __dirname, '..', 'node_modules' ) ) );
 app.use( '/dist', express.static( path.join( __dirname, '..', 'dist' ) ) );
+app.use( '/stylesheets', express.static( path.join( __dirname, '..', 'browser/stylesheets' ) ) );
 app.use( '/api', require( './routes' ) );
 
 app.use( requestId );
+
+app.use( session( {
+  secret: 'glasses',
+  resave: false,
+  saveUnitialized: false
+} ) );
+
+app.use( require( './passport.middleware.js' ) );
+
+app.use( ( req, res, next ) => {
+  req.session.counter = req.session.counter || 0;
+  req.session.counter++;
+  next();
+} );
+
+app.use( '/api/auth', require( './api/auth' ) );
+
+app.get( '/github', (req, res, next) => {
+  res.redirect('http://github.com/wfgmiami/Grace_Shopper');
+});
 
 app.get( '*', ( req, res, next ) => {
   res.sendFile( path.join( __dirname, '..', 'browser/index.html' ) );
@@ -28,7 +54,6 @@ app.get( '*', ( req, res, next ) => {
 const port = process.env.PORT || 3000;
 app.listen( port, () => console.log( `Listening on port ${port}` ) );
 
-//db.seed();
 
 // Handle file not found
 app.use( ( req, res, next ) => {
@@ -39,7 +64,7 @@ app.use( ( req, res, next ) => {
 
 // Handle internal server error
 app.use( ( err, req, res, next ) => {
-  res.status( 500 );
+  if (!res.headersSent) res.sendStatus( 500 );
   console.log( `Status 500: ${chalk.magenta.inverse(req.method)} ${chalk.blue.inverse(req.url)}` );
   console.log( err );
 } );

@@ -1,0 +1,26 @@
+.oauth {
+  max-width: 18em;
+}
+
+.btn-social {
+  text-align: center;
+  width: 100%;
+}
+
+.back-line {
+  line-height: 0;
+  border-bottom: 1px dotted #999;
+  text-align: center;
+}
+
+.back-line > span {
+  background: #fff;
+  color: #999;
+  padding: 0.5em;
+  border: 1px dotted #999;
+  border-radius: 50%;
+}
+
+.buffer {
+  margin: 1.5em 0.8em;
+}

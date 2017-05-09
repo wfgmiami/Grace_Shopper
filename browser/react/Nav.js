@@ -27,16 +27,19 @@ class Nav extends React.Component {
                 <span className="icon-bar" />
                 <span className="icon-bar" />
               </button>
-              <a className="navbar-brand">Grace Shopper</a>
+              <c className="navbar-brand"><Link to="/">Grace Shopper</Link></c>
             </div>
             <div className="collapse navbar-collapse">
               <ul className="nav navbar-nav">
                 <li>
-                  <a className="dropdown-toggle" data-toggle="dropdown" href="#">
+                  <a href="#">
                     Cart { cartItems }
                   </a>
                 </li>
                 <li className="divider" />
+                <li>
+                  <a href="/github">Github</a>
+                </li>
               </ul>
               <ul className="nav navbar-nav navbar-right">
                 {
@@ -48,15 +51,8 @@ class Nav extends React.Component {
                   </li>
                 }
                 <li className="">
-                  <a href="/user/settings/">
-                    <span className="glyphicon glyphicon-user" />
-                    { ' ' }
-                    Sign In
-                  </a>
-                </li>
-                <li className="">
                   <Link to="/signup">
-                    <span className="glyphicon glyphicon-heart"></span>
+                    <span className="glyphicon glyphicon-heart" />
                     { ' ' }
                     Sign Up
                   </Link>

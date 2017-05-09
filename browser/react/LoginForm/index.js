@@ -7,32 +7,41 @@ const LoginForm = ({ invalidLogin, login, name, password, onNameChange, onPasswo
 
   const submitFn = user ? logout : login;
   const h3Style = { marginTop: '0px' };
-
  return (
    <div>
      { user ? <h3 style={h3Style}>Sign Out</h3> : <h3 style={h3Style}>Sign In</h3>}
      { user && `Hello, ${ user.name }` }
      { invalidLogin ? <div style={{ color: 'red' }}>Invalid Login</div> : null }
-      <form onSubmit={ submitFn }>
-        {!user && (<div>
-          <div className="form-group">
-            <input className="form-control" placeholder="name" value={ name } onChange={ onNameChange } />
+      <div className="buffer local">
+        <form onSubmit={ submitFn }>
+          {!user && (<div>
+            <div className="form-group">
+              <input className="form-control" placeholder="name" value={ name } onChange={ onNameChange } />
+            </div>
+            <div className="form-group">
+              <input className="form-control" type="password" placeholder="password" value={ password } onChange={ onPasswordChange } />
+            </div>
+            </div>)}
+
+              <button className="btn btn-primary">{ user ? `Sign Out` : `Sign In` }</button>
+        </form>
+      </div>
+      {!user && (<div>
+        <div className="or buffer">
+          <div className="back-line">
+            <span>OR</span>
           </div>
-          <div className="form-group">
-            <input className="form-control" type="password" placeholder="password" value={ password } onChange={ onPasswordChange } />
-          </div>
-          </div>)}
-        <button className="btn btn-primary">{ user ? `Sign Out` : `Sign In` }</button>
-      </form>
-<pre>
-Login:<br />
-<br />
-name: Arum, password: 123<br />
-name: Richard, password: 1234<br />
-name: Evan, password: 12345<br />
-name: Alex, password: 123456
-</pre>
-    </div>
+        </div>
+        <div className="buffer oauth">
+          <p>
+            <a href="/api/auth/google" className="btn btn-social btn-google">
+              <i className="fa fa-google" />
+              <span>Sign In With Google</span>
+            </a>
+          </p>
+        </div>
+      </div>)}
+  </div>
  );
 };
 
@@ -71,7 +80,6 @@ class LoginPage extends Component{
   }
 
   render(){
-
     return (
       <LoginForm
         invalidLogin={ this.props.invalidLogin }

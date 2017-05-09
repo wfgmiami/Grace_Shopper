@@ -4,28 +4,33 @@ Due Date: May 9, 2017
 
 ----
 
+## Site:
+[Grace Shopper](http://grace-shopper.herokuapp.com)
+
+----
+
 ## Requirements
 
 ### Users
 
 #### Unauthenticated Users:
 
-* [ ] View products (catalog)
+* [x] View products (catalog)
  * [x] Refine listing by category
- * [ ] Search product listing
- * [ ] View a product's details
- * [ ] Product information
+ * [x] Search product listing
+ * [x] View a product's details
+ * [x] Product information
  * [x] Photo(s)
- * [ ] View reviews left by authenticated users
+ * [x] View reviews left by authenticated users
 * [ ] Manage their cart
- * [ ] Add an item to the cart from product listing or product detail pages
- * [ ] Remove an item from the cart
+ * [x] Add an item to the cart from product listing or product detail pages
+ * [x] Remove an item from the cart
  * [ ] Edit/update quantities of items in the cart
  * [x] Log in and continue editing the cart
  * [x] Refresh the page without being logged in and have the cart persist (you may use sessionStorage, localStorage, Cookies or JWT for this)
-* [ ] Account Management
+* [x] Account Management
  * [x] Create an account
- * [ ] Login with Facebook and/or Google
+ * [x] Login with Facebook and/or Google
 * [ ] Checkout
  * [ ] Purchase items from cart
  * [ ] Specify shipping address and email address
@@ -50,11 +55,11 @@ Due Date: May 9, 2017
  * [ ] Create categories for items, each item can have multiple categories
  * [ ] Manage the availability of a product. If a product is no longer available, users will not see it while browsing, but they can view the product detail page if they've ordered it previously or have a direct link. On that product detail page, it should say "Currently Unavailable"
  * [ ] Add/remove categories from items
-* [ ] Order management
- * [ ] View a list of all orders
- * [ ] Filter orders by status (Created, Processing, Cancelled, Completed)
- * [ ] Change the status of the order (Created -> Processing, Processing -> Cancelled || Completed)
- * [ ] View details of a specific order
+* [x] Order management
+ * [x] View a list of all orders
+ * [x] Filter orders by status (Created, Processing, Cancelled, Completed)
+ * [x] Change the status of the order (Created -> Processing, Processing -> Cancelled || Completed)
+ * [x] View details of a specific order
 * [x] User management
  * [x] Promote other user accounts to have admin status
  * [x] Delete a user

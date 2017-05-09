@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { loadProducts } from '../../redux/reducers/products';
+import { pgStartEnd } from './pagLogic';
 
 function mapStateToProps(state) {
   return {
@@ -17,19 +18,7 @@ export const Pagination = ({ loadProducts, products }) => {
   const { count, offset } = products;
   products = products.products;
 
-  let start = 1;
-  let end = 10;
-  const maxPossible = Math.ceil(count / (products.length || 15));
-
-  if (offset >= 10) {
-    start = offset - 5;
-    end = offset + 5;
-    if (offset > (maxPossible - 10)) {
-      start = maxPossible - 10;
-      end = maxPossible;
-    }
-  }
-
+  const { start, end } = pgStartEnd( offset, count );
 
   for (let i = start; i <= end; i++) {
     pages.push((

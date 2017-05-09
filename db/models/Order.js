@@ -29,26 +29,64 @@ const Order = sequelize.define( 'orders', {
     type: Sequelize.TEXT
   }
   // productId through association
-  // userId/guestId through association
+  // userId through association
   // addressId through association
 }, {
+
+  scopes: {
+    pending: Object.assign( { where: { status: 'Pending', userId: { $ne: null } } }, includes ),
+    shipping: Object.assign( { where: { status: 'Shipping', userId: { $ne: null } } }, includes ),
+    delivered: Object.assign( { where: { status: 'Delivered', userId: { $ne: null } } }, includes ),
+    cancelled: Object.assign( { where: { status: 'Cancelled', userId: { $ne: null } } }, includes ),
+    all: Object.assign( { where: { userId: { $ne: null } } }, includes )
+  },
   hooks: {
-    beforeValidate(order) {
-      if (order.status !== 'Pending' && !order.paymentId) {
-        throw new Error('There is no payment associated to the order');
+    beforeValidate( order ) {
+      if ( order.status !== 'Pending' && !order.paymentId ) {
+        throw new Error( 'There is no payment associated to the order' );
       }
-      if (order.status !== 'Pending' && !order.shippingAddress) {
-        throw new Error('There is no shipping address associated to the order');
+      if ( order.status !== 'Pending' && !order.shippingAddress ) {
+        throw new Error( 'There is no shipping address associated to the order' );
       }
     }
   },
-  scopes: {
-    pending: Object.assign( { status: 'Pending' }, includes ),
-    shipping: Object.assign( { status: 'Shipping' }, includes ),
-    delivered: Object.assign( { status: 'Delivered' }, includes ),
-    cancelled: Object.assign( { status: 'Cancelled' }, includes )
+  classMethods: {
+    integrate(userId, cart) {
+      return Promise.all( [
+        Order.scope( 'pending' ).findOne( { where: { userId } } ),
+      ].concat( cart.map( glasses => Glasses.findById( glasses.id ) ) ) )
+      .then( ( [ order, ...glasses ] ) => {
+
+        cart = cart.map( item => {
+          const ind = order.glasses.findIndex( tst => tst.id === item.id );
+          if ( ind > -1 ) {
+            item.lineitems.quantity += order.glasses[ ind ].lineitems.quantity;
+          }
+          return item;
+        } );
+
+        return Promise.all(
+          glasses.map( ( glass, idx ) => order.addGlass( glass, {
+            quantity: cart[ idx ].lineitems.quantity,
+            price: cart[ idx ].lineitems.price,
+            date: new Date()
+          }, { updatesOnDuplicate: true } ) )
+        );
+      } );
+    },
+    itemAdd(userId, cart) {
+      return Promise.all( [
+        Order.scope( 'pending' ).findOne( { where: { userId } } ),
+      ].concat( cart.map( glasses => Glasses.findById( glasses.id ) ) ) )
+      .then( ( [ order, ...glasses ] ) => Promise.all(
+        glasses.map( ( glass, idx ) => order.addGlass( glass, {
+          quantity: cart[ idx ].lineitems.quantity,
+          price: cart[ idx ].lineitems.price,
+          date: new Date()
+        }, { updatesOnDuplicate: true } ) )
+      ) );
+    }
   }
 } );
 
 module.exports = Order;
-
