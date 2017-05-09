@@ -10,7 +10,7 @@ const LineItem = sequelize.define( 'lineitems', {
       min: 0
     }
   },
-  date: {
+  date: { // is this important? Like when the item was added to the cart/order?
     type: Sequelize.DATE,
     allowNull: false
   },

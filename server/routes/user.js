@@ -9,15 +9,16 @@ router.post( '/', ( req, res, next ) => {
     memo[ param ] = req.body[ param ];
     return memo;
   }, {} );
-
+  // const {name, password, email} = req.body // consider object destructuring!
+  // User.create({name, password, email})
   User.create( newUser )
     .then( user => {
-      if (!user) return res.sendStatus( 401 );
+      if (!user) return res.sendStatus( 401 ); // why are you sending a 401?
       res.send( {
         token: jwt.encode( { id: user.id }, res.locals.jwtSecret )
       } );
     } )
-    .catch( err => console.log(err) );
+    .catch( err => console.log(err) ); // you have to send a response for every request!!! Use `next`
   } );
 
 module.exports = router;

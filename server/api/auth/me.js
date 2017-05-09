@@ -8,7 +8,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.delete('/', function (req, res) {
-  req.logOut();
+  req.logOut(); // great using your passport methods here!
   res.sendStatus(204);
 });
 

@@ -10,7 +10,7 @@ const Payment = conn.define('payments', {
     allowNull: false
   },
   cardVendor: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING, // I almost feel like enumberable makes a lot of sense here, but that is just a thought (MC, Visa, Amex, Discover)
     allowNull: false
   },
   expiration: {

@@ -15,7 +15,7 @@ describe( 'Lineitem model', () => {
     describe( 'price attribute', () => {
       const { attributes: { price } } = lineitems;
      it( 'Validates price', () => {
-        expect( price.validate.min + 1 ).to.be.ok;
+        expect( price.validate.min + 1 ).to.be.ok; // can you not use - `to.be.a('number')`
       } );
       notNullOrEmpty( price );
     } );
@@ -30,7 +30,7 @@ describe( 'Lineitem model', () => {
     describe( 'quantity attribute', () => {
       const { attributes: { quantity } } = lineitems;
        it( 'Validates quantity', () => {
-        expect( quantity.validate.min ).to.be.ok;
+        expect( quantity.validate.min ).to.be.ok; // `to.exist` is something I like more, but both work!
       } );
       notNullOrEmpty( quantity );
     } );

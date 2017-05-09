@@ -17,7 +17,7 @@ describe( 'User model', () => {
     describe( 'name attribute', () => {
       const { attributes: { name } } = users;
       // console.log(users.options);
-      // console.log( Object.keys( users ) );
+      // console.log( Object.keys( users ) ); // logs in master.... not the best :)
       it( 'Has length requirements', () => {
         expect( name.validate.len ).to.be.a( 'array' );
       } );
@@ -52,13 +52,13 @@ describe( 'User model', () => {
   describe( 'Class Methods', () => {
     describe( 'findByPassword', () => {
       it( 'Exists', () => {
-        expect( users.findByPassword ).to.be.ok;
+        expect( users.findByPassword ).to.be.ok; // this isn't really testing if the function does what we expect. Try actually using it and seeing if you get expected results (maybe you need a before to create a couple of users or something)
       } );
     } );
   } );
 } );
 
-function notNullOrEmpty( obj ) {
+function notNullOrEmpty( obj ) { // love that you are DRYing out your code!!
   return it( 'Doesn\'t allow empty or null values', () => {
     expect( obj.validate.notEmpty ).to.be.ok;
     expect( obj.allowNull ).to.be.eql( false );

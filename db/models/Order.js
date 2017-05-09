@@ -7,7 +7,7 @@ const Glasses = require( './Glasses' );
 
 const { Sequelize } = sequelize;
 
-const includes = {
+const includes = { // DRY code :D
   include: [ {
     model: Glasses.scope( 'categories' ),
     attributes: {
@@ -18,6 +18,24 @@ const includes = {
     through: { attributes: [ 'quantity', 'price' ] }
   } ]
 };
+
+// function scopeObj (status) { // maybe this is even MORE dry :D :D
+//   return Object.assign({
+//     where: {
+//       status, 
+//       userId: { $ne: null } 
+//     }, 
+//     include: [{
+//       model: Glasses.scope( 'categories' ),
+//       attributes: {
+//         exclude: [
+//           'inventory', 'createdAt', 'updatedAt', 'price', 'description'
+//         ]
+//       },
+//       through: { attributes: [ 'quantity', 'price' ] }
+//     }]
+//   })
+// }
 
 const Order = sequelize.define( 'orders', {
   status: {
@@ -34,6 +52,7 @@ const Order = sequelize.define( 'orders', {
 }, {
 
   scopes: {
+    // pending: scopeObj('Pending') <-- based on the function I mention above. Maybe this works?!
     pending: Object.assign( { where: { status: 'Pending', userId: { $ne: null } } }, includes ),
     shipping: Object.assign( { where: { status: 'Shipping', userId: { $ne: null } } }, includes ),
     delivered: Object.assign( { where: { status: 'Delivered', userId: { $ne: null } } }, includes ),
@@ -51,13 +70,15 @@ const Order = sequelize.define( 'orders', {
     }
   },
   classMethods: {
-    integrate(userId, cart) {
-      return Promise.all( [
-        Order.scope( 'pending' ).findOne( { where: { userId } } ),
-      ].concat( cart.map( glasses => Glasses.findById( glasses.id ) ) ) )
+    integrate(userId, cart) { 
+      return Promise.all( [ // the following code format === inconsistent
+        Order.scope( 'pending' ).findOne( { where: { userId } } ), // what if there isn't a pending order already? Maybe you take care of this by calling user.getOrder first?
+      ].concat( cart.map( glasses => Glasses.findById( glasses.id ) ) ) ) // for readability I would almost pull out the cart.map into its own variable to prettify this situation
       .then( ( [ order, ...glasses ] ) => {
+        // this seems a bit convoluted :/ I'm wondering if you update the order and save it if it will update the through table
 
-        cart = cart.map( item => {
+        // don't reassign the original cart, make a new variable
+        cart = cart.map( item => { // why do you say glasses above and item here?
           const ind = order.glasses.findIndex( tst => tst.id === item.id );
           if ( ind > -1 ) {
             item.lineitems.quantity += order.glasses[ ind ].lineitems.quantity;

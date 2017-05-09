@@ -3,6 +3,7 @@
 const path = require('path');
 const secret = process.env.SECRET || '1701-FLX-NY';
 
+// are you using these?
 const rootPath = path.join(__dirname, '../../');
 const serverRoot = path.join(__dirname, '../');
 

@@ -47,10 +47,10 @@ const User = conn.define( 'users', {
 }, {
   scopes: {
     admin: {
-      isAdmin: true
+      isAdmin: true // shouldn't this be in a where clause?
     },
     resetPassword: {
-      passwordExpired: true
+      passwordExpired: true // shouldn't this be in a where clause?
     }
   },
   hooks: {

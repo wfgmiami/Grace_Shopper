@@ -10,7 +10,7 @@ passport.use(
 
     // localhost credentials
     clientID:
-    '996228923588-ma414rr4i6oumg6939tsv45kcn95imv4.apps.googleusercontent.com',
+    '996228923588-ma414rr4i6oumg6939tsv45kcn95imv4.apps.googleusercontent.com', // these should be in a secret .gitignore'ed file. Not on github for all peoples to see. You could do like what you did in app-variables and set them in production in heroku! (I can help if you don't know how to do this)
     clientSecret: '4XCnWYcRyxxeb3Xmldy_lIrF',
     callbackURL: '/api/auth/google/verify'
 
@@ -32,10 +32,10 @@ passport.use(
       defaults: info
     })
     .spread( user => {
-      Order.findOrCreate({
+      Order.findOrCreate({ // you are probably going to want to do this here and maybe when you change an order from Pending to anything else? If so, maybe a user instance method makes more sense?
           where: { userId: user.id },
           defaults: { userId: this.id, status: 'Pending' }
-      })
+      }) // this is async -- don't call `done` until you are sure this is finished
       done(null, user)
     })
     .catch(done);
@@ -45,8 +45,8 @@ passport.use(
 router.get('/', passport.authenticate('google', { scope: 'email' }))
 
 router.get('/verify', passport.authenticate('google', {
-   failureRedirect: '/',
-   successRedirect: '/'
+   failureRedirect: '/', // maybe go to the login page again with an error message
+   successRedirect: '/' // maybe go to the user's home page!
 }));
 
 module.exports = router;

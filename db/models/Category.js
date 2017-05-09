@@ -12,7 +12,7 @@ const Category = conn.define('categories', {
       notEmpty: true
     }
   },
-  value: {
+  value: { // what is this value? Just not understanding your categories I think
     type: Sequelize.STRING,
     allowNull: false,
     unique: 'compositeIndex',

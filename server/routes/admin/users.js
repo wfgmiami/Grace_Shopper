@@ -29,7 +29,7 @@ router.put( '/:token/:userId', ( req, res, next ) => {
   const { mods } = req.body;
   res.locals.isAdmin( req )
     .then( () => User.findById( req.params.userId ) )
-    .then( user => {
+    .then( user => { // do you not want to just do an Object.assign(user, mods)? Consider update here as well
       user.isAdmin = mods.isAdmin;
       user.passwordExpired = mods.passwordExpired;
       return user.save();
