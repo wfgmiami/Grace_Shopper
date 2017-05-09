@@ -22,7 +22,6 @@ const addToCart = item => dispatch => {
     let newInfo = newCart( store.getState().cart, item );
     currentCart = newInfo.currentCart;
     item = newInfo.item;
-
     axios.post( `/api/order/pending/${token}`, {
         cart: [ item ]
       } )
@@ -55,7 +54,7 @@ const addToCart = item => dispatch => {
         glass.lineitems.price = glass.price || glass.lineitems.price;
         return Object.assign( {}, glass );
       } );
-      insItem.lineitems = { quantity: itemQuantity, price: item.price };
+      insItem.lineitems = { quantity: itemQuantity, price: item.lineitems.price || item.price };
     } else {
       insItem.lineitems = { quantity: 1, price: insItem.price };
       updatedCart.push( insItem );
@@ -65,20 +64,33 @@ const addToCart = item => dispatch => {
 };
 
 const decreaseQuantity = item => dispatch => {
-    let currentCart = JSON.parse( localStorage.getItem( 'cart' ) ) || store.getState().cart;
-    if(item.lineitems.quantity == 1){
-      removeFromCart(item)(dispatch)
-    } else {
-        let myNewCart = currentCart.map(glass => {
-        if(glass.id==item.id){
-          glass.lineitems.quantity--;
-        }
-        return Object.assign({}, glass)
+  let currentCart = JSON.parse( localStorage.getItem( 'cart' ) ) || store.getState().cart;
+  const token = localStorage.getItem( 'token' );
+
+  if(item.lineitems.quantity == 1){
+    removeFromCart(item)(dispatch)
+  } else {
+    let myNewCart = currentCart.map(glass => {
+      if(glass.id==item.id){
+        glass.lineitems.quantity--;
+      }
+      return Object.assign({}, glass)
+    })
+    console.log(myNewCart)
+  
+    if(token){
+      axios.post(`/api/order/pending/${token}`, {
+        cart: [item]
       })
-      console.log(myNewCart)
+      .then( () => {
+        dispatch({ type: UPDATE_CART, cart: currentCart})
+      })
+    } 
+    else {
       localStorage.setItem('cart', JSON.stringify(currentCart));
       dispatch( { type: UPDATE_CART, cart: myNewCart } );
-      }
+    }
+  }
 }
 
 const removeFromCart = item => dispatch => {

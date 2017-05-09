@@ -8,7 +8,7 @@ class Cart extends Component{
   }
 
   render() {
-    var items = this.props.cart || [{name: 'this', price: 1.99, quantity: 2}, {name: 'other this', price: 2.99, quantity: 1}];
+    var items = this.props.cart;
     if (typeof items === 'string'){
       items = JSON.parse(items);
     }
