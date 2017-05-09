@@ -11,9 +11,7 @@ class Checkout extends React.Component{
   constructor(props){
     super(props);
     this.state={ 
-      order: [],
-      cart: [],
-      cardType: '',
+      cardType: 'Credit',
       cardVendor: '',
       expiration: '',
       name: '',
@@ -21,7 +19,7 @@ class Checkout extends React.Component{
       user: this.props.user || { name: 'NOOOOOO' }
     }
 
-    this.submitOder = this.submitOrder.bind(this);
+    this.submitOrder = this.submitOrder.bind(this);
     this.changeCardType = this.changeCardType.bind(this);
     this.changeCardVendor = this.changeCardVendor.bind(this);
     this.changeExpiration = this.changeExpiration.bind(this);
@@ -32,33 +30,27 @@ class Checkout extends React.Component{
 
   submitOrder(evt){
     evt.preventDefault();
-      //if(cardType, cardVendor, expiration, name, billingAddress)
-    
-    this.setState({ cardType, cardVendor, expiration, name, billingAddress})
-
-    console.log('state: ',this.state);
-
-     axios.post('/api/orders',{
-      date: new Date(),
-      cart: this.state.cart,
-      cardType: this.cardType,
-      cardVendor: this.cardVendor,
-      expiration: this.expiration,
-      name: this.name,
-      billingAddress: this.billingAddress
-
+ 
+    const _this=this;
+      console.log('THIS IS:', this.props.cart)
+    // if (_this) {
+    // }
+    // else {
+    //   console.log('no cart!')
+    // }
+     axios.post('/api/order/checkout',{
+      cart: this.props.cart,
+      payment: {
+        cardType: this.state.cardType,
+        cardVendor: this.state.cardVendor,
+        expiration: this.state.expiration,
+        name: this.state.name,
+        billingAddress: this.state.billingAddress,
+      },
+      userId: this.props.user.id
     })
-    // .then(()=> {
-    //   return axios.post('/api/email', {
-    //     name: this.state.name,
-    //     email: this.state.email,
-    //     address: this.state.address
-    //   });
-    // })
     .then(()=> browserHistory.push('/'))
     .catch(err => console.log(err))
-
-    
   }
 
   changeCardType(evt){
@@ -79,6 +71,7 @@ class Checkout extends React.Component{
 
   changeAddress(evt){
     this.setState({ billingAddress: evt.target.value })
+    console.log(this.state)
   }
 
   keepShopping(evt) {
@@ -87,6 +80,7 @@ class Checkout extends React.Component{
   }
 
   render(){
+    console.log('*****the',this.props.id);
 
     const { cardType, cardVendor, expiration, billingAddress, name } = this.state;
 
